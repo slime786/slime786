@@ -121,10 +121,10 @@ weeklyBrief();
  const input=palette.querySelector('#command-input'),results=palette.querySelector('#command-results');
  const base='/slime786/';
  const items=[
-  ['Home','Command Centre',base+'index.html'],['Market Radar','Project',base+'market-radar.html'],['Journal','Writing',base+'journal/index.html'],
+  ['Home','Command Centre',base+'index.html'],['Market Radar','Project',base+'market-radar.html'],['Journal','Writing',base+'journal.html'],
   ['Weekly Brief','Live',base+'index.html#weekly'],['The Observatory','Community',base+'index.html#observatory'],['Projects','Builds',base+'index.html#projects'],
   ['Technology Pulse','Live',base+'index.html#tech-feed'],['Rocket Game','Play',base+'index.html#game'],['About Moheen','Profile',base+'index.html#about'],['Contact','Connect',base+'index.html#contact'],
-  ['AI is becoming an interface','Article',base+'articles/ai-interface.html'],['AI infrastructure','Article',base+'journal/ai-infrastructure.html'],['Market noise vs business progress','Article',base+'journal/market-noise.html'],['Agents and the next interface shift','Article',base+'journal/agents-interface.html']
+  ['AI is becoming an interface','Article',base+'article-ai-interface.html'],['AI infrastructure','Article',base+'article-ai-infrastructure.html'],['Market noise vs business progress','Article',base+'article-market-noise.html'],['Agents and the next interface shift','Article',base+'article-agents-interface.html']
  ];let selected=0,visible=[];
  const render=()=>{const q=input.value.toLowerCase();visible=items.filter(x=>(x[0]+' '+x[1]).toLowerCase().includes(q));selected=Math.min(selected,Math.max(0,visible.length-1));results.innerHTML=visible.map((x,i)=>`<a class="command-result ${i===selected?'selected':''}" href="${x[2]}"><span>${x[0]}</span><small>${x[1].toUpperCase()}</small></a>`).join('')||'<div class="command-result"><span>No results</span></div>';};
  const open=()=>{palette.classList.add('open');palette.setAttribute('aria-hidden','false');input.value='';selected=0;render();setTimeout(()=>input.focus(),20)};
