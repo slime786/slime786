@@ -1,29 +1,55 @@
-# Moheen Mahmood — V8 Radar + Journal + Command Search
+# Moheen Mahmood — V8.1 GitHub Pages Path Fix
 
-This release focuses on depth rather than adding more homepage decoration.
+This version fixes the unstyled Journal / raw HTML problem seen on:
+`https://slime786.github.io/slime786/`
 
-## New
-- **Market Radar** standalone project (`market-radar.html`)
-  - live BTC/ETH GBP prices
-  - London and New York market-session status
-  - technology research map
-  - research principles and clear investment disclaimer
-- **Full Journal** (`journal/`)
-  - searchable/filterable journal index
-  - existing notes plus three new editorial drafts
-  - new drafts are clearly marked for Moheen's review before treating them as approved personal writing
-- **Command Search**
-  - click the `⌘ K` control or press Ctrl+K / Cmd+K
-  - navigate projects, sections and articles quickly
-- Existing V7.1 weekly brief, Observatory, game, GitHub, live data and contact features remain.
+## What was wrong
+Pages inside `/journal/` and `/articles/` were using relative asset paths such as:
+- `../style.css`
+- `../script.js`
 
-## Upload
-Upload everything to the root of `main`, preserving both the `articles` and `journal` folders.
+Depending on how GitHub uploaded/preserved the folder structure, those subpages could resolve incorrectly and load without CSS.
 
-## Editorial workflow
-The three new journal drafts are:
-- Why I keep coming back to AI infrastructure
-- Market noise versus business progress
-- Agents and the next interface shift
+## What V8.1 changes
+All subpages now use explicit GitHub Pages project-root paths:
 
-Review/edit them first. Each currently contains an editorial note making that status explicit.
+- `/slime786/style.css`
+- `/slime786/script.js`
+- `/slime786/favicon.svg`
+- `/slime786/journal/`
+- `/slime786/articles/...`
+- `/slime786/market-radar.html`
+
+This is tailored to your current GitHub Pages project URL:
+`https://slime786.github.io/slime786/`
+
+## Upload instructions
+Upload/replace EVERYTHING in this ZIP on the `main` branch.
+
+Keep these folders intact:
+- `articles/`
+- `journal/`
+
+Your root should contain:
+- `index.html`
+- `style.css`
+- `script.js`
+- `market-radar.html`
+- `404.html`
+- `favicon.svg`
+- `hero-cinematic-clean.jpg`
+- `astronaut-clean-hd.jpg`
+- `README.md`
+- `articles/`
+- `journal/`
+
+After GitHub Pages finishes redeploying:
+1. Open the homepage.
+2. Press Ctrl + F5.
+3. Open Journal.
+4. Open one article.
+5. Open Market Radar.
+6. Test Ctrl + K.
+
+## Future custom domain
+When you move to a custom domain later, these `/slime786/...` paths should be changed to root `/...` paths. Do that at the same time as the custom-domain migration.

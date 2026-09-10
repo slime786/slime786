@@ -119,7 +119,7 @@ weeklyBrief();
 (function(){
  const trigger=document.getElementById('command-trigger'),palette=document.getElementById('command-palette');if(!trigger||!palette)return;
  const input=palette.querySelector('#command-input'),results=palette.querySelector('#command-results');
- const base=location.pathname.includes('/journal/')?'../':'';
+ const base='/slime786/';
  const items=[
   ['Home','Command Centre',base+'index.html'],['Market Radar','Project',base+'market-radar.html'],['Journal','Writing',base+'journal/index.html'],
   ['Weekly Brief','Live',base+'index.html#weekly'],['The Observatory','Community',base+'index.html#observatory'],['Projects','Builds',base+'index.html#projects'],
