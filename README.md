@@ -1,29 +1,26 @@
-# Moheen Mahmood — V5 Cinematic Edition
+# Moheen Mahmood — V5.1 Cinematic Fixed Edition
 
-This version is designed to closely match the cinematic concept:
-- Larger, highly readable Moheen Mahmood branding
-- Larger live Bitcoin / Ethereum / London-time panel
-- Cleaner HD astronaut visual
-- Clear EXPLORE / PUSH / IMPROVE / REPEAT statement
-- Dark cinematic blue styling
-- Technology and market live sections
-- Rocket game
-- Contact links
+This fixes the visual overlap issues in V5.
 
-## Upload to GitHub
-Upload these files to the repository root:
+## What was fixed
+- Removed mock-up text/UI from the hero background.
+- Removed duplicated "EXPLORE PUSH IMPROVE REPEAT" overlay from the hero.
+- Replaced the astronaut image with a clean HD crop that does not contain the cut-off live widget.
+- Rebuilt the rocket-game background using clean CSS space/nebula graphics instead of a screenshot containing website cards.
+- Increased hero spacing and minimum height.
+- Improved Bitcoin / Ethereum / London widget readability.
+- Improved responsive behaviour on narrower displays.
+- Raised game HUD and object layers so gameplay remains clear.
+
+## Upload to GitHub main
+Upload / replace:
 - index.html
 - style.css
 - script.js
-- hero-cinematic.jpg
-- astronaut-hd.jpg
-- cards-space.jpg
+- hero-cinematic-clean.jpg
+- astronaut-clean-hd.jpg
 - README.md
 
-GitHub Pages should publish from `main` / `(root)`.
+The old files `hero-cinematic.jpg`, `astronaut-hd.jpg`, and `cards-space.jpg` are no longer needed after you confirm V5.1 works.
 
-Configured contact details:
-- Email: moheenmahmood@hotmail.co.uk
-- WhatsApp: +44 7848 390059
-- Instagram: @slime786
-- GitHub: slime786
+GitHub Pages should remain set to `main` / `(root)`.
