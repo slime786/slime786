@@ -1,21 +1,26 @@
-# Moheen Mahmood — V8.4.1 Ticker Collision Fix
+# Moheen Mahmood — V8.5 Personal Astronaut Edition
 
-This version fixes the overlapping live ticker seen in V8.4.
+This version keeps the working V8.4.1 ticker fix and replaces the homepage hero with a cinematic astronaut image based on Moheen's uploaded photo.
 
-## Cause
-V8.4 used two independently animated ticker tracks. Because the two tracks did not have
-perfectly identical rendered widths, they could drift into one another and overlap.
+## Included
+- Personal astronaut hero
+- Continuous live ticker without overlap
+- BTC / ETH live data
+- London time and US session status
+- Technology headlines and HIGH SIGNAL indicator
+- Journal
+- Market Radar
+- Command search
+- Rocket game
+- Observatory/community features
+- Contact links
 
-## Fix
-V8.4.1 uses:
-- one single animated marquee
-- two geometrically identical content groups
-- fixed chip widths
-- clipped long headlines
-- mirrored live data
-- one synchronized animation loop
+## Upload
+Upload all files in this ZIP directly to the root of the `main` branch.
 
-The live BTC/ETH, sparklines, London time, US session, rotating technology headlines,
-and HIGH SIGNAL detector are all retained.
+The new image file is:
+`hero-moheen-astronaut.jpg`
 
-Upload all files in this ZIP directly to the root of `main`.
+The old `hero-cinematic-clean.jpg` can remain temporarily. Once V8.5 is confirmed working, it can be deleted because the homepage now uses `hero-moheen-astronaut.jpg`.
+
+After GitHub Pages deploys, press Ctrl + F5.
