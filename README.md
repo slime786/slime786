@@ -1,27 +1,64 @@
-# YOUR NAME — Portfolio
+# Moheen Mahmood — V4 Cinematic Space Edition
 
-A clean, responsive one-page portfolio inspired by the editorial feel and section-based storytelling of modern studio websites.
+A complete cinematic rebuild inspired by the visual direction developed in the concept image.
 
-## Quick start
+## Included
+- Full-screen cinematic entrance with animated stars, planet glow and "scroll to begin"
+- Cosmic hero built from a dedicated local image asset
+- Live London clock
+- Live BTC and ETH prices in GBP
+- Indicative US regular market session status
+- Auto-refreshing technology stories
+- Public GitHub activity for @slime786
+- Cinematic astronaut story section
+- Fully upgraded playable rocket game:
+  - Arrow keys to steer
+  - Space / Up Arrow to boost
+  - 3 lives
+  - Energy meter
+  - Neon thrusters
+  - Colourful asteroids
+  - Energy-core collectibles
+  - Persistent high score
+- Custom sci-fi cursor
+- Hidden Easter egg
+- Responsive mobile layout
+- WhatsApp, email, Instagram and GitHub links configured
 
-Open `index.html` in a browser.
+## Contact links
+Email: moheenmahmood@hotmail.co.uk
+WhatsApp: +44 7848 390059
+Instagram: @slime786
+GitHub: slime786
 
 ## GitHub Pages
+Upload everything in this folder to the root of your GitHub Pages repository, including the `assets` folder.
 
-1. Create a new GitHub repository, for example `yourname.github.io`.
-2. Upload `index.html`, `style.css`, and `script.js`.
-3. Go to **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select `main` and `/ (root)`, then save.
-6. Your site will be available at your GitHub Pages address.
+Required structure:
+index.html
+style.css
+script.js
+assets/
+  cosmic-hero.jpg
+  cosmic-story.jpg
+  game-space.jpg
 
-## Personalise
+## Live API notes
+The browser uses public endpoints for CoinGecko, Hacker News and GitHub public activity. External services can be rate-limited or temporarily unavailable. Financial information shown on the site is for general information only and is not investment advice.
 
-Search for:
-- `YOUR NAME`
-- `YOUR CITY`
-- `hello@example.com`
-- Project One / Two / Three / Four
-- LinkedIn / GitHub / Instagram
 
-Replace those values with your own details, project links and social profiles.
+## Corrected GitHub upload layout
+
+This package is adjusted for a repository where the three JPG files sit in the same root folder as `index.html`, `style.css`, and `script.js`.
+
+Expected layout:
+
+index.html
+style.css
+script.js
+README.md
+cosmic-hero.jpg
+cosmic-story.jpg
+game-space.jpg
+
+No `assets` folder is required for this corrected package.

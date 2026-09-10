@@ -1,112 +1,263 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Moheen Mahmood — portfolio, projects, experience and contact." />
-  <title>Moheen Mahmood — Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Moheen Mahmood — London. Technology, investments, markets, entrepreneurship and ideas.">
+  <meta name="theme-color" content="#050811">
+  <title>Moheen Mahmood — Ideas, Investments, Impact</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="nav">
-    <a class="brand" href="#top">Moheen Mahmood<span>.</span></a>
-    <nav>
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- CINEMATIC ENTRANCE -->
+  <section id="cinematic-intro" class="cinematic-intro" aria-label="Cinematic introduction">
+    <div class="intro-stars intro-stars-a"></div>
+    <div class="intro-stars intro-stars-b"></div>
+    <div class="intro-glow"></div>
+    <div class="intro-scan"></div>
+
+    <div class="intro-top">
+      <a class="intro-brand" href="#home"><i></i> MOHEEN MAHMOOD</a>
+      <span>PORTFOLIO / 2026</span>
+    </div>
+
+    <div class="intro-center">
+      <p class="micro">LONDON · UNITED KINGDOM</p>
+      <h1><span>IDEAS.</span><span>INVESTMENTS.</span><span class="outline">IMPACT.</span></h1>
+      <p class="intro-lead">Exploring technology, markets and opportunities<br>to build a brighter tomorrow.</p>
+      <a class="cinematic-cta" href="#home">ENTER MY WORLD <b>→</b></a>
+    </div>
+
+    <a href="#home" class="scroll-cue"><span>SCROLL TO BEGIN</span><b>↓</b></a>
+    <div class="intro-coordinate">51.5072° N · 0.1276° W</div>
+  </section>
+
+  <!-- SITE NAV -->
+  <header class="nav" id="home">
+    <a class="brand" href="#home"><i></i> MOHEEN MAHMOOD</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <nav id="nav-links">
+      <a href="#about">ABOUT</a>
+      <a href="#interests">FOCUS</a>
+      <a href="#markets">MARKETS</a>
+      <a href="#tech">TECH</a>
+      <a href="#game">GAME</a>
+      <a href="#contact">CONTACT</a>
     </nav>
-    <a class="nav-cta" href="#contact">Let's talk ↗</a>
+    <a class="talk" href="#contact">LET'S TALK <span>↗</span></a>
   </header>
 
-  <main id="top">
-    <section class="hero section">
-      <div class="eyebrow">PORTFOLIO / 2026</div>
-      <h1>I build <em>digital experiences</em> that make ideas impossible to ignore.</h1>
-      <div class="hero-bottom">
-        <p>I'm <strong>YOUR NAME</strong> — a designer / developer / creative based in YOUR CITY. I turn ambitious ideas into clean, useful and memorable digital products.</p>
-        <a class="circle-link" href="#work" aria-label="Scroll to work">↓</a>
+  <main>
+    <!-- COSMIC HERO -->
+    <section class="space-hero">
+      <div class="hero-image" aria-hidden="true"></div>
+      <div class="hero-vignette"></div>
+      <div class="hero-copy">
+        <p class="micro cyan-line">LONDON, UK</p>
+        <h2>IDEAS.<br>INVESTMENTS.<br><span>IMPACT.</span></h2>
+        <p>I'm Moheen Mahmood. I follow technology, markets, entrepreneurship and the ideas shaping what comes next.</p>
+        <div class="hero-actions">
+          <a href="#about" class="pill primary">EXPLORE MY WORLD <span>→</span></a>
+          <a href="#game" class="pill ghost">PLAY THE GAME <span>↗</span></a>
+        </div>
+      </div>
+
+      <aside class="market-glass">
+        <div class="market-clock">
+          <span>LONDON</span>
+          <strong id="live-clock">--:--:--</strong>
+          <small id="live-date">Loading…</small>
+        </div>
+        <div class="market-line"></div>
+        <div class="market-mini">
+          <i class="coin btc">₿</i><span><small>Bitcoin</small><b id="btc-price">Loading…</b></span><em id="btc-change">—</em>
+        </div>
+        <div class="market-mini">
+          <i class="coin eth">◆</i><span><small>Ethereum</small><b id="eth-price">Loading…</b></span><em id="eth-change">—</em>
+        </div>
+        <div class="market-status"><i></i><b id="market-status">Checking…</b><span id="market-note">US session</span></div>
+      </aside>
+
+      <div class="hero-mantra">TECHNOLOGY<br>INVESTMENTS <span>→</span><br>A BRIGHTER<br>TOMORROW</div>
+      <a href="#about" class="hero-scroll"><b>↓</b><span>SCROLL TO EXPLORE</span></a>
+    </section>
+
+    <!-- FOUR FEATURE CARDS -->
+    <section class="feature-rail">
+      <article><span>01</span><h3>TECHNOLOGY</h3><p>Solving real problems</p></article>
+      <article><span>02</span><h3>INVESTMENTS</h3><p>Backing the future</p></article>
+      <article><span>03</span><h3>ENTREPRENEURSHIP</h3><p>Turning ideas into impact</p></article>
+      <article><span>04</span><h3>A BRIGHTER TOMORROW</h3><p>Progress through innovation</p></article>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about-cinema">
+      <div class="section-number">01 / ABOUT</div>
+      <div class="about-title">
+        <p class="micro">WHO I AM</p>
+        <h2>CURIOUS BY<br><span>DEFAULT.</span></h2>
+      </div>
+      <div class="about-copy">
+        <p>I'm Moheen Mahmood, based in London. I'm interested in the way technology changes how we work, communicate, invest and build businesses.</p>
+        <p>I enjoy discovering companies, understanding markets, following emerging technologies and connecting ideas across industries. The goal is simple: keep learning, keep building and keep looking forward.</p>
+      </div>
+      <div class="about-metrics">
+        <div><b>01</b><strong>STAY CURIOUS</strong><span>Ask better questions.</span></div>
+        <div><b>02</b><strong>THINK LONG TERM</strong><span>Look beyond the noise.</span></div>
+        <div><b>03</b><strong>MAKE IT USEFUL</strong><span>Turn ideas into action.</span></div>
       </div>
     </section>
 
-    <section class="ticker" aria-label="Capabilities">
-      <div>DESIGN</div><div>DEVELOPMENT</div><div>BRANDING</div><div>UI/UX</div><div>STRATEGY</div><div>CREATIVE</div>
-    </section>
-
-    <section id="work" class="section work">
+    <!-- INTERESTS -->
+    <section id="interests" class="section focus-section">
       <div class="section-head">
-        <div>
-          <div class="eyebrow">SELECTED WORK</div>
-          <h2>A few things I've built.</h2>
+        <div><p class="micro">02 / FOCUS</p><h2>WHAT KEEPS<br><span>ME THINKING.</span></h2></div>
+        <p>The subjects I keep returning to — because each one says something about where the future may be heading.</p>
+      </div>
+      <div class="focus-grid">
+        <article><span>01</span><div class="focus-orb purple"></div><h3>ARTIFICIAL INTELLIGENCE</h3><p>Products, productivity and the economics of intelligent systems.</p></article>
+        <article><span>02</span><div class="focus-orb orange"></div><h3>INVESTING & MARKETS</h3><p>Businesses, capital, conviction and long-term value creation.</p></article>
+        <article><span>03</span><div class="focus-orb cyan"></div><h3>STARTUPS</h3><p>The people and decisions that turn a small idea into something bigger.</p></article>
+        <article><span>04</span><div class="focus-orb lime"></div><h3>FUTURE TECHNOLOGY</h3><p>Platforms, infrastructure and technologies defining the next decade.</p></article>
+      </div>
+    </section>
+
+    <!-- MARKETS + TECH LIVE HUB -->
+    <section id="markets" class="section live-hub">
+      <div class="section-head">
+        <div><p class="micro"><i class="online"></i> 03 / LIVE HUB</p><h2>WHAT'S MOVING<br><span>RIGHT NOW.</span></h2></div>
+        <p>A live corner of the site for markets and technology. Data refreshes automatically while you browse.</p>
+      </div>
+
+      <div class="hub-grid">
+        <article class="terminal-card">
+          <div class="terminal-head"><span>MOHEEN / MARKET WATCH</span><b>LIVE ●</b></div>
+          <div class="terminal-row"><div><i class="coin btc">₿</i><span>BITCOIN<small>BTC / GBP</small></span></div><strong id="hub-btc">—</strong><em id="hub-btc-change">—</em></div>
+          <div class="terminal-row"><div><i class="coin eth">◆</i><span>ETHEREUM<small>ETH / GBP</small></span></div><strong id="hub-eth">—</strong><em id="hub-eth-change">—</em></div>
+          <div class="terminal-row"><div><i class="coin index">US</i><span>US SESSION<small>NEW YORK</small></span></div><strong id="hub-us-status">—</strong><em id="hub-us-time">—</em></div>
+          <p class="disclaimer">Market data is informational only and may be delayed. Nothing here is investment advice.</p>
+        </article>
+
+        <article id="tech" class="terminal-card tech-terminal">
+          <div class="terminal-head"><span>TECH / PULSE</span><b>AUTO REFRESH ●</b></div>
+          <div id="tech-feed" class="tech-feed"><p class="loading">Scanning the network for technology stories…</p></div>
+          <p class="disclaimer">Public technology stories open at the original source.</p>
+        </article>
+      </div>
+
+      <article class="github-terminal">
+        <div class="github-copy">
+          <p class="micro">GITHUB / PUBLIC ACTIVITY</p>
+          <h3>WHAT I'M<br><span>BUILDING.</span></h3>
+          <p id="github-status">Recent public activity from @slime786.</p>
+          <a href="https://github.com/slime786" target="_blank" rel="noopener" class="terminal-link">OPEN GITHUB ↗</a>
         </div>
-        <span class="muted">01 — 04</span>
-      </div>
-
-      <div class="projects">
-        <article class="project">
-          <div class="project-image image-one"><span>01</span></div>
-          <div class="project-meta"><div><h3>Project One</h3><p>Brand / Web / Development</p></div><span>↗</span></div>
-        </article>
-        <article class="project">
-          <div class="project-image image-two"><span>02</span></div>
-          <div class="project-meta"><div><h3>Project Two</h3><p>Product / UI / UX</p></div><span>↗</span></div>
-        </article>
-        <article class="project">
-          <div class="project-image image-three"><span>03</span></div>
-          <div class="project-meta"><div><h3>Project Three</h3><p>Website / Creative Direction</p></div><span>↗</span></div>
-        </article>
-        <article class="project">
-          <div class="project-image image-four"><span>04</span></div>
-          <div class="project-meta"><div><h3>Project Four</h3><p>App / Development / Strategy</p></div><span>↗</span></div>
-        </article>
-      </div>
+        <div id="github-feed" class="github-feed"><p class="loading">Connecting to GitHub…</p></div>
+      </article>
     </section>
 
-    <section id="about" class="section about">
-      <div class="eyebrow">ABOUT</div>
-      <div class="about-grid">
-        <h2>Good work sits somewhere between <em>clarity</em> and curiosity.</h2>
-        <div>
-          <p>I care about the details people notice and the ones they don't. My approach combines thoughtful design, strong technology and a practical focus on outcomes.</p>
-          <p>Whether it's a personal brand, a startup, a portfolio or a digital product, I like making things feel simple, distinctive and considered.</p>
-          <a class="text-link" href="#contact">More about me ↗</a>
+    <!-- CINEMATIC STORY -->
+    <section class="story-section">
+      <div class="story-media"><img src="cosmic-story.jpg" alt="Cinematic astronaut view of Earth"></div>
+      <div class="story-copy">
+        <p class="micro">04 / POINT OF VIEW</p>
+        <h2>LOOK<br>FURTHER.</h2>
+        <blockquote>“The best opportunities often sit at the intersection of curiosity, technology and conviction.”</blockquote>
+        <div class="story-list">
+          <div><span>01</span><p>Technology compounds.</p></div>
+          <div><span>02</span><p>Capital tells a story.</p></div>
+          <div><span>03</span><p>Curiosity is an edge.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="skills" class="section capabilities">
-      <div class="eyebrow">WHAT I DO</div>
-      <div class="capability-list">
-        <div><span>01</span><h3>Web Design</h3><p>Modern, responsive interfaces with a strong visual point of view.</p></div>
-        <div><span>02</span><h3>Development</h3><p>Fast, accessible websites built with clean, maintainable code.</p></div>
-        <div><span>03</span><h3>Brand & Identity</h3><p>Visual systems that make a person or business recognisable.</p></div>
-        <div><span>04</span><h3>Creative Strategy</h3><p>Turning vague ideas into clear digital stories and experiences.</p></div>
+    <!-- ROCKET GAME -->
+    <section id="game" class="section game-section">
+      <div class="game-heading">
+        <div><p class="micro magenta-line">05 / PLAY</p><h2>LAUNCH<br>AND EXPLORE.</h2></div>
+        <div>
+          <p>A small game, a big universe. Use arrow keys to steer and Space to boost. Dodge asteroids, collect energy cores and survive.</p>
+          <button id="start-game-top" class="play-pill">PLAY GAME <span>→</span></button>
+        </div>
+      </div>
+
+      <div id="rocket-game" class="game-shell" tabindex="0" aria-label="Playable rocket game">
+        <div class="game-bg"></div>
+        <div class="game-nebula"></div>
+        <div class="game-stars"></div>
+
+        <div class="game-hud">
+          <div>SCORE <strong id="rocket-score">0000</strong></div>
+          <div class="hud-centre">ENERGY <span class="energy-bar"><i id="energy-fill"></i></span></div>
+          <div>LIVES <span id="rocket-lives">♥ ♥ ♥</span></div>
+        </div>
+
+        <div class="best-score">BEST <strong id="rocket-best">0000</strong></div>
+        <div id="game-objects"></div>
+
+        <div id="rocket" class="rocket-pro">
+          <div class="wing wing-l"></div><div class="wing wing-r"></div>
+          <div class="rocket-body"><i class="cockpit"></i><i class="body-light"></i></div>
+          <div class="thruster t1"></div><div class="thruster t2"></div><div class="thruster-glow"></div>
+        </div>
+
+        <div id="game-message" class="game-message">
+          <p class="micro">FLIGHT SYSTEMS READY</p>
+          <h3>READY FOR<br>LAUNCH?</h3>
+          <span>← → STEER &nbsp; · &nbsp; SPACE BOOSTS</span>
+          <button id="start-game" type="button">INITIATE LAUNCH <b>→</b></button>
+        </div>
+
+        <div class="game-controls">
+          <span>CONTROLS</span>
+          <div><button data-key="ArrowLeft">←</button><button data-key="ArrowUp">↑</button><button data-key="ArrowRight">→</button></div>
+          <button data-key="Space" class="boost-btn">SPACE / BOOST</button>
+        </div>
+      </div>
+
+      <div class="game-stats">
+        <div><small>HIGH SCORE</small><strong id="stat-best">0000</strong></div>
+        <div><small>LAST SCORE</small><strong id="stat-last">0000</strong></div>
+        <div class="game-mantra">EXPLORE<br><span>PUSH</span><br>IMPROVE<br>REPEAT.</div>
       </div>
     </section>
 
-    <section class="statement">
-      <p>“The goal isn't to make something look good. It's to make it <em>matter.</em>”</p>
+    <!-- COLOUR STRIP -->
+    <section class="colour-strip">
+      <div class="violet"><span>TECHNOLOGY</span><b>BUILD WHAT'S NEXT.</b></div>
+      <div class="orange"><span>INVESTMENTS</span><b>THINK LONG TERM.</b></div>
+      <div class="cyan"><span>CURIOSITY</span><b>KEEP LOOKING.</b></div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="section contact">
-      <div class="eyebrow">GET IN TOUCH</div>
-      <h2>Have an idea?<br><em>Let's make it real.</em></h2>
-      <a class="email" href="mailto:hello@example.com">hello@example.com ↗</a>
-      <div class="contact-row">
-        <span>Available for freelance & selected projects</span>
-        <div><a href="#">LinkedIn</a><a href="#">GitHub</a><a href="#">Instagram</a></div>
+      <div class="contact-title"><p class="micro">06 / CONTACT</p><h2>LET'S START<br><span>A CONVERSATION.</span></h2></div>
+      <div class="contact-side">
+        <p>Have an idea, an interesting opportunity, or simply want to connect? I'd be happy to hear from you.</p>
+        <a class="email-link" href="mailto:moheenmahmood@hotmail.co.uk">moheenmahmood@hotmail.co.uk <span>↗</span></a>
+        <div class="socials">
+          <a href="mailto:moheenmahmood@hotmail.co.uk?subject=Hello%20Moheen">EMAIL ↗</a>
+          <a href="https://wa.me/447848390059" target="_blank" rel="noopener">WHATSAPP ↗</a>
+          <a href="https://www.instagram.com/slime786/" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+          <a href="https://github.com/slime786" target="_blank" rel="noopener">GITHUB ↗</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <span>© 2026 YOUR NAME</span>
-    <span>Built with HTML, CSS & JavaScript</span>
-    <a href="#top">Back to top ↑</a>
+    <span>© 2026 MOHEEN MAHMOOD</span>
+    <span>LONDON, UK · BUILT FOR THE CURIOUS</span>
+    <a href="#cinematic-intro">BACK TO ORBIT ↑</a>
+    <button id="easter-trigger" aria-label="Hidden message">✦</button>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
