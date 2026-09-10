@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Moheen Mahmood — London-based portfolio exploring technology, investments and ideas.">
+<meta name="theme-color" content="#06101a">
+<title>Moheen Mahmood — Technology, Markets & Ideas</title>
+
+<meta property="og:title" content="Moheen Mahmood — Technology, Markets & Ideas">
+<meta property="og:description" content="London-based personal portfolio exploring technology, investing, markets, entrepreneurship and ideas.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index,follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="cursor-dot"></div><div class="cursor-ring"></div>
+
+<header class="nav" id="top">
+  <a class="brand" href="#top">Moheen Mahmood</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#now">Now</a>
+    <a href="#markets">Markets</a>
+    <a href="market-radar.html">Radar</a>
+    <a href="#tech">Technology</a>
+    <a href="#weekly">Weekly</a>
+    <a href="#ideas">Ideas</a>
+    <a href="journal/index.html">Journal</a>
+    <a href="#github">GitHub</a>
+    <a href="#projects">Projects</a>
+    <a href="#observatory">Observatory</a>
+    <a href="#game">Game</a>
+    <a href="#contact">Contact</a>
+  <button class="command-trigger" id="command-trigger" aria-label="Open command search"><span>⌘</span> K</button></nav>
+  <a class="connect" href="#contact">Let's Connect</a>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">IDEAS · INVESTMENTS · IMPACT.</p>
+    <h1>Moheen<br>Mahmood</h1>
+    <p class="hero-text">Exploring technology, global markets and bold ideas to create a smarter, more innovative tomorrow.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#about">Explore My Work →</a>
+      <a class="btn" href="#about">About Me</a>
+    </div>
+  </div>
+
+  <aside class="live-panel" id="markets">
+    <div class="market-item">
+      <span class="coin btc">₿</span>
+      <div><small>Bitcoin (BTC)</small><strong id="btc">Loading…</strong><em id="btc-change">—</em></div>
+    </div>
+    <div class="market-item">
+      <span class="coin eth">◆</span>
+      <div><small>Ethereum (ETH)</small><strong id="eth">Loading…</strong><em id="eth-change">—</em></div>
+    </div>
+    <div class="market-item london">
+      <span class="flag">🇬🇧</span>
+      <div><small>London, UK</small><strong id="clock">--:--:--</strong><em id="date">Loading…</em></div>
+    </div>
+  </aside>
+</section>
+
+<section class="quick-cards">
+  <article><h3>Investments</h3><p>Markets, opportunities and long-term thinking.</p><a href="#markets">Explore →</a></article>
+  <article id="tech"><h3>Technology Pulse</h3><p>AI, innovation and the future of our world.</p><a href="#tech-feed">Explore →</a></article>
+  <article id="github"><h3>GitHub Activity</h3><p>Building, learning and shipping ideas.</p><a href="https://github.com/slime786" target="_blank" rel="noopener">View GitHub →</a></article>
+  <article><h3>Rocket Game</h3><p>Play the space game and reach new heights.</p><a href="#game">Launch →</a></article>
+  <article><h3>Contact</h3><p>Let's connect and build the future.</p><a href="#contact">Get in Touch →</a></article>
+</section>
+
+<section id="about" class="section about">
+  <div>
+    <p class="eyebrow">ABOUT ME</p>
+    <h2>Curious about where<br>technology and capital meet.</h2>
+  </div>
+  <div class="about-copy">
+    <p>I'm Moheen Mahmood, based in London. My interests sit across technology, investing, entrepreneurship and the ideas shaping the next decade.</p>
+    <p>I enjoy understanding businesses, following emerging technologies, learning from markets and thinking about the connections between innovation, capital and long-term opportunity.</p>
+  </div>
+</section>
+
+
+<section id="now" class="section now-section">
+  <div class="section-title split-title">
+    <div>
+      <p class="eyebrow">NOW / CURRENTLY</p>
+      <h2>What has my<br>attention right now.</h2>
+    </div>
+    <p class="section-intro">A living snapshot of the themes I keep coming back to — updated as my interests evolve.</p>
+  </div>
+
+  <div class="now-grid">
+    <article>
+      <span>01</span>
+      <h3>Artificial Intelligence</h3>
+      <p>Following how AI changes software, work, productivity and the economics of building digital products.</p>
+      <b>LEARNING →</b>
+    </article>
+    <article>
+      <span>02</span>
+      <h3>Markets & Businesses</h3>
+      <p>Understanding companies, incentives, capital allocation and the difference between short-term noise and long-term value.</p>
+      <b>RESEARCHING →</b>
+    </article>
+    <article>
+      <span>03</span>
+      <h3>Building on the Web</h3>
+      <p>Turning ideas into interactive digital experiences — including this portfolio and the experiments inside it.</p>
+      <b>BUILDING →</b>
+    </article>
+  </div>
+</section>
+
+<section class="section data-section">
+  <div class="section-title">
+    <p class="eyebrow">LIVE INFORMATION</p>
+    <h2>Markets & Technology</h2>
+  </div>
+  <div class="data-grid">
+    <div class="market-box">
+      <h3>Market Watch</h3>
+      <div class="row"><span>Bitcoin</span><strong id="btc2">—</strong></div>
+      <div class="row"><span>Ethereum</span><strong id="eth2">—</strong></div>
+      <div class="row"><span>US Market</span><strong id="us-status">Checking…</strong></div>
+      <p class="fine">Informational only. External market data can be delayed.</p>
+    </div>
+    <div class="news-box" id="tech-feed">
+      <h3>Technology Pulse</h3>
+      <div id="news">Loading the latest technology stories…</div>
+    </div>
+  </div>
+
+<div class="watchlist-box">
+  <div class="watchlist-head">
+    <div><p class="eyebrow">PERSONAL WATCHLIST</p><h3>Signals I like to watch.</h3></div>
+    <span class="live-badge"><i></i> LIVE / INDICATIVE</span>
+  </div>
+  <div class="watchlist-grid">
+    <div><small>BTC / GBP</small><strong id="watch-btc">—</strong><span id="watch-btc-change">—</span></div>
+    <div><small>ETH / GBP</small><strong id="watch-eth">—</strong><span id="watch-eth-change">—</span></div>
+    <div><small>US SESSION</small><strong id="watch-us">—</strong><span>NEW YORK</span></div>
+    <div><small>LONDON</small><strong id="watch-time">—</strong><span>LOCAL TIME</span></div>
+  </div>
+  <p class="fine">A lightweight personal dashboard for context, not financial advice. External data can be delayed or unavailable.</p>
+<a class="radar-launch" href="market-radar.html">LAUNCH MARKET RADAR ↗</a>
+</div>
+
+</section>
+
+
+<section id="weekly" class="section weekly-section">
+  <div class="weekly-head">
+    <div><p class="eyebrow">WEEKLY BRIEF / AUTOMATIC EDITION</p><h2>This week in<br>technology.</h2></div>
+    <div class="edition"><small>CURRENT EDITION</small><strong id="weekly-edition">—</strong><span id="weekly-date">—</span></div>
+  </div>
+  <div class="weekly-grid">
+    <article class="weekly-lead">
+      <span>LIVE CURATION</span>
+      <h3 id="weekly-title">Loading this week’s technology brief…</h3>
+      <p id="weekly-summary">The page builds a fresh weekly reading list from the current technology feed. It refreshes automatically when visitors return.</p>
+      <div id="weekly-stories" class="weekly-stories"></div>
+    </article>
+    <aside class="weekly-side">
+      <p class="eyebrow">MOHEEN'S LENS</p>
+      <h3>What I’m looking for.</h3>
+      <ul>
+        <li>Where AI is becoming useful infrastructure.</li>
+        <li>Businesses with durable technology advantages.</li>
+        <li>Changes in compute, chips, energy and software.</li>
+        <li>Ideas that connect innovation with long-term value.</li>
+      </ul>
+      <a href="articles/weekly-notes.html">Read my weekly lens ↗</a>
+    </aside>
+  </div>
+  <p class="weekly-disclaimer">The live reading list is automatically assembled from public technology stories and is not written or endorsed by Moheen. My authored notes remain separate below.</p>
+</section>
+<section id="ideas" class="section ideas-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">IDEAS / JOURNAL</p><h2>Notes on what<br>I’m thinking about.</h2></div>
+    <p class="section-intro">Short-form thinking rather than formal essays — ideas, questions and themes worth revisiting.</p>
+  </div>
+
+  <div class="ideas-grid">
+    <article class="idea-card featured">
+      <span class="idea-no">01</span>
+      <p class="idea-tag">AI / PRODUCTS</p>
+      <h3>AI is becoming an interface, not just a feature.</h3>
+      <p>The interesting shift is not only what models can do, but how naturally intelligence becomes part of everyday software.</p>
+      <a href="articles/ai-interface.html">Read note ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">02</span>
+      <p class="idea-tag">INVESTING</p>
+      <h3>Good businesses make complexity look simple.</h3>
+      <p>I’m interested in companies where strong products, distribution and execution compound over long periods.</p>
+      <a href="articles/good-businesses.html">Read note ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">03</span>
+      <p class="idea-tag">TECHNOLOGY</p>
+      <h3>Infrastructure becomes interesting before it becomes obvious.</h3>
+      <p>The tools behind a platform shift can be as important as the applications everyone notices first.</p>
+      <a href="articles/infrastructure.html">Read note ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">04</span>
+      <p class="idea-tag">BUILDING</p>
+      <h3>A portfolio should feel alive.</h3>
+      <p>This website is an experiment in turning a personal page into a living command centre: data, ideas, code and play in one place.</p>
+      <a href="articles/living-portfolio.html">Read note ↗</a>
+    </article>
+  </div>
+<div class="section-end-cta"><a class="btn secondary" href="journal/index.html">OPEN FULL JOURNAL ↗</a></div>
+</section>
+
+<section class="astronaut-section">
+  <img src="astronaut-clean-hd.jpg" alt="Astronaut overlooking Earth">
+  <div class="astro-copy">
+    <p class="eyebrow">POINT OF VIEW</p>
+    <h2>EXPLORE.<br>PUSH.<br>IMPROVE.<br>REPEAT.</h2>
+    <p>Keep moving forward. Keep learning. Keep looking at what others might miss.</p>
+  </div>
+</section>
+
+
+<section id="projects" class="section projects-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">PROJECTS / BUILT HERE</p><h2>Real experiments,<br>running on this site.</h2></div>
+    <p class="section-intro">These are not placeholder client projects. They are working modules I have built into this portfolio and can keep developing in public.</p>
+  </div>
+  <div class="projects-grid">
+    <article class="project-card">
+      <div class="project-visual project-market"><span>PROJECT 01 / LIVE</span><b>MARKET<br>COMMAND</b></div>
+      <div class="project-copy"><p>JAVASCRIPT / API / DATA UI</p><h3>Market Command Centre</h3><span>Live Bitcoin and Ethereum pricing, London time and US-session context presented as a compact personal market dashboard.</span><a href="#markets">Use project ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-space"><span>PROJECT 02 / PLAYABLE</span><b>ORBIT<br>RUNNER</b></div>
+      <div class="project-copy"><p>JAVASCRIPT / GAME LOGIC / UI</p><h3>Orbit Runner</h3><span>A keyboard-controlled browser game with collision detection, increasing difficulty, lives and persistent local high scores.</span><a href="#game">Play project ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-code"><span>PROJECT 03 / PUBLIC</span><b>DEV<br>RADAR</b></div>
+      <div class="project-copy"><p>GITHUB / API / ACTIVITY</p><h3>Developer Radar</h3><span>A live window into my public GitHub work at @slime786, connecting the portfolio to what I am actually building.</span><a href="https://github.com/slime786" target="_blank" rel="noopener">View source ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-observe"><span>PROJECT 04 / COMMUNITY</span><b>THE<br>OBSERVATORY</b></div>
+      <div class="project-copy"><p>PUBLISHING / INTERACTION</p><h3>The Observatory</h3><span>A lightweight community experiment for open questions, reactions, signals and discussion around technology and markets.</span><a href="#observatory">Enter project ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-pulse"><span>PROJECT 05 / LIVE</span><b>TECH<br>PULSE</b></div>
+      <div class="project-copy"><p>API / NEWS / CURATION</p><h3>Technology Pulse</h3><span>A continuously refreshed technology feed that brings current stories into the command centre without turning the site into a news clone.</span><a href="#tech-feed">Open feed ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-journal"><span>PROJECT 06 / PUBLISHING</span><b>IDEAS<br>LOG</b></div>
+      <div class="project-copy"><p>WRITING / STATIC WEB</p><h3>Ideas Log</h3><span>A growing collection of short notes about AI, infrastructure, businesses, investing and building on the web.</span><a href="#ideas">Read notes ↗</a></div>
+    </article>
+  </div>
+</section>
+
+<section id="game" class="section game-section">
+  <div class="section-title">
+    <p class="eyebrow">PLAY</p>
+    <h2>Launch and Explore</h2>
+    <p>Arrow keys steer. Space boosts. Dodge asteroids, collect energy and beat your best score.</p>
+  </div>
+  <div class="game-shell" tabindex="0" id="game-shell">
+    <div class="game-bg"></div>
+    <div class="hud"><span>SCORE <b id="score">0000</b></span><span>LIVES <b id="lives">♥ ♥ ♥</b></span></div>
+    <div id="objects"></div>
+    <div class="rocket" id="rocket"><i></i><span></span></div>
+    <div class="game-message" id="game-message">
+      <h3>Ready for launch?</h3>
+      <p>← → steer · Space boosts</p>
+      <button id="launch">Play Game →</button>
+    </div>
+  </div>
+  <div class="score-row"><div><small>High Score</small><strong id="best">0000</strong></div><div><small>Last Score</small><strong id="last">0000</strong></div></div>
+</section>
+
+
+
+<section id="observatory" class="section observatory-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">THE OBSERVATORY / COMMUNITY</p><h2>Ideas are better<br>when challenged.</h2></div>
+    <p class="section-intro">A lightweight community layer for questions about technology, markets and the future — without turning the site into an empty traditional forum.</p>
+  </div>
+  <div class="observatory-layout">
+    <article class="open-question">
+      <div class="question-top"><span class="live-badge"><i></i> OPEN QUESTION</span><span>Q / 001</span></div>
+      <p class="question-topic">AI / NEXT 10 YEARS</p>
+      <h3>What part of today’s AI boom will still matter in 2036?</h3>
+      <p>Models, chips, energy, data, interfaces, robotics — or something we are underestimating?</p>
+      <div class="signal-votes" data-poll="ai2036">
+        <button data-choice="models">Models <b>0</b></button>
+        <button data-choice="chips">Chips <b>0</b></button>
+        <button data-choice="energy">Energy <b>0</b></button>
+        <button data-choice="robotics">Robotics <b>0</b></button>
+      </div>
+      <p class="local-note">Reactions are stored on this device only. The site does not collect personal data for this poll.</p>
+      <a class="btn secondary" href="mailto:moheenmahmood@hotmail.co.uk?subject=The%20Observatory%20%E2%80%94%20AI%20in%202036&body=My%20take%3A%20">Send me your take ↗</a>
+    </article>
+    <aside class="observatory-side">
+      <div class="signal-card"><span>THE SIGNAL</span><h3>Short notes. Useful links. Things worth watching.</h3><p>A publishing format for observations that are too small for an essay but too interesting to lose.</p><a href="#ideas">Read current notes ↑</a></div>
+      <div class="signal-card"><span>CONTRIBUTE</span><h3>See something I should be watching?</h3><p>Send an article, company, technology or idea. The best suggestions can become future Observatory questions.</p><a href="mailto:moheenmahmood@hotmail.co.uk?subject=Signal%20for%20Moheen&body=Thought%20you%20might%20find%20this%20interesting%3A%20">Send a signal ↗</a></div>
+    </aside>
+  </div>
+</section>
+<section class="section subscribe-section">
+  <div class="subscribe-inner">
+    <div><p class="eyebrow">TRANSMISSION / UPDATES</p><h2>Stay in the loop.</h2><p>Occasional notes on technology, markets, things I’m building and ideas worth revisiting. Until a mailing service is connected, this opens a real email subscription request rather than pretending to collect an address.</p></div>
+    <a class="btn primary subscribe-btn" href="mailto:moheenmahmood@hotmail.co.uk?subject=Subscribe%20me%20to%20Moheen%27s%20updates&body=Hi%20Moheen%2C%0A%0APlease%20add%20me%20to%20your%20future%20updates.%0A">Request updates ↗</a>
+  </div>
+</section>
+
+<section class="section timeline-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">PERSONAL TIMELINE</p><h2>A simple<br>through-line.</h2></div>
+    <p class="section-intro">Not a résumé — just the themes that define the direction of this site and what I want to keep exploring.</p>
+  </div>
+  <div class="timeline">
+    <div><span>01</span><h3>London</h3><p>Home base — a global city where technology, capital and culture constantly overlap.</p></div>
+    <div><span>02</span><h3>Technology</h3><p>A long-term curiosity about software, AI, digital products and the infrastructure behind them.</p></div>
+    <div><span>03</span><h3>Investing</h3><p>An interest in businesses, markets, capital allocation and thinking beyond short-term headlines.</p></div>
+    <div><span>04</span><h3>Building</h3><p>Turning those interests into projects, experiments, research and digital experiences.</p></div>
+  </div>
+</section>
+
+<section id="contact" class="section contact">
+  <div><p class="eyebrow">CONTACT</p><h2>Let's connect and build the future.</h2></div>
+  <div class="contact-side">
+    <a class="email" href="mailto:moheenmahmood@hotmail.co.uk">moheenmahmood@hotmail.co.uk</a>
+    <div class="socials">
+      <a href="mailto:moheenmahmood@hotmail.co.uk?subject=Hello%20Moheen">Email ↗</a>
+      <a href="https://wa.me/447848390059" target="_blank" rel="noopener">WhatsApp ↗</a>
+      <a href="https://www.instagram.com/slime786/" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="https://github.com/slime786" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+<div class="contact-form-wrap">
+  <p class="eyebrow">DIRECT MESSAGE</p>
+  <form id="contact-form" class="contact-form">
+    <label><span>Name</span><input id="cf-name" type="text" autocomplete="name" required placeholder="Your name"></label>
+    <label><span>Email</span><input id="cf-email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+    <label class="full"><span>Subject</span><input id="cf-subject" type="text" required placeholder="What would you like to discuss?"></label>
+    <label class="full"><span>Message</span><textarea id="cf-message" rows="5" required placeholder="Tell me a little more..."></textarea></label>
+    <div class="full form-actions"><button class="btn primary" type="submit">Open email draft ↗</button><small>No form data is uploaded by this website. Submitting opens your email app with the message pre-filled.</small></div>
+  </form>
+</div>
+
+</section>
+</main>
+
+<footer><span>© 2026 Moheen Mahmood</span><span>London, UK</span><a href="#top">Back to top ↑</a></footer>
+<script src="script.js"></script>
+
+<div class="command-palette" id="command-palette" aria-hidden="true">
+  <div class="command-backdrop" data-command-close></div>
+  <div class="command-box" role="dialog" aria-modal="true" aria-label="Command Centre Search">
+    <div class="command-input-row"><span>⌘</span><input id="command-input" type="search" autocomplete="off" placeholder="Search the command centre…"><kbd>ESC</kbd></div>
+    <div class="command-results" id="command-results"></div>
+    <div class="command-foot"><span>↑ ↓ Navigate</span><span>Enter Open</span><span>Esc Close</span></div>
+  </div>
+</div>
+
+</body>
+</html>

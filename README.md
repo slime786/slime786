@@ -1,15 +1,29 @@
-# Moheen Mahmood — V7.1 Projects + Weekly Edition
+# Moheen Mahmood — V8 Radar + Journal + Command Search
 
-Adds six genuine projects based on working parts of the portfolio:
-1. Market Command Centre
-2. Orbit Runner
-3. Developer Radar
-4. The Observatory
-5. Technology Pulse
-6. Ideas Log
+This release focuses on depth rather than adding more homepage decoration.
 
-Also adds an **Automatic Weekly Brief**. The week number/date update automatically and the reading list refreshes from the public Hacker News API whenever visitors load the site.
+## New
+- **Market Radar** standalone project (`market-radar.html`)
+  - live BTC/ETH GBP prices
+  - London and New York market-session status
+  - technology research map
+  - research principles and clear investment disclaimer
+- **Full Journal** (`journal/`)
+  - searchable/filterable journal index
+  - existing notes plus three new editorial drafts
+  - new drafts are clearly marked for Moheen's review before treating them as approved personal writing
+- **Command Search**
+  - click the `⌘ K` control or press Ctrl+K / Cmd+K
+  - navigate projects, sections and articles quickly
+- Existing V7.1 weekly brief, Observatory, game, GitHub, live data and contact features remain.
 
-Important: the automatically changing stories are clearly labelled as live curation, not as articles personally written by Moheen. Authored journal notes remain separate. A new authored living note, `articles/weekly-notes.html`, explains Moheen's technology-reading lens.
+## Upload
+Upload everything to the root of `main`, preserving both the `articles` and `journal` folders.
 
-Upload everything in this ZIP to the root of `main`, preserving the `articles` folder.
+## Editorial workflow
+The three new journal drafts are:
+- Why I keep coming back to AI infrastructure
+- Market noise versus business progress
+- Agents and the next interface shift
+
+Review/edit them first. Each currently contains an editorial note making that status explicit.

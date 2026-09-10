@@ -95,3 +95,41 @@ async function weeklyBrief(){
   }
 }
 weeklyBrief();
+
+// V8 Market Radar
+(function(){
+ const clock=document.getElementById('radar-clock');
+ if(clock){
+   const tick=()=>{const d=new Date();clock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(d);document.getElementById('radar-date').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'short',day:'numeric',month:'short',year:'numeric'}).format(d).toUpperCase();
+   const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d),o=Object.fromEntries(parts.map(p=>[p.type,p.value])),mins=Number(o.hour)*60+Number(o.minute),wd=!['Sat','Sun'].includes(o.weekday);document.getElementById('radar-london').textContent=wd&&mins>=480&&mins<990?'OPEN':'CLOSED';
+   const ny=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d).map(p=>[p.type,p.value])),nm=Number(ny.hour)*60+Number(ny.minute),nwd=!['Sat','Sun'].includes(ny.weekday);document.getElementById('radar-us').textContent=nwd&&nm>=570&&nm<960?'OPEN':'CLOSED';};tick();setInterval(tick,1000);
+   fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=gbp&include_24hr_change=true').then(r=>r.json()).then(d=>{const f=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:n>100?0:2}).format(n);document.getElementById('radar-btc').textContent=f(d.bitcoin.gbp);document.getElementById('radar-eth').textContent=f(d.ethereum.gbp);document.getElementById('radar-btc-c').textContent=`${d.bitcoin.gbp_24h_change>=0?'+':''}${d.bitcoin.gbp_24h_change.toFixed(2)}% / 24H`;document.getElementById('radar-eth-c').textContent=`${d.ethereum.gbp_24h_change>=0?'+':''}${d.ethereum.gbp_24h_change.toFixed(2)}% / 24H`;}).catch(()=>{});
+ }
+})();
+
+// V8 Journal search/filter
+(function(){
+ const input=document.getElementById('journal-search'); if(!input)return;
+ const cards=[...document.querySelectorAll('.journal-card')],buttons=[...document.querySelectorAll('.journal-tools button')];let filter='all';
+ const apply=()=>{const q=input.value.toLowerCase().trim();cards.forEach(c=>{const text=c.dataset.search.toLowerCase(),okF=filter==='all'||text.includes(filter.toLowerCase()),okQ=!q||text.includes(q);c.style.display=okF&&okQ?'flex':'none';});};
+ input.addEventListener('input',apply);buttons.forEach(b=>b.addEventListener('click',()=>{buttons.forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;apply();}));
+})();
+
+// V8 Command Centre search
+(function(){
+ const trigger=document.getElementById('command-trigger'),palette=document.getElementById('command-palette');if(!trigger||!palette)return;
+ const input=palette.querySelector('#command-input'),results=palette.querySelector('#command-results');
+ const base=location.pathname.includes('/journal/')?'../':'';
+ const items=[
+  ['Home','Command Centre',base+'index.html'],['Market Radar','Project',base+'market-radar.html'],['Journal','Writing',base+'journal/index.html'],
+  ['Weekly Brief','Live',base+'index.html#weekly'],['The Observatory','Community',base+'index.html#observatory'],['Projects','Builds',base+'index.html#projects'],
+  ['Technology Pulse','Live',base+'index.html#tech-feed'],['Rocket Game','Play',base+'index.html#game'],['About Moheen','Profile',base+'index.html#about'],['Contact','Connect',base+'index.html#contact'],
+  ['AI is becoming an interface','Article',base+'articles/ai-interface.html'],['AI infrastructure','Article',base+'journal/ai-infrastructure.html'],['Market noise vs business progress','Article',base+'journal/market-noise.html'],['Agents and the next interface shift','Article',base+'journal/agents-interface.html']
+ ];let selected=0,visible=[];
+ const render=()=>{const q=input.value.toLowerCase();visible=items.filter(x=>(x[0]+' '+x[1]).toLowerCase().includes(q));selected=Math.min(selected,Math.max(0,visible.length-1));results.innerHTML=visible.map((x,i)=>`<a class="command-result ${i===selected?'selected':''}" href="${x[2]}"><span>${x[0]}</span><small>${x[1].toUpperCase()}</small></a>`).join('')||'<div class="command-result"><span>No results</span></div>';};
+ const open=()=>{palette.classList.add('open');palette.setAttribute('aria-hidden','false');input.value='';selected=0;render();setTimeout(()=>input.focus(),20)};
+ const close=()=>{palette.classList.remove('open');palette.setAttribute('aria-hidden','true')};
+ trigger.addEventListener('click',open);palette.querySelector('[data-command-close]').addEventListener('click',close);
+ document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open()}if(!palette.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowDown'){e.preventDefault();selected=Math.min(selected+1,visible.length-1);render()}if(e.key==='ArrowUp'){e.preventDefault();selected=Math.max(selected-1,0);render()}if(e.key==='Enter'&&visible[selected])location.href=visible[selected][2];});
+ input.addEventListener('input',()=>{selected=0;render()});
+})();

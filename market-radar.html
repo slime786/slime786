@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Moheen Mahmood's Market Radar — a personal technology and markets research dashboard.">
+<title>Market Radar — Moheen Mahmood</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><link rel="icon" href="favicon.svg">
+</head><body class="radar-page">
+<header class="radar-nav"><a href="index.html">MOHEEN MAHMOOD</a><div><a href="journal/index.html">Journal</a><a href="index.html#contact">Contact</a><button id="command-trigger" class="command-trigger"><span>⌘</span> K</button></div></header>
+<main>
+<section class="radar-hero">
+ <div><p class="eyebrow">PROJECT 01 / MARKET COMMAND</p><h1>MARKET<br>RADAR.</h1><p>A personal research interface for the markets, companies and technology themes I want to understand better.</p></div>
+ <div class="radar-clock"><small>LONDON / LOCAL</small><strong id="radar-clock">--:--:--</strong><span id="radar-date">—</span></div>
+</section>
+<section class="radar-strip">
+ <div><small>BTC / GBP</small><strong id="radar-btc">—</strong><span id="radar-btc-c">LIVE</span></div>
+ <div><small>ETH / GBP</small><strong id="radar-eth">—</strong><span id="radar-eth-c">LIVE</span></div>
+ <div><small>LONDON SESSION</small><strong id="radar-london">—</strong><span>08:00–16:30</span></div>
+ <div><small>NEW YORK SESSION</small><strong id="radar-us">—</strong><span>NYSE / NASDAQ</span></div>
+</section>
+<section class="radar-content">
+ <div class="radar-heading"><p class="eyebrow">RESEARCH MAP</p><h2>What I’m watching.</h2><p>This is a research list, not a portfolio or recommendation. It maps themes and businesses I find worth understanding.</p></div>
+ <div class="radar-themes">
+  <article><span>01 / AI</span><h3>Artificial Intelligence</h3><p>Models, agents, inference economics and the applications turning intelligence into useful products.</p><div class="ticker-row"><b>NVDA</b><b>MSFT</b><b>GOOGL</b><b>META</b></div></article>
+  <article><span>02 / COMPUTE</span><h3>Semiconductors</h3><p>Compute capacity, fabrication, lithography and the infrastructure behind increasingly demanding software.</p><div class="ticker-row"><b>NVDA</b><b>AMD</b><b>TSM</b><b>ASML</b></div></article>
+  <article><span>03 / INFRA</span><h3>Cloud & Infrastructure</h3><p>The platforms, networks and developer infrastructure that make modern digital products possible.</p><div class="ticker-row"><b>MSFT</b><b>AMZN</b><b>GOOGL</b><b>NET</b></div></article>
+  <article><span>04 / FRONTIER</span><h3>Robotics, Energy & Space</h3><p>Physical-world technologies where software meets machines, power constraints and new infrastructure.</p><div class="ticker-row"><b>ROBOTICS</b><b>ENERGY</b><b>SPACE</b></div></article>
+ </div>
+</section>
+<section class="radar-content radar-notes">
+ <div class="radar-heading"><p class="eyebrow">RESEARCH PRINCIPLES</p><h2>Questions before conclusions.</h2></div>
+ <div class="principle-grid"><div><span>01</span><h3>What is the customer actually buying?</h3></div><div><span>02</span><h3>What gets stronger as the business scales?</h3></div><div><span>03</span><h3>Is the constraint durable or temporary?</h3></div><div><span>04</span><h3>What would prove the thesis wrong?</h3></div></div>
+ <p class="radar-disclaimer">For personal research and educational context only. Nothing on this page is investment advice, a recommendation, or a statement that I own any security shown.</p>
+</section>
+</main>
+<footer class="radar-footer"><span>© 2026 Moheen Mahmood</span><a href="index.html">Return to Command Centre ↑</a></footer>
+<div class="command-palette" id="command-palette" aria-hidden="true"><div class="command-backdrop" data-command-close></div><div class="command-box" role="dialog" aria-modal="true"><div class="command-input-row"><span>⌘</span><input id="command-input" type="search" autocomplete="off" placeholder="Search the command centre…"><kbd>ESC</kbd></div><div class="command-results" id="command-results"></div><div class="command-foot"><span>↑ ↓ Navigate</span><span>Enter Open</span><span>Esc Close</span></div></div></div>
+<script src="script.js"></script></body></html>
