@@ -63,3 +63,35 @@ document.querySelectorAll('.signal-votes').forEach(group=>{
 });
 const cf=document.getElementById('contact-form');
 if(cf)cf.addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('cf-name').value.trim(),em=document.getElementById('cf-email').value.trim(),s=document.getElementById('cf-subject').value.trim(),m=document.getElementById('cf-message').value.trim(),body=`Hi Moheen,\n\n${m}\n\nFrom: ${n}\nEmail: ${em}`;location.href=`mailto:moheenmahmood@hotmail.co.uk?subject=${encodeURIComponent(s)}&body=${encodeURIComponent(body)}`});
+
+// V7.1 automatic weekly technology brief
+function isoWeekInfo(date=new Date()){
+  const d=new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate()));
+  const day=d.getUTCDay()||7; d.setUTCDate(d.getUTCDate()+4-day);
+  const yearStart=new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  const week=Math.ceil((((d-yearStart)/86400000)+1)/7);
+  return {year:d.getUTCFullYear(),week};
+}
+async function weeklyBrief(){
+  const ed=document.getElementById('weekly-edition'); if(!ed)return;
+  const info=isoWeekInfo(), dateEl=document.getElementById('weekly-date');
+  ed.textContent=`W${String(info.week).padStart(2,'0')} / ${info.year}`;
+  dateEl.textContent=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).format(new Date());
+  try{
+    const ids=await fetch('https://hacker-news.firebaseio.com/v0/topstories.json',{cache:'no-store'}).then(r=>r.json());
+    const items=await Promise.all(ids.slice(0,24).map(id=>fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r=>r.json())));
+    const tech=items.filter(x=>x&&x.title&&x.type==='story').slice(0,6);
+    document.getElementById('weekly-title').textContent=`Six technology stories on the radar — Week ${info.week}`;
+    document.getElementById('weekly-summary').textContent='A live weekly reading list for keeping the command centre current. New stories appear automatically as the source feed changes.';
+    document.getElementById('weekly-stories').innerHTML=tech.map((s,i)=>{
+      const u=s.url||`https://news.ycombinator.com/item?id=${s.id}`;
+      const host=(()=>{try{return new URL(u).hostname.replace('www.','')}catch{return 'news.ycombinator.com'}})();
+      const safe=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+      return `<div class="weekly-story"><span>0${i+1}</span><a href="${safe(u)}" target="_blank" rel="noopener">${safe(s.title)}</a><small>${safe(host)}</small></div>`;
+    }).join('');
+  }catch(e){
+    document.getElementById('weekly-title').textContent='Weekly brief temporarily offline.';
+    document.getElementById('weekly-summary').textContent='The live source could not be reached. My authored journal notes are still available below.';
+  }
+}
+weeklyBrief();
