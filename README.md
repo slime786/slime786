@@ -1,33 +1,12 @@
-# Moheen Mahmood — V6 Personal Command Centre
+# Moheen Mahmood — V7 Community & Publishing Edition
 
-V6 turns the cinematic portfolio into a more complete personal website.
+Chosen direction:
+- **The Observatory** rather than a traditional empty forum
+- Four real journal/article pages
+- A privacy-friendly local reaction poll
+- Email-based discussion and signal submissions
+- Honest email subscription request until a newsletter service is connected
+- Contact form that opens the visitor's email app with a pre-filled draft
 
-## New in V6
-- "Now / Currently" section
-- Personal live watchlist
-- Ideas / Journal section
-- Projects / Experiments section using real modules from the site
-- Public GitHub activity remains connected to @slime786
-- Personal timeline
-- Active navigation highlighting
-- SEO / Open Graph metadata
-- Favicon
-- Custom 404 page
-- Reduced-motion accessibility support
-- Existing cinematic design, live data, astronaut section, contact links and rocket game retained
-
-## Contact details
-- Email: moheenmahmood@hotmail.co.uk
-- WhatsApp: +44 7848 390059
-- Instagram: @slime786
-- GitHub: slime786
-
-## Upload to GitHub
-Upload all files in this ZIP to the root of the `main` branch.
-
-GitHub Pages should remain:
-- Source: Deploy from a branch
-- Branch: main
-- Folder: / (root)
-
-After deployment, hard refresh with Ctrl + F5.
+Upload everything in this ZIP to the root of `main`. Keep the `articles` folder intact.
+GitHub Pages remains `main` / `(root)`. After deployment, hard refresh with Ctrl + F5.

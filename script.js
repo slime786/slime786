@@ -46,3 +46,20 @@ const v6Reveal=new IntersectionObserver(entries=>{
 document.querySelectorAll('.now-grid article,.idea-card,.project-card,.timeline>div').forEach(el=>{
   el.style.opacity='0'; v6Reveal.observe(el);
 });
+
+// V7 Observatory reactions are local-only on this static GitHub Pages site.
+document.querySelectorAll('.signal-votes').forEach(group=>{
+  const poll=group.dataset.poll;
+  group.querySelectorAll('button').forEach(btn=>{
+    const choice=btn.dataset.choice,key=`mm-v7-poll-${poll}-${choice}`,selectedKey=`mm-v7-poll-selected-${poll}`;
+    btn.querySelector('b').textContent=Number(localStorage.getItem(key)||0);
+    if(localStorage.getItem(selectedKey)===choice) btn.classList.add('selected');
+    btn.addEventListener('click',()=>{
+      const prior=localStorage.getItem(selectedKey); if(prior===choice)return;
+      if(prior){const pb=group.querySelector(`[data-choice="${prior}"]`);if(pb){const pk=`mm-v7-poll-${poll}-${prior}`,n=Math.max(0,Number(localStorage.getItem(pk)||0)-1);localStorage.setItem(pk,n);pb.querySelector('b').textContent=n;pb.classList.remove('selected')}}
+      const n=Number(localStorage.getItem(key)||0)+1;localStorage.setItem(key,n);localStorage.setItem(selectedKey,choice);btn.querySelector('b').textContent=n;btn.classList.add('selected');
+    });
+  });
+});
+const cf=document.getElementById('contact-form');
+if(cf)cf.addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('cf-name').value.trim(),em=document.getElementById('cf-email').value.trim(),s=document.getElementById('cf-subject').value.trim(),m=document.getElementById('cf-message').value.trim(),body=`Hi Moheen,\n\n${m}\n\nFrom: ${n}\nEmail: ${em}`;location.href=`mailto:moheenmahmood@hotmail.co.uk?subject=${encodeURIComponent(s)}&body=${encodeURIComponent(body)}`});
