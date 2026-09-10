@@ -133,3 +133,20 @@ weeklyBrief();
  document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open()}if(!palette.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowDown'){e.preventDefault();selected=Math.min(selected+1,visible.length-1);render()}if(e.key==='ArrowUp'){e.preventDefault();selected=Math.max(selected-1,0);render()}if(e.key==='Enter'&&visible[selected])location.href=visible[selected][2];});
  input.addEventListener('input',()=>{selected=0;render()});
 })();
+
+// V8.3 premium ticker
+(function(){
+ const g=id=>document.getElementById(id),root=document.querySelector('.command-ticker');if(!root)return;
+ let headlines=[],hi=0;
+ function sync(){
+   const btc=g('btc')?.textContent||'—',eth=g('eth')?.textContent||'—',bc=g('btc-change')?.textContent||'—',ec=g('eth-change')?.textContent||'—',time=g('clock')?.textContent||'—',us=g('us-status')?.textContent||'—';
+   g('ticker-btc').textContent=btc;g('ticker-eth').textContent=eth;g('ticker-btc-change').textContent=bc;g('ticker-eth-change').textContent=ec;g('ticker-london-time').textContent=time;g('ticker-us').textContent=us;
+   [[g('ticker-btc-change'),bc],[g('ticker-eth-change'),ec]].forEach(([el,t])=>{const n=parseFloat(String(t).replace(/[^0-9+.-]/g,''));el.classList.toggle('positive',n>=0);el.classList.toggle('negative',n<0)});
+   g('ticker-updated').textContent='UPDATED '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+ }
+ async function load(){
+   try{const ids=await fetch('https://hacker-news.firebaseio.com/v0/topstories.json',{cache:'no-store'}).then(r=>r.json());const s=await Promise.all(ids.slice(0,8).map(id=>fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r=>r.json())));headlines=s.filter(x=>x&&x.title).map(x=>({title:x.title,source:(()=>{try{return x.url?new URL(x.url).hostname.replace(/^www\./,''):'news.ycombinator.com'}catch{return 'TECH'}})()}));rotate()}catch{}}
+ function rotate(){if(!headlines.length)return;const h=headlines[hi++%headlines.length];g('ticker-headline').textContent=h.title;g('ticker-headline-source').textContent=h.source.toUpperCase()}
+ g('ticker-pause')?.addEventListener('click',e=>{const p=root.classList.toggle('paused');e.currentTarget.textContent=p?'▶':'Ⅱ';e.currentTarget.setAttribute('aria-pressed',String(p))});
+ sync();setInterval(sync,2000);load();setInterval(rotate,6500);setInterval(load,300000);
+})();
