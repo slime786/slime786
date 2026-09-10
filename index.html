@@ -42,6 +42,7 @@
   <button class="command-trigger" id="command-trigger" aria-label="Open command search"><span>⌘</span> K</button></nav>
   <a class="connect" href="#contact">Let's Connect</a>
 </header>
+
 <section class="command-ticker" aria-label="Live market and technology ticker">
   <div class="ticker-status">
     <span class="ticker-live-dot"></span>
@@ -50,26 +51,92 @@
   </div>
 
   <div class="ticker-window">
-    <div class="ticker-track ticker-track-a" id="ticker-track-a">
-      <div class="ticker-chip spark-chip"><span>BTC / GBP</span><strong id="ticker-btc">—</strong><canvas id="btc-spark" width="120" height="34" aria-label="Bitcoin 24 hour sparkline"></canvas><em id="ticker-btc-change">—</em></div>
-      <div class="ticker-chip spark-chip"><span>ETH / GBP</span><strong id="ticker-eth">—</strong><canvas id="eth-spark" width="120" height="34" aria-label="Ethereum 24 hour sparkline"></canvas><em id="ticker-eth-change">—</em></div>
-      <div class="ticker-chip"><span>LONDON</span><strong id="ticker-london-time">—</strong><em>LOCAL</em></div>
-      <div class="ticker-chip"><span>US SESSION</span><strong id="ticker-us">—</strong><em>INDICATIVE</em></div>
-      <div class="ticker-chip headline-chip"><span>TECH SIGNAL</span><strong id="ticker-headline">Scanning current technology stories…</strong><em id="ticker-headline-source">LIVE FEED</em></div>
-      <div class="ticker-chip signal-chip"><span id="signal-label">HIGH SIGNAL</span><strong id="signal-title">Assessing current stories…</strong><em id="signal-score">—</em></div>
-    </div>
-    <div class="ticker-track ticker-track-b" aria-hidden="true">
-      <div class="ticker-chip"><span>BTC / GBP</span><strong id="ticker-btc-2">—</strong><em id="ticker-btc-change-2">—</em></div>
-      <div class="ticker-chip"><span>ETH / GBP</span><strong id="ticker-eth-2">—</strong><em id="ticker-eth-change-2">—</em></div>
-      <div class="ticker-chip"><span>LONDON</span><strong id="ticker-london-time-2">—</strong><em>LOCAL</em></div>
-      <div class="ticker-chip"><span>US SESSION</span><strong id="ticker-us-2">—</strong><em>INDICATIVE</em></div>
-      <div class="ticker-chip headline-chip"><span>TECH SIGNAL</span><strong id="ticker-headline-2">Live technology feed</strong><em id="ticker-headline-source-2">LIVE FEED</em></div>
-      <div class="ticker-chip signal-chip"><span>HIGH SIGNAL</span><strong id="signal-title-2">Current important story</strong><em id="signal-score-2">—</em></div>
+    <div class="ticker-marquee" id="ticker-marquee">
+
+      <div class="ticker-group">
+        <div class="ticker-chip spark-chip">
+          <span>BTC / GBP</span>
+          <strong id="ticker-btc">—</strong>
+          <canvas id="btc-spark" width="120" height="34" aria-label="Bitcoin 24 hour sparkline"></canvas>
+          <em id="ticker-btc-change">—</em>
+        </div>
+
+        <div class="ticker-chip spark-chip">
+          <span>ETH / GBP</span>
+          <strong id="ticker-eth">—</strong>
+          <canvas id="eth-spark" width="120" height="34" aria-label="Ethereum 24 hour sparkline"></canvas>
+          <em id="ticker-eth-change">—</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>LONDON</span>
+          <strong id="ticker-london-time">—</strong>
+          <em>LOCAL</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>US SESSION</span>
+          <strong id="ticker-us">—</strong>
+          <em>INDICATIVE</em>
+        </div>
+
+        <div class="ticker-chip headline-chip">
+          <span>TECH SIGNAL</span>
+          <strong id="ticker-headline">Scanning current technology stories…</strong>
+          <em id="ticker-headline-source">LIVE FEED</em>
+        </div>
+
+        <div class="ticker-chip signal-chip">
+          <span>HIGH SIGNAL</span>
+          <strong id="signal-title">Assessing current stories…</strong>
+          <em id="signal-score">—</em>
+        </div>
+      </div>
+
+      <div class="ticker-group" aria-hidden="true">
+        <div class="ticker-chip">
+          <span>BTC / GBP</span>
+          <strong class="mirror-btc">—</strong>
+          <em class="mirror-btc-change">—</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>ETH / GBP</span>
+          <strong class="mirror-eth">—</strong>
+          <em class="mirror-eth-change">—</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>LONDON</span>
+          <strong class="mirror-london">—</strong>
+          <em>LOCAL</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>US SESSION</span>
+          <strong class="mirror-us">—</strong>
+          <em>INDICATIVE</em>
+        </div>
+
+        <div class="ticker-chip headline-chip">
+          <span>TECH SIGNAL</span>
+          <strong class="mirror-headline">Live technology feed</strong>
+          <em class="mirror-headline-source">LIVE FEED</em>
+        </div>
+
+        <div class="ticker-chip signal-chip">
+          <span>HIGH SIGNAL</span>
+          <strong class="mirror-signal-title">Current important story</strong>
+          <em class="mirror-signal-score">—</em>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <button class="ticker-pause" id="ticker-pause" type="button" aria-pressed="false" aria-label="Pause live ticker">Ⅱ</button>
 </section>
+
 
 <main>
 <section class="hero" id="home">

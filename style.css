@@ -310,3 +310,178 @@ opacity:1}.game-shell:after{content:'';position:absolute;inset:0;background:radi
  .ticker-track-a,.ticker-track-b{animation:none!important}
  .ticker-track-b{display:none}
 }
+
+
+/* ====================================================
+   V8.4.1 — TICKER COLLISION FIX
+   One marquee / two identical groups. No track overlap.
+   ==================================================== */
+.command-ticker{
+  height:62px;
+  grid-template-columns:auto minmax(0,1fr) auto;
+}
+
+.ticker-window{
+  position:relative;
+  min-width:0;
+  height:100%;
+  overflow:hidden;
+  mask-image:linear-gradient(90deg,transparent 0,#000 2%,#000 98%,transparent 100%);
+}
+
+/* Disable all legacy track animation rules */
+.ticker-track,
+.ticker-track-a,
+.ticker-track-b{
+  animation:none!important;
+  position:static!important;
+  transform:none!important;
+  display:none!important;
+}
+
+.ticker-marquee{
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  display:flex;
+  width:max-content;
+  align-items:stretch;
+  animation:tickerMarqueeFixed 58s linear infinite;
+  will-change:transform;
+}
+
+.ticker-group{
+  display:flex;
+  align-items:stretch;
+  height:100%;
+  flex:none;
+}
+
+@keyframes tickerMarqueeFixed{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+
+.command-ticker.paused .ticker-marquee,
+.command-ticker:hover .ticker-marquee{
+  animation-play-state:paused;
+}
+
+/* Every group must have exactly the same chip geometry */
+.ticker-group .ticker-chip{
+  flex:none;
+  box-sizing:border-box;
+}
+
+.ticker-group .ticker-chip:not(.headline-chip):not(.signal-chip):not(.spark-chip){
+  width:230px;
+  min-width:230px;
+}
+
+.ticker-group .spark-chip{
+  width:420px;
+  min-width:420px;
+}
+
+.ticker-group .headline-chip{
+  width:650px;
+  min-width:650px;
+}
+
+.ticker-group .signal-chip{
+  width:680px;
+  min-width:680px;
+}
+
+/* Mirror group has no canvas, so preserve spark-chip width with first two chips */
+.ticker-group[aria-hidden="true"] .ticker-chip:nth-child(1),
+.ticker-group[aria-hidden="true"] .ticker-chip:nth-child(2){
+  width:420px;
+  min-width:420px;
+  grid-template-columns:auto 1fr auto;
+}
+
+/* Prevent any long headline from bleeding into neighbouring cells */
+.ticker-chip{
+  overflow:hidden;
+}
+.ticker-chip strong{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.headline-chip strong,
+.signal-chip strong{
+  display:block;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Small gap between loop copies makes the repeat look intentional */
+.ticker-group:last-child{
+  border-left:1px solid #214862;
+}
+
+/* Make ticker text a little easier to scan */
+.ticker-chip>span{
+  flex:none;
+}
+.ticker-chip strong{
+  letter-spacing:-.01em;
+}
+.ticker-chip em{
+  white-space:nowrap;
+}
+
+/* Status block cannot be squeezed by moving content */
+.ticker-status{
+  position:relative;
+  z-index:3;
+  background:#030a11;
+}
+.ticker-pause{
+  position:relative;
+  z-index:3;
+  background:#030a11;
+}
+
+@media(max-width:900px){
+  .command-ticker{
+    height:56px;
+    grid-template-columns:auto minmax(0,1fr);
+  }
+  .ticker-group .ticker-chip:not(.headline-chip):not(.signal-chip):not(.spark-chip){
+    width:195px;
+    min-width:195px;
+  }
+  .ticker-group .spark-chip{
+    width:345px;
+    min-width:345px;
+  }
+  .ticker-group .headline-chip{
+    width:520px;
+    min-width:520px;
+  }
+  .ticker-group .signal-chip{
+    width:540px;
+    min-width:540px;
+  }
+  .ticker-group[aria-hidden="true"] .ticker-chip:nth-child(1),
+  .ticker-group[aria-hidden="true"] .ticker-chip:nth-child(2){
+    width:345px;
+    min-width:345px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ticker-marquee{
+    position:static;
+    animation:none!important;
+  }
+  .ticker-group[aria-hidden="true"]{
+    display:none;
+  }
+}

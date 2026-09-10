@@ -1,16 +1,21 @@
-# Moheen Mahmood — V8.4 Live Motion Edition
+# Moheen Mahmood — V8.4.1 Ticker Collision Fix
 
-Upgrades the command ticker to:
-- continuously moving dual-track marquee
-- BTC/ETH near-real-time refresh every 30 seconds
-- London live clock every second
-- US session status
-- BTC and ETH 24h sparklines
-- rotating live technology headlines
-- HIGH SIGNAL / IMPORTANT story detector based on current story activity
-- pause/resume control
-- reduced-motion fallback
+This version fixes the overlapping live ticker seen in V8.4.
 
-Important: the crypto feed is near-real-time public API data, not exchange tick-by-tick streaming data.
+## Cause
+V8.4 used two independently animated ticker tracks. Because the two tracks did not have
+perfectly identical rendered widths, they could drift into one another and overlap.
 
-Upload all files directly to the root of `main`.
+## Fix
+V8.4.1 uses:
+- one single animated marquee
+- two geometrically identical content groups
+- fixed chip widths
+- clipped long headlines
+- mirrored live data
+- one synchronized animation loop
+
+The live BTC/ETH, sparklines, London time, US session, rotating technology headlines,
+and HIGH SIGNAL detector are all retained.
+
+Upload all files in this ZIP directly to the root of `main`.

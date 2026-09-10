@@ -241,3 +241,36 @@ weeklyBrief();
  setInterval(rotateStory,7000);
  setInterval(loadStories,300000);
 })();
+
+
+// V8.4.1 — ticker mirror synchronisation
+(function(){
+  const one=(s)=>document.querySelector(s);
+  const all=(s)=>document.querySelectorAll(s);
+
+  function syncMirrors(){
+    const copy=(sourceId,selector)=>{
+      const src=document.getElementById(sourceId);
+      if(!src)return;
+      all(selector).forEach(el=>{
+        el.textContent=src.textContent;
+        el.classList.toggle('positive',src.classList.contains('positive'));
+        el.classList.toggle('negative',src.classList.contains('negative'));
+      });
+    };
+
+    copy('ticker-btc','.mirror-btc');
+    copy('ticker-btc-change','.mirror-btc-change');
+    copy('ticker-eth','.mirror-eth');
+    copy('ticker-eth-change','.mirror-eth-change');
+    copy('ticker-london-time','.mirror-london');
+    copy('ticker-us','.mirror-us');
+    copy('ticker-headline','.mirror-headline');
+    copy('ticker-headline-source','.mirror-headline-source');
+    copy('signal-title','.mirror-signal-title');
+    copy('signal-score','.mirror-signal-score');
+  }
+
+  syncMirrors();
+  setInterval(syncMirrors,500);
+})();
