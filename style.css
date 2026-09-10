@@ -275,3 +275,38 @@ opacity:1}.game-shell:after{content:'';position:absolute;inset:0;background:radi
 
 /* V8.3 premium ticker */
 .command-ticker{position:sticky;top:74px;z-index:95;height:54px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;background:rgba(3,10,17,.95);border-bottom:1px solid #173c58;backdrop-filter:blur(14px);overflow:hidden}.ticker-status{height:100%;display:flex;align-items:center;gap:8px;padding:0 18px;border-right:1px solid #173c58;white-space:nowrap}.ticker-status b{font-size:9px;letter-spacing:.14em}.ticker-status small{font-size:7px;color:#54758c}.ticker-live-dot{width:7px;height:7px;border-radius:50%;background:#1df28a;box-shadow:0 0 12px #1df28a;animation:tPulse 1.6s infinite}@keyframes tPulse{50%{box-shadow:0 0 22px #1df28a}}.ticker-window{overflow:hidden;height:100%;mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}.ticker-track{height:100%;display:flex;align-items:center;width:max-content;animation:tMove 34s linear infinite}.command-ticker.paused .ticker-track,.command-ticker:hover .ticker-track{animation-play-state:paused}@keyframes tMove{to{transform:translateX(-36%)}}.ticker-chip{height:100%;min-width:220px;display:grid;grid-template-columns:auto auto auto;align-items:center;gap:12px;padding:0 22px;border-right:1px solid #14344c;white-space:nowrap}.ticker-chip>span{font-size:8px;letter-spacing:.14em;color:#66849a}.ticker-chip strong{font-size:13px;color:#edf8ff;font-variant-numeric:tabular-nums}.ticker-chip em{font-size:8px;font-style:normal;color:#728da1}.ticker-chip em.positive{color:#2bef8b}.ticker-chip em.negative{color:#ff6680}.headline-chip{min-width:620px;grid-template-columns:auto minmax(300px,1fr) auto}.headline-chip strong{max-width:500px;overflow:hidden;text-overflow:ellipsis}.ticker-pause{width:52px;height:100%;border:0;border-left:1px solid #173c58;background:transparent;color:#6e8ca2;cursor:pointer}.ticker-pause:hover{color:#fff;background:#081723}.price-positive{color:#2bef8b!important}.price-negative{color:#ff6680!important}@media(max-width:900px){.command-ticker{grid-template-columns:auto 1fr}.ticker-pause{display:none}.ticker-status small{display:none}.headline-chip{min-width:500px}}@media(prefers-reduced-motion:reduce){.ticker-track{animation:none!important}}
+
+/* V8.4 — continuous motion, sparklines, high-signal alerts */
+.command-ticker{height:62px}
+.ticker-window{position:relative;overflow:hidden}
+.ticker-track{position:absolute;top:0;height:100%;display:flex;align-items:center;width:max-content;will-change:transform}
+.ticker-track-a{animation:tickerLoopA 48s linear infinite}
+.ticker-track-b{animation:tickerLoopB 48s linear infinite}
+@keyframes tickerLoopA{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@keyframes tickerLoopB{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.command-ticker.paused .ticker-track,.command-ticker:hover .ticker-track{animation-play-state:paused}
+.spark-chip{grid-template-columns:auto auto 120px auto;min-width:420px}
+.spark-chip canvas{display:block;width:120px;height:34px}
+.signal-chip{min-width:650px;grid-template-columns:auto minmax(320px,1fr) auto}
+.signal-chip>span{color:#ff9d5c}
+.signal-chip strong{max-width:520px;overflow:hidden;text-overflow:ellipsis}
+.signal-chip em{color:#ffad70}
+.price-tick-up{animation:tickUp .75s ease}
+.price-tick-down{animation:tickDown .75s ease}
+@keyframes tickUp{0%{color:#2bef8b;text-shadow:0 0 20px rgba(43,239,139,.7)}100%{color:#edf8ff;text-shadow:none}}
+@keyframes tickDown{0%{color:#ff6680;text-shadow:0 0 20px rgba(255,102,128,.6)}100%{color:#edf8ff;text-shadow:none}}
+.signal-alert-panel{margin:0;padding:18px 5vw;display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;background:linear-gradient(90deg,#25120a,#0b1017);border-top:1px solid #6d351e;border-bottom:1px solid #6d351e}
+.signal-alert-kicker{font-size:9px;letter-spacing:.13em;color:#ffab70;white-space:nowrap}
+.signal-alert-copy h3{font-size:16px;line-height:1.25;margin-bottom:3px}
+.signal-alert-copy p{font-size:9px;color:#896e60}
+.signal-alert-panel>a{font-size:9px;color:#ffb57f;white-space:nowrap}
+@media(max-width:900px){
+  .spark-chip{min-width:360px;grid-template-columns:auto auto 90px auto}
+  .spark-chip canvas{width:90px}
+  .signal-chip{min-width:520px}
+  .signal-alert-panel{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+ .ticker-track-a,.ticker-track-b{animation:none!important}
+ .ticker-track-b{display:none}
+}

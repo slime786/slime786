@@ -150,3 +150,94 @@ weeklyBrief();
  g('ticker-pause')?.addEventListener('click',e=>{const p=root.classList.toggle('paused');e.currentTarget.textContent=p?'▶':'Ⅱ';e.currentTarget.setAttribute('aria-pressed',String(p))});
  sync();setInterval(sync,2000);load();setInterval(rotate,6500);setInterval(load,300000);
 })();
+
+// V8.4 — near-real-time live ticker, sparklines, continuous motion and high-signal stories
+(function(){
+ const $=id=>document.getElementById(id);
+ if(!$('ticker-btc')) return;
+
+ let prevB=null,prevE=null,stories=[],storyIndex=0;
+
+ function setAll(ids,value){ids.forEach(id=>{const el=$(id);if(el)el.textContent=value})}
+ function numeric(v){return parseFloat(String(v).replace(/[^0-9.]/g,''))}
+ function flash(ids,oldV,newV){
+   if(oldV==null||oldV===newV)return;
+   const up=numeric(newV)>=numeric(oldV);
+   ids.forEach(id=>{const el=$(id);if(!el)return;el.classList.remove('price-tick-up','price-tick-down');void el.offsetWidth;el.classList.add(up?'price-tick-up':'price-tick-down')});
+ }
+
+ async function refreshPrices(){
+   try{
+     const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=gbp&include_24hr_change=true',{cache:'no-store'});
+     if(!r.ok)throw new Error();
+     const d=await r.json();
+     const fmt=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:n>100?0:2}).format(n);
+     const b=fmt(d.bitcoin.gbp),e=fmt(d.ethereum.gbp);
+     const bc=`${d.bitcoin.gbp_24h_change>=0?'+':''}${d.bitcoin.gbp_24h_change.toFixed(2)}%`;
+     const ec=`${d.ethereum.gbp_24h_change>=0?'+':''}${d.ethereum.gbp_24h_change.toFixed(2)}%`;
+     flash(['ticker-btc','ticker-btc-2'],prevB,b);flash(['ticker-eth','ticker-eth-2'],prevE,e);
+     setAll(['ticker-btc','ticker-btc-2'],b);setAll(['ticker-eth','ticker-eth-2'],e);
+     setAll(['ticker-btc-change','ticker-btc-change-2'],bc);setAll(['ticker-eth-change','ticker-eth-change-2'],ec);
+     [['ticker-btc-change',bc],['ticker-btc-change-2',bc],['ticker-eth-change',ec],['ticker-eth-change-2',ec]].forEach(([id,t])=>{const el=$(id),n=parseFloat(t);if(el){el.classList.toggle('positive',n>=0);el.classList.toggle('negative',n<0)}});
+     prevB=b;prevE=e;
+     $('ticker-updated').textContent='UPDATED '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+   }catch(e){}
+ }
+
+ async function spark(coin,canvasId){
+   const c=$(canvasId); if(!c)return;
+   try{
+     const d=await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=gbp&days=1`,{cache:'no-store'}).then(r=>r.json());
+     const vals=(d.prices||[]).map(x=>x[1]).filter(Number.isFinite); if(vals.length<2)return;
+     const ctx=c.getContext('2d'),w=c.width,h=c.height,min=Math.min(...vals),max=Math.max(...vals),span=max-min||1;
+     ctx.clearRect(0,0,w,h);ctx.lineWidth=2;ctx.strokeStyle=vals.at(-1)>=vals[0]?'#2bef8b':'#ff6680';ctx.beginPath();
+     vals.forEach((v,i)=>{const x=i/(vals.length-1)*w,y=h-3-(v-min)/span*(h-6);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+   }catch(e){}
+ }
+
+ function syncClock(){
+   const d=new Date(),lt=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(d);
+   setAll(['ticker-london-time','ticker-london-time-2'],lt);
+   const p=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d).map(x=>[x.type,x.value]));
+   const mins=+p.hour*60 + +p.minute,open=!['Sat','Sun'].includes(p.weekday)&&mins>=570&&mins<960;
+   setAll(['ticker-us','ticker-us-2'],open?'OPEN':'CLOSED');
+ }
+
+ async function loadStories(){
+   try{
+     const ids=await fetch('https://hacker-news.firebaseio.com/v0/topstories.json',{cache:'no-store'}).then(r=>r.json());
+     const arr=await Promise.all(ids.slice(0,18).map(id=>fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`,{cache:'no-store'}).then(r=>r.json())));
+     stories=arr.filter(s=>s&&s.title).map(s=>{
+       let source='news.ycombinator.com';try{if(s.url)source=new URL(s.url).hostname.replace(/^www\./,'')}catch{}
+       return {...s,source,signal:(s.score||0)+(s.descendants||0)*1.25};
+     }).sort((a,b)=>b.signal-a.signal);
+     storyIndex=0;rotateStory();importantStory();
+   }catch(e){}
+ }
+
+ function rotateStory(){
+   if(!stories.length)return;const s=stories[storyIndex++%stories.length];
+   setAll(['ticker-headline','ticker-headline-2'],s.title);setAll(['ticker-headline-source','ticker-headline-source-2'],s.source.toUpperCase());
+ }
+
+ function importantStory(){
+   if(!stories.length)return;const s=stories[0];
+   setAll(['signal-title','signal-title-2'],s.title);
+   setAll(['signal-score','signal-score-2'],`${s.score||0} PTS · ${s.descendants||0} COMMENTS`);
+   if($('important-title'))$('important-title').textContent=s.title;
+   if($('important-meta'))$('important-meta').textContent=`High activity signal: ${s.score||0} points · ${s.descendants||0} comments · ${s.source}`;
+   if($('important-link'))$('important-link').href=s.url||`https://news.ycombinator.com/item?id=${s.id}`;
+ }
+
+ $('ticker-pause')?.addEventListener('click',e=>{
+   const root=document.querySelector('.command-ticker'),p=root.classList.toggle('paused');
+   e.currentTarget.textContent=p?'▶':'Ⅱ';e.currentTarget.setAttribute('aria-pressed',String(p));
+ });
+
+ refreshPrices();spark('bitcoin','btc-spark');spark('ethereum','eth-spark');syncClock();loadStories();
+ setInterval(syncClock,1000);
+ setInterval(refreshPrices,30000);
+ setInterval(()=>{spark('bitcoin','btc-spark');spark('ethereum','eth-spark')},300000);
+ setInterval(rotateStory,7000);
+ setInterval(loadStories,300000);
+})();
