@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Moheen Mahmood — London-based portfolio exploring technology, investments and ideas.">
 <meta name="theme-color" content="#06101a">
-<title>Moheen Mahmood — Cinematic Portfolio</title>
+<title>Moheen Mahmood — Technology, Markets & Ideas</title>
+
+<meta property="og:title" content="Moheen Mahmood — Technology, Markets & Ideas">
+<meta property="og:description" content="London-based personal portfolio exploring technology, investing, markets, entrepreneurship and ideas.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index,follow">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="cursor-dot"></div><div class="cursor-ring"></div>
@@ -19,9 +27,12 @@
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
+    <a href="#now">Now</a>
     <a href="#markets">Markets</a>
     <a href="#tech">Technology</a>
+    <a href="#ideas">Ideas</a>
     <a href="#github">GitHub</a>
+    <a href="#projects">Projects</a>
     <a href="#game">Game</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -77,6 +88,38 @@
   </div>
 </section>
 
+
+<section id="now" class="section now-section">
+  <div class="section-title split-title">
+    <div>
+      <p class="eyebrow">NOW / CURRENTLY</p>
+      <h2>What has my<br>attention right now.</h2>
+    </div>
+    <p class="section-intro">A living snapshot of the themes I keep coming back to — updated as my interests evolve.</p>
+  </div>
+
+  <div class="now-grid">
+    <article>
+      <span>01</span>
+      <h3>Artificial Intelligence</h3>
+      <p>Following how AI changes software, work, productivity and the economics of building digital products.</p>
+      <b>LEARNING →</b>
+    </article>
+    <article>
+      <span>02</span>
+      <h3>Markets & Businesses</h3>
+      <p>Understanding companies, incentives, capital allocation and the difference between short-term noise and long-term value.</p>
+      <b>RESEARCHING →</b>
+    </article>
+    <article>
+      <span>03</span>
+      <h3>Building on the Web</h3>
+      <p>Turning ideas into interactive digital experiences — including this portfolio and the experiments inside it.</p>
+      <b>BUILDING →</b>
+    </article>
+  </div>
+</section>
+
 <section class="section data-section">
   <div class="section-title">
     <p class="eyebrow">LIVE INFORMATION</p>
@@ -95,6 +138,60 @@
       <div id="news">Loading the latest technology stories…</div>
     </div>
   </div>
+
+<div class="watchlist-box">
+  <div class="watchlist-head">
+    <div><p class="eyebrow">PERSONAL WATCHLIST</p><h3>Signals I like to watch.</h3></div>
+    <span class="live-badge"><i></i> LIVE / INDICATIVE</span>
+  </div>
+  <div class="watchlist-grid">
+    <div><small>BTC / GBP</small><strong id="watch-btc">—</strong><span id="watch-btc-change">—</span></div>
+    <div><small>ETH / GBP</small><strong id="watch-eth">—</strong><span id="watch-eth-change">—</span></div>
+    <div><small>US SESSION</small><strong id="watch-us">—</strong><span>NEW YORK</span></div>
+    <div><small>LONDON</small><strong id="watch-time">—</strong><span>LOCAL TIME</span></div>
+  </div>
+  <p class="fine">A lightweight personal dashboard for context, not financial advice. External data can be delayed or unavailable.</p>
+</div>
+
+</section>
+
+
+<section id="ideas" class="section ideas-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">IDEAS / JOURNAL</p><h2>Notes on what<br>I’m thinking about.</h2></div>
+    <p class="section-intro">Short-form thinking rather than formal essays — ideas, questions and themes worth revisiting.</p>
+  </div>
+
+  <div class="ideas-grid">
+    <article class="idea-card featured">
+      <span class="idea-no">01</span>
+      <p class="idea-tag">AI / PRODUCTS</p>
+      <h3>AI is becoming an interface, not just a feature.</h3>
+      <p>The interesting shift is not only what models can do, but how naturally intelligence becomes part of everyday software.</p>
+      <a href="#contact">Discuss this idea ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">02</span>
+      <p class="idea-tag">INVESTING</p>
+      <h3>Good businesses make complexity look simple.</h3>
+      <p>I’m interested in companies where strong products, distribution and execution compound over long periods.</p>
+      <a href="#contact">Discuss this idea ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">03</span>
+      <p class="idea-tag">TECHNOLOGY</p>
+      <h3>Infrastructure becomes interesting before it becomes obvious.</h3>
+      <p>The tools behind a platform shift can be as important as the applications everyone notices first.</p>
+      <a href="#contact">Discuss this idea ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">04</span>
+      <p class="idea-tag">BUILDING</p>
+      <h3>A portfolio should feel alive.</h3>
+      <p>This website is an experiment in turning a personal page into a living command centre: data, ideas, code and play in one place.</p>
+      <a href="#projects">See the experiments ↓</a>
+    </article>
+  </div>
 </section>
 
 <section class="astronaut-section">
@@ -103,6 +200,46 @@
     <p class="eyebrow">POINT OF VIEW</p>
     <h2>EXPLORE.<br>PUSH.<br>IMPROVE.<br>REPEAT.</h2>
     <p>Keep moving forward. Keep learning. Keep looking at what others might miss.</p>
+  </div>
+</section>
+
+
+<section id="projects" class="section projects-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">PROJECTS / EXPERIMENTS</p><h2>Things I’m<br>building and testing.</h2></div>
+    <p class="section-intro">Real pieces of this site, treated as small experiments rather than invented client work.</p>
+  </div>
+
+  <div class="projects-grid">
+    <article class="project-card">
+      <div class="project-visual project-market"><span>LIVE</span><b>MARKET<br>COMMAND</b></div>
+      <div class="project-copy">
+        <p>LIVE DATA / FRONT-END</p>
+        <h3>Personal Market Watch</h3>
+        <span>A browser-based dashboard combining crypto pricing, market-session status and local time.</span>
+        <a href="#markets">Open module ↗</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-visual project-space"><span>PLAY</span><b>ROCKET<br>LAB</b></div>
+      <div class="project-copy">
+        <p>JAVASCRIPT / INTERACTION</p>
+        <h3>Rocket Game</h3>
+        <span>A lightweight arcade experiment with keyboard controls, collision detection and persistent scores.</span>
+        <a href="#game">Launch game ↗</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-visual project-code"><span>PUBLIC</span><b>GITHUB<br>ACTIVITY</b></div>
+      <div class="project-copy">
+        <p>API / GITHUB</p>
+        <h3>Live Development Feed</h3>
+        <span>Public GitHub activity from @slime786, brought directly into the portfolio.</span>
+        <a href="https://github.com/slime786" target="_blank" rel="noopener">View GitHub ↗</a>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -124,6 +261,20 @@
     </div>
   </div>
   <div class="score-row"><div><small>High Score</small><strong id="best">0000</strong></div><div><small>Last Score</small><strong id="last">0000</strong></div></div>
+</section>
+
+
+<section class="section timeline-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">PERSONAL TIMELINE</p><h2>A simple<br>through-line.</h2></div>
+    <p class="section-intro">Not a résumé — just the themes that define the direction of this site and what I want to keep exploring.</p>
+  </div>
+  <div class="timeline">
+    <div><span>01</span><h3>London</h3><p>Home base — a global city where technology, capital and culture constantly overlap.</p></div>
+    <div><span>02</span><h3>Technology</h3><p>A long-term curiosity about software, AI, digital products and the infrastructure behind them.</p></div>
+    <div><span>03</span><h3>Investing</h3><p>An interest in businesses, markets, capital allocation and thinking beyond short-term headlines.</p></div>
+    <div><span>04</span><h3>Building</h3><p>Turning those interests into projects, experiments, research and digital experiences.</p></div>
+  </div>
 </section>
 
 <section id="contact" class="section contact">
