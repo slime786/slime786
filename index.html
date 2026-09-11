@@ -18,14 +18,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/slime786/style.css">
 <link rel="icon" href="/slime786/favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="/slime786/hero-moheen-astronaut.jpg">
+<link rel="preload" as="image" href="/slime786/hero-moheen-astronaut.jpg" fetchpriority="high">
+
+<link rel="canonical" href="https://slime786.github.io/slime786/">
+<meta property="og:site_name" content="Moheen Mahmood">
+<meta property="og:title" content="Moheen Mahmood — Technology, Markets & Ideas">
+<meta property="og:description" content="A cinematic personal command centre exploring technology, markets, investing, ideas and building.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://slime786.github.io/slime786/">
+<meta property="og:image" content="https://slime786.github.io/slime786/hero-moheen-astronaut.jpg">
+<meta property="og:image:alt" content="Moheen Mahmood in a cinematic astronaut scene above Earth">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Moheen Mahmood — Technology, Markets & Ideas">
+<meta name="twitter:description" content="Technology, markets, ideas and projects from London.">
+<meta name="twitter:image" content="https://slime786.github.io/slime786/hero-moheen-astronaut.jpg">
+<meta name="theme-color" content="#03080f">
+
+<!-- Analytics hook: set window.MM_ANALYTICS_ENDPOINT only after connecting a real provider. No analytics are transmitted by default. -->
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="cursor-dot"></div><div class="cursor-ring"></div>
 
 <header class="nav" id="top">
   <a class="brand" href="#top">Moheen Mahmood</a>
-  <nav>
+  <nav id="nav-links">
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#now">Now</a>
@@ -40,7 +57,7 @@
     <a href="#observatory">Observatory</a>
     <a href="#game">Game</a>
     <a href="#contact">Contact</a>
-  <button class="command-trigger" id="command-trigger" aria-label="Open command search"><span>⌘</span> K</button></nav>
+  <button class="command-trigger" id="command-trigger" aria-label="Open command search"><span>⌘</span> K</button></nav><button type="button" id="mobile-nav-toggle" class="mobile-nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span><span></span></button>
   <a class="connect" href="#contact">Let's Connect</a>
 </header>
 
@@ -139,7 +156,7 @@
 </section>
 
 
-<main>
+<main id="main-content">
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -331,7 +348,7 @@
 </section>
 
 <section class="astronaut-section">
-  <img src="astronaut-clean-hd.jpg" alt="Astronaut overlooking Earth">
+  <img loading="lazy" decoding="async" src="astronaut-clean-hd.jpg" alt="Astronaut overlooking Earth">
   <div class="astro-copy">
     <p class="eyebrow">POINT OF VIEW</p>
     <h2>EXPLORE.<br>PUSH.<br>IMPROVE.<br>REPEAT.</h2>

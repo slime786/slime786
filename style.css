@@ -498,3 +498,98 @@ opacity:1}.game-shell:after{content:'';position:absolute;inset:0;background:radi
 @media(max-width:760px){
   .hero-bg{background-position:66% center!important}
 }
+
+/* V8.6 — mobile / accessibility / performance */
+.skip-link{position:fixed;left:14px;top:12px;z-index:10000;transform:translateY(-180%);padding:10px 14px;border-radius:6px;background:#fff;color:#02070d;font-weight:700;transition:transform .2s ease}
+.skip-link:focus{transform:translateY(0)}
+:focus-visible{outline:2px solid #47b4ff!important;outline-offset:3px!important}
+a,button,input,textarea{touch-action:manipulation}
+html,body{max-width:100%;overflow-x:hidden}
+img,canvas,video,svg{max-width:100%}
+.nav{gap:20px}
+.nav nav{min-width:0}
+.nav nav a{white-space:nowrap}
+.mobile-nav-toggle{display:none;width:42px;height:42px;border:1px solid #1f4a68;background:#06121d;border-radius:8px;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0}
+.mobile-nav-toggle span{width:19px;height:1px;background:#dcecff;display:block}
+.hero-copy{width:min(680px,52vw)}
+.hero-actions{flex-wrap:wrap}
+
+@media(max-width:1100px){
+  .nav nav{gap:18px}
+  .nav nav a{font-size:8px}
+  .connect{padding:9px 12px}
+}
+
+@media(max-width:900px){
+  .nav{height:68px;padding:0 18px}
+  .brand{font-size:20px;position:relative;z-index:103}
+  .mobile-nav-toggle{display:flex;position:relative;z-index:103}
+  .nav nav{display:none!important;position:fixed;top:68px;left:0;right:0;z-index:102;background:rgba(3,9,15,.98);border-bottom:1px solid #173e5a;padding:22px 18px 26px;grid-template-columns:1fr 1fr;gap:0;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  .nav nav.mobile-open{display:grid!important}
+  .nav nav a{padding:14px 8px;border-bottom:1px solid #102d43;font-size:11px;letter-spacing:.03em}
+  .connect{display:none!important}
+  .command-trigger{margin-left:auto}
+  .command-ticker{top:68px!important;height:52px!important}
+  .ticker-status{padding:0 10px!important}
+  .ticker-status b{font-size:8px!important}
+  .ticker-group .ticker-chip:not(.headline-chip):not(.signal-chip):not(.spark-chip){width:175px!important;min-width:175px!important}
+  .ticker-group .spark-chip{width:300px!important;min-width:300px!important}
+  .ticker-group .headline-chip{width:420px!important;min-width:420px!important}
+  .ticker-group .signal-chip{width:440px!important;min-width:440px!important}
+  .ticker-group[aria-hidden="true"] .ticker-chip:nth-child(1),.ticker-group[aria-hidden="true"] .ticker-chip:nth-child(2){width:300px!important;min-width:300px!important}
+  .hero{min-height:980px!important;padding-bottom:330px}
+  .hero-bg{background-position:72% center!important}
+  .hero-overlay{background:linear-gradient(180deg,rgba(2,7,13,.36) 0%,rgba(2,7,13,.52) 38%,rgba(2,7,13,.95) 77%,#02070d 100%),linear-gradient(90deg,rgba(2,7,13,.88),rgba(2,7,13,.12) 70%)!important}
+  .hero-copy{width:100%;max-width:620px;padding:62px 22px 0!important}
+  .hero h1{font-size:clamp(58px,15vw,82px)!important;line-height:.88!important;max-width:560px!important}
+  .hero-text{max-width:520px!important;font-size:17px!important}
+  .live-panel{left:18px!important;right:18px!important;bottom:24px!important;width:auto!important;grid-template-columns:1fr!important;border-radius:12px!important}
+  .market-item{grid-template-columns:48px 1fr!important;min-height:0!important;padding:15px 17px!important}
+  .coin{width:42px!important;height:42px!important;font-size:22px!important}
+  .market-item strong{font-size:23px!important}
+  .london strong{font-size:27px!important}
+  .section{padding:72px 20px!important}
+  .section-head,.split-title,.about,.contact,.game-heading{grid-template-columns:1fr!important}
+  .quick-cards,.focus-grid,.projects-grid,.now-grid,.watchlist-grid{grid-template-columns:1fr!important}
+  .about-copy{grid-template-columns:1fr!important}
+  .astronaut-section{grid-template-columns:1fr!important;min-height:auto!important}
+  .astronaut-section img{height:auto!important;aspect-ratio:4/5;object-fit:cover!important;object-position:center top!important}
+  .game-shell{height:min(68vh,540px)!important;min-height:420px}
+  .game-message h3{font-size:36px!important}
+  .game-controls{display:none!important}
+  .game-hud{font-size:8px!important;left:14px!important;right:14px!important}
+  .game-hud strong{font-size:15px!important}
+  .observatory-layout,.weekly-grid,.ideas-grid,.data-grid,.github-terminal,.journal-grid{grid-template-columns:1fr!important}
+}
+
+@media(max-width:600px){
+  .nav{padding:0 14px}
+  .brand{font-size:18px!important}
+  .command-trigger{padding:7px 8px!important}
+  .ticker-status small,.ticker-pause{display:none!important}
+  .command-ticker{grid-template-columns:auto minmax(0,1fr)!important}
+  .hero{min-height:1010px!important}
+  .hero-copy{padding-left:18px!important;padding-right:18px!important}
+  .hero h1{font-size:clamp(52px,17vw,70px)!important}
+  .hero-text{font-size:15px!important;line-height:1.55!important}
+  .hero-actions .btn{width:100%;text-align:center}
+  .section{padding-left:16px!important;padding-right:16px!important}
+  .section-title h2,.about h2,.contact h2,.astro-copy h2{font-size:clamp(42px,13vw,64px)!important}
+  .market-box,.news-box,.watchlist-box,.open-question,.signal-card{padding:20px!important}
+  .game-shell{height:470px!important}
+  .rocket{bottom:58px!important}
+  .socials{display:grid!important;grid-template-columns:1fr 1fr}
+  .socials a{text-align:center}
+  footer{gap:12px;flex-direction:column;align-items:flex-start!important}
+}
+
+@supports(content-visibility:auto){
+  .section,.astronaut-section,.colour-strip{content-visibility:auto;contain-intrinsic-size:800px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .ticker-marquee{animation:none!important;transform:none!important}
+  .ticker-group[aria-hidden="true"]{display:none!important}
+}

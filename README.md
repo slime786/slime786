@@ -1,26 +1,37 @@
-# Moheen Mahmood — V8.5 Personal Astronaut Edition
+# Moheen Mahmood — V8.6 Mobile + Production Polish
 
-This version keeps the working V8.4.1 ticker fix and replaces the homepage hero with a cinematic astronaut image based on Moheen's uploaded photo.
+## Mobile
+- hamburger navigation below 900px
+- mobile-safe ticker sizing
+- astronaut hero repositioned for phones
+- stacked live market cards
+- all major grids collapse cleanly
+- mobile-sized game HUD/canvas
+- touch-friendly social/contact controls
 
-## Included
-- Personal astronaut hero
-- Continuous live ticker without overlap
-- BTC / ETH live data
-- London time and US session status
-- Technology headlines and HIGH SIGNAL indicator
-- Journal
-- Market Radar
-- Command search
-- Rocket game
-- Observatory/community features
-- Contact links
+## Social sharing
+Open Graph + Twitter Card metadata use:
+https://slime786.github.io/slime786/hero-moheen-astronaut.jpg
 
-## Upload
-Upload all files in this ZIP directly to the root of the `main` branch.
+## Accessibility
+- skip-to-content link
+- keyboard focus states
+- Escape closes mobile navigation
+- reduced-motion fallback
+- aria-current on current page
+- safer external-link rel attributes
 
-The new image file is:
-`hero-moheen-astronaut.jpg`
+## Performance
+- hero preload with high fetch priority
+- lazy/async astronaut image
+- content-visibility for below-fold sections where supported
 
-The old `hero-cinematic-clean.jpg` can remain temporarily. Once V8.5 is confirmed working, it can be deleted because the homepage now uses `hero-moheen-astronaut.jpg`.
+## Analytics
+A privacy-friendly analytics hook is included but OFF by default.
+No visitor data is transmitted unless you explicitly set:
+window.MM_ANALYTICS_ENDPOINT = "https://your-provider-endpoint";
 
-After GitHub Pages deploys, press Ctrl + F5.
+That hook can send pageviews and link clicks without cookies or fingerprinting.
+For a real dashboard, connect a provider later (Plausible, Simple Analytics, Cloudflare Web Analytics, GoatCounter, Google Analytics, etc.).
+
+Upload all files directly to the root of `main`.

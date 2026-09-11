@@ -274,3 +274,34 @@ weeklyBrief();
   syncMirrors();
   setInterval(syncMirrors,500);
 })();
+
+// V8.6 mobile navigation
+(function(){
+  const btn=document.getElementById('mobile-nav-toggle'),nav=document.getElementById('nav-links');
+  if(!btn||!nav)return;
+  const close=()=>{nav.classList.remove('mobile-open');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open navigation')};
+  btn.addEventListener('click',()=>{const open=nav.classList.toggle('mobile-open');btn.setAttribute('aria-expanded',String(open));btn.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+  window.addEventListener('resize',()=>{if(innerWidth>900)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+
+// Safe external links
+document.querySelectorAll('a[target="_blank"]').forEach(a=>{
+  const rel=new Set((a.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
+  rel.add('noopener');rel.add('noreferrer');a.setAttribute('rel',[...rel].join(' '));
+});
+
+// Optional privacy-friendly analytics hook: off by default.
+(function(){
+  const endpoint=window.MM_ANALYTICS_ENDPOINT;if(!endpoint)return;
+  const send=(event,data={})=>{const payload=JSON.stringify({event,path:location.pathname,referrer:document.referrer?new URL(document.referrer).hostname:'',ts:new Date().toISOString(),...data});try{if(navigator.sendBeacon)navigator.sendBeacon(endpoint,new Blob([payload],{type:'application/json'}));else fetch(endpoint,{method:'POST',headers:{'content-type':'application/json'},body:payload,keepalive:true})}catch(e){}};
+  send('pageview');
+  document.addEventListener('click',e=>{const a=e.target.closest('a');if(a)send('link_click',{label:(a.textContent||'').trim().slice(0,80),href:a.href})});
+})();
+
+// Current page semantics
+(function(){
+  const here=location.pathname.replace(/\/index\.html$/,'/');
+  document.querySelectorAll('.nav nav a').forEach(a=>{try{const u=new URL(a.href,location.href);if(u.pathname.replace(/\/index\.html$/,'/')===here&&!u.hash)a.setAttribute('aria-current','page')}catch(e){}});
+})();
