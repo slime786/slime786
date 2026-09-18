@@ -639,3 +639,181 @@ img,canvas,video,svg{max-width:100%}
 .case-footer{padding:28px 5vw;border-top:1px solid #17384e;display:flex;justify-content:space-between;gap:20px;color:#5f7a8d;font-size:8px;letter-spacing:.13em}
 @media(max-width:900px){.case-hero{min-height:850px}.case-hero-bg{background-position:70% center}.case-hero-overlay{background:linear-gradient(180deg,rgba(2,7,13,.28),rgba(2,7,13,.95) 75%,#02070d),linear-gradient(90deg,rgba(2,7,13,.8),transparent)}.case-hero-copy{padding-top:260px}.case-meta-grid{grid-template-columns:1fr 1fr}.case-two-col,.case-lessons{grid-template-columns:1fr;gap:30px}.case-system-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.case-nav{padding:0 18px}.case-nav-links a:not(:first-child){display:none}.case-wrap{width:calc(100% - 36px)}.case-hero{min-height:820px}.case-hero h1{font-size:clamp(58px,18vw,78px)}.case-lead{font-size:16px}.case-kicker{flex-wrap:wrap}.case-section{padding:75px 0}.case-meta-grid,.case-system-grid{grid-template-columns:1fr}.case-system-grid article{min-height:220px}.case-system-grid h3{margin-top:38px}.case-visual img{height:560px;object-position:68% center}.case-footer{flex-direction:column}}
+
+
+/* =========================================================
+   V9.2 — INTERACTIVE HOVER SYSTEM
+   Clear, restrained interaction feedback for desktop/pointer devices.
+   ========================================================= */
+
+/* Always communicate clickability */
+a,
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+.clickable {
+  cursor: pointer;
+}
+
+/* Buttons: lift + cyan edge/glow + physical press */
+.btn,
+button {
+  transition:
+    transform .20s ease,
+    box-shadow .20s ease,
+    border-color .20s ease,
+    background-color .20s ease,
+    color .20s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover,
+  button:hover {
+    transform: translateY(-3px);
+    border-color: rgba(85,196,255,.9);
+    box-shadow:
+      0 10px 30px rgba(40,174,255,.18),
+      inset 0 0 0 1px rgba(85,196,255,.08);
+  }
+
+  .btn.primary:hover {
+    box-shadow:
+      0 12px 34px rgba(40,174,255,.28),
+      0 0 20px rgba(85,196,255,.10);
+  }
+
+  .btn:active,
+  button:active {
+    transform: translateY(0) scale(.97);
+    transition-duration: .08s;
+  }
+
+  /* Navigation: brighter text + animated signal line */
+  nav a,
+  .nav-links a,
+  .case-nav a {
+    position: relative;
+    transition: color .20s ease, text-shadow .20s ease;
+  }
+
+  nav a::after,
+  .nav-links a::after,
+  .case-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -7px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .24s ease;
+    opacity: .8;
+  }
+
+  nav a:hover,
+  .nav-links a:hover,
+  .case-nav a:hover {
+    color: #dff6ff;
+    text-shadow: 0 0 16px rgba(85,196,255,.35);
+  }
+
+  nav a:hover::after,
+  .nav-links a:hover::after,
+  .case-nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Inline/text links: underline sweeps left -> right */
+  .text-link {
+    position: relative;
+    display: inline-block;
+    transition: color .20s ease, transform .20s ease;
+  }
+
+  .text-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .24s ease;
+    opacity: .8;
+  }
+
+  .text-link:hover {
+    color: #65caff;
+    transform: translateX(3px);
+  }
+
+  .text-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Interactive cards: subtle elevation rather than excessive motion */
+  .command-card,
+  .project-card,
+  .journal-card,
+  .radar-card {
+    transition:
+      transform .24s ease,
+      border-color .24s ease,
+      box-shadow .24s ease,
+      background-color .24s ease;
+  }
+
+  .command-card:hover,
+  .project-card:hover,
+  .journal-card:hover,
+  .radar-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(85,196,255,.52);
+    box-shadow: 0 18px 48px rgba(0,113,184,.13);
+  }
+
+  /* Social/contact icons and compact links */
+  .social-link,
+  .socials a,
+  .contact-links a {
+    transition: transform .20s ease, color .20s ease, opacity .20s ease;
+  }
+
+  .social-link:hover,
+  .socials a:hover,
+  .contact-links a:hover {
+    transform: translateY(-2px);
+    color: #66caff;
+  }
+}
+
+/* Strong keyboard feedback remains visible independently of hover */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #5ac8ff;
+  outline-offset: 4px;
+}
+
+/* Respect users who request reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  button,
+  .text-link,
+  .command-card,
+  .project-card,
+  .journal-card,
+  .radar-card,
+  nav a,
+  .nav-links a,
+  .case-nav a {
+    transition-duration: .01ms !important;
+  }
+}

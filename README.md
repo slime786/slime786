@@ -1,20 +1,19 @@
-# V9.1 — Project 001
+# V9.2 — Interactive Hover Edition
 
-Adds the first genuine case study to the Personal Command Centre:
+Builds directly on V9.1 / Project 001.
 
-**Project 001 — Personal Command Centre**
+New interaction polish:
+- pointer cursor on clickable controls
+- button lift and cyan glow on hover
+- brief press/compression feedback on click
+- animated navigation underline
+- animated text-link underline and slight directional movement
+- subtle interactive card elevation
+- social/contact hover feedback
+- keyboard focus remains clearly visible
+- hover effects are restricted to pointer devices
+- reduced-motion preferences are respected
 
-The case study documents:
-- the original idea
-- GitHub Pages / HTML / CSS / JavaScript foundation
-- live public-data edges
-- mobile and responsive iteration
-- ticker collision fix
-- visual hierarchy decisions
-- static-site limitations
-- lessons learned
-- route toward Project 002
-
-The page is `project-personal-command-centre.html` and is linked from the V9 Signal Board.
+No content, Project 001, live-data features, mobile work, or core visual design was removed.
 
 Upload every file in this ZIP directly to the root of `main`, replacing matching files.
