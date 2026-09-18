@@ -305,3 +305,5 @@ document.querySelectorAll('a[target="_blank"]').forEach(a=>{
   const here=location.pathname.replace(/\/index\.html$/,'/');
   document.querySelectorAll('.nav nav a').forEach(a=>{try{const u=new URL(a.href,location.href);if(u.pathname.replace(/\/index\.html$/,'/')===here&&!u.hash)a.setAttribute('aria-current','page')}catch(e){}});
 })();
+
+// V9: Command Centre personal content remains human-curated.
