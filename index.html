@@ -391,24 +391,69 @@
   </div>
 </section>
 
-<section id="game" class="section game-section">
-  <div class="section-title">
-    <p class="eyebrow">PLAY</p>
-    <h2>Launch and Explore</h2>
-    <p>Arrow keys steer. Space boosts. Dodge asteroids, collect energy and beat your best score.</p>
+<section id="game" class="section game-section arcade-section">
+  <div class="section-head">
+    <div class="section-title"><span class="eyebrow">MOHEEN // ARCADE</span><h2>SELECT<br>MISSION.</h2></div>
+    <p>Short browser games built into the Command Centre. Progress and high scores stay on this device.</p>
   </div>
-  <div class="game-shell" tabindex="0" id="game-shell">
-    <div class="game-bg"></div>
-    <div class="hud"><span>SCORE <b id="score">0000</b></span><span>LIVES <b id="lives">♥ ♥ ♥</b></span></div>
-    <div id="objects"></div>
-    <div class="rocket" id="rocket"><i></i><span></span></div>
-    <div class="game-message" id="game-message">
-      <h3>Ready for launch?</h3>
-      <p>← → steer · Space boosts</p>
-      <button id="launch">Play Game →</button>
+
+  <div class="arcade-profile">
+    <div><small>ARCADE XP</small><strong id="arcade-xp">0000</strong></div>
+    <div><small>MISSIONS</small><strong id="arcade-missions">00</strong></div>
+    <div><small>BEST BOOST</small><strong id="best">0000</strong></div>
+    <button id="sound-toggle" class="arcade-mini-btn" type="button" aria-pressed="false">SOUND / OFF</button>
+  </div>
+
+  <div class="arcade-selector" aria-label="Arcade missions">
+    <button class="mission-card active" data-game="boost"><span>01</span><b>SPACE BOOST 2.0</b><small>FLIGHT / SURVIVAL</small></button>
+    <button class="mission-card" data-game="defender"><span>02</span><b>ORBITAL DEFENDER</b><small>DEFENCE / WAVES</small></button>
+    <button class="mission-card" data-game="signal"><span>03</span><b>SIGNAL DECODE</b><small>LOGIC / MEMORY</small></button>
+  </div>
+
+  <div class="arcade-stage">
+    <div class="arcade-panel active" id="arcade-boost">
+      <div class="game-instructions"><b>SPACE BOOST 2.0</b><span>← → / A D steer · Space boosts · P pauses · collect energy · dodge asteroids</span></div>
+      <div class="game-shell" tabindex="0" id="game-shell" aria-label="Space Boost 2.0 game">
+        <div class="game-bg"></div><div class="stars"></div>
+        <div class="game-hud">
+          <span>SCORE <b id="score">0000</b></span>
+          <span>SHIELD <b id="shield">100</b></span>
+          <span>ENERGY <b id="energy">0</b></span>
+          <span>LIVES <b id="lives">♥ ♥ ♥</b></span>
+        </div>
+        <div id="objects"></div>
+        <div class="rocket" id="rocket"><i></i><span></span></div>
+        <div class="game-message" id="game-message">
+          <h3>SPACE BOOST 2.0</h3>
+          <p>Survive the asteroid field and collect energy cells.</p>
+          <button id="launch">Launch Mission →</button>
+        </div>
+        <button id="pause-game" class="pause-game" type="button" aria-label="Pause game">Ⅱ</button>
+      </div>
+    </div>
+
+    <div class="arcade-panel" id="arcade-defender">
+      <div class="mini-game-shell">
+        <div class="mini-game-head"><div><small>MISSION 02</small><h3>ORBITAL DEFENDER</h3></div><div>WAVE <b id="def-wave">1</b> · SCORE <b id="def-score">0</b></div></div>
+        <p>Protect Earth. Click or tap incoming objects before they reach the defence line.</p>
+        <div id="defender-field" class="defender-field"><div class="earth-defence">EARTH</div></div>
+        <button id="def-start" class="btn primary">Start Defence →</button>
+      </div>
+    </div>
+
+    <div class="arcade-panel" id="arcade-signal">
+      <div class="mini-game-shell">
+        <div class="mini-game-head"><div><small>MISSION 03</small><h3>SIGNAL DECODE</h3></div><div>ROUND <b id="sig-round">0</b> · BEST <b id="sig-best">0</b></div></div>
+        <p>Memorise the signal sequence, then reproduce it. Each round adds another node.</p>
+        <div class="signal-grid">
+          <button data-signal="0" aria-label="Signal node 1"></button><button data-signal="1" aria-label="Signal node 2"></button>
+          <button data-signal="2" aria-label="Signal node 3"></button><button data-signal="3" aria-label="Signal node 4"></button>
+        </div>
+        <div id="signal-status" class="signal-status">SYSTEM READY</div>
+        <button id="sig-start" class="btn primary">Decode Signal →</button>
+      </div>
     </div>
   </div>
-  <div class="score-row"><div><small>High Score</small><strong id="best">0000</strong></div><div><small>Last Score</small><strong id="last">0000</strong></div></div>
 </section>
 
 
