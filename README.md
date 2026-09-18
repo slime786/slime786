@@ -1,6 +1,20 @@
-# V9 — Personal Command Centre
-Builds on V8.6 and retains the personal astronaut hero, mobile production pass, live ticker, Market Radar, Journal, game, accessibility and social metadata.
+# V9.1 — Project 001
 
-New: a responsive Signal Board bringing Current Focus, Market Radar, Journal, Projects and GitHub together as a personal command centre, plus a web-app manifest foundation.
+Adds the first genuine case study to the Personal Command Centre:
 
-Upload every file in this ZIP directly to the root of the `main` branch, replacing matching files.
+**Project 001 — Personal Command Centre**
+
+The case study documents:
+- the original idea
+- GitHub Pages / HTML / CSS / JavaScript foundation
+- live public-data edges
+- mobile and responsive iteration
+- ticker collision fix
+- visual hierarchy decisions
+- static-site limitations
+- lessons learned
+- route toward Project 002
+
+The page is `project-personal-command-centre.html` and is linked from the V9 Signal Board.
+
+Upload every file in this ZIP directly to the root of `main`, replacing matching files.

@@ -609,3 +609,33 @@ img,canvas,video,svg{max-width:100%}
 .focus-lines b{color:#cfe7f5;font-size:11px;letter-spacing:.02em;font-weight:600}
 @media(max-width:900px){.command-grid{grid-template-columns:1fr}.command-card--wide{grid-column:auto}}
 @media(max-width:600px){.command-grid{margin-top:28px}.command-card{min-height:240px;padding:20px}.command-card--wide{min-height:0}.focus-lines span{grid-template-columns:1fr;gap:6px}}
+
+/* V9.1 — Project 001 case study */
+.case-study-page{background:#02070d;color:#eaf6ff}
+.case-nav{height:72px;position:fixed;z-index:500;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;background:rgba(2,7,13,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(64,164,224,.18)}
+.case-brand,.case-nav a{color:#e9f6ff;text-decoration:none}.case-brand{font-weight:800;letter-spacing:-.03em}.case-nav-links{display:flex;gap:26px}.case-nav-links a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#87a6ba}
+.case-wrap{width:min(1180px,90vw);margin:auto}
+.case-hero{min-height:920px;position:relative;display:flex;align-items:center;padding-top:100px;overflow:hidden}
+.case-hero-bg{position:absolute;inset:0;background:url('hero-moheen-astronaut.jpg') center right/cover no-repeat}
+.case-hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,7,13,.96) 0%,rgba(2,7,13,.74) 40%,rgba(2,7,13,.16) 75%),linear-gradient(0deg,#02070d 0%,transparent 28%)}
+.case-hero-copy{position:relative;z-index:2}
+.case-kicker{display:flex;gap:22px;color:#55bfff;font-size:9px;letter-spacing:.16em;margin-bottom:32px}
+.case-hero h1{font-size:clamp(74px,10vw,148px);line-height:.78;letter-spacing:-.075em;margin:0;max-width:850px}
+.case-lead{font-size:20px;line-height:1.65;color:#9db4c4;max-width:650px;margin:36px 0}
+.case-actions{display:flex;gap:10px;flex-wrap:wrap}
+.case-section{padding:110px 0;border-top:1px solid #102b3e}
+.case-meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.case-meta-grid div{display:grid;gap:10px}.case-meta-grid small,.case-number{color:#4fb8f8;font-size:9px;letter-spacing:.16em}.case-meta-grid strong{font-size:14px}.case-live{color:#66e2a0!important}
+.case-two-col{display:grid;grid-template-columns:.85fr 1.15fr;gap:9vw;align-items:start}
+.case-section h2{font-size:clamp(46px,6vw,82px);line-height:.92;letter-spacing:-.055em;margin:24px 0}
+.case-copy{font-size:17px;line-height:1.85;color:#91a8b8}.case-copy p{margin:0 0 28px}.case-copy strong{color:#dff4ff}
+.case-visual{position:relative;background:#000}.case-visual img{width:100%;height:min(78vh,850px);object-fit:cover;object-position:center}.case-caption{position:absolute;bottom:18px;left:5vw;background:rgba(2,7,13,.76);padding:10px 13px;font-size:8px;letter-spacing:.14em;color:#a9c3d4}
+.case-wide-title{font-size:clamp(58px,8vw,108px)!important}
+.case-system-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#17374d;border:1px solid #17374d;margin-top:60px}
+.case-system-grid article{background:#04101a;padding:30px;min-height:280px}.case-system-grid b{color:#4dbbff;font-size:10px}.case-system-grid h3{font-size:24px;margin:60px 0 14px}.case-system-grid p{color:#8299a9;line-height:1.7;font-size:14px}
+.case-dark{background:#01050a}.case-timeline{border-left:1px solid #1a4562}.case-timeline div{padding:0 0 42px 32px;position:relative}.case-timeline div:before{content:"";position:absolute;left:-4px;top:3px;width:7px;height:7px;border-radius:50%;background:#51bfff}.case-timeline b{font-size:9px;letter-spacing:.15em;color:#4dbbff}.case-timeline p{color:#92a9b9;line-height:1.7}
+.case-lessons{display:grid;grid-template-columns:1.1fr .9fr;gap:8vw;margin-top:50px}.case-lessons blockquote{font-size:clamp(34px,5vw,70px);line-height:1.08;letter-spacing:-.045em;margin:0}
+.case-next{padding:140px 0;background:radial-gradient(circle at 75% 50%,rgba(21,134,202,.15),transparent 32%),#030a11;border-top:1px solid #17384e}.case-next h2{font-size:clamp(68px,10vw,140px);line-height:.82;letter-spacing:-.07em;margin:28px 0}.case-next h2 em{font-style:normal;color:#24485f}.case-next p{color:#8ba4b4;margin-bottom:30px}
+.case-footer{padding:28px 5vw;border-top:1px solid #17384e;display:flex;justify-content:space-between;gap:20px;color:#5f7a8d;font-size:8px;letter-spacing:.13em}
+@media(max-width:900px){.case-hero{min-height:850px}.case-hero-bg{background-position:70% center}.case-hero-overlay{background:linear-gradient(180deg,rgba(2,7,13,.28),rgba(2,7,13,.95) 75%,#02070d),linear-gradient(90deg,rgba(2,7,13,.8),transparent)}.case-hero-copy{padding-top:260px}.case-meta-grid{grid-template-columns:1fr 1fr}.case-two-col,.case-lessons{grid-template-columns:1fr;gap:30px}.case-system-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.case-nav{padding:0 18px}.case-nav-links a:not(:first-child){display:none}.case-wrap{width:calc(100% - 36px)}.case-hero{min-height:820px}.case-hero h1{font-size:clamp(58px,18vw,78px)}.case-lead{font-size:16px}.case-kicker{flex-wrap:wrap}.case-section{padding:75px 0}.case-meta-grid,.case-system-grid{grid-template-columns:1fr}.case-system-grid article{min-height:220px}.case-system-grid h3{margin-top:38px}.case-visual img{height:560px;object-position:68% center}.case-footer{flex-direction:column}}
