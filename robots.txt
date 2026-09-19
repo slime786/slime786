@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://slime786.github.io/slime786/sitemap.xml

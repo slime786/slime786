@@ -1,9 +1,9 @@
 {
-  "name": "Moheen Mahmood \u2014 Personal Command Centre",
+  "name": "Moheen Mahmood \u2014 Quiet Command",
   "short_name": "Moheen",
   "start_url": "/slime786/",
   "display": "standalone",
-  "background_color": "#02070d",
-  "theme_color": "#03080f",
-  "description": "Technology, markets, projects, ideas and journal."
+  "background_color": "#020508",
+  "theme_color": "#020508",
+  "description": "Technology, markets, projects, writing and play."
 }
