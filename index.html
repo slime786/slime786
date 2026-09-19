@@ -3,176 +3,553 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Moheen Mahmood — Quiet Command</title>
-<meta name="description" content="Moheen Mahmood — a quieter personal command centre for technology, markets, projects, writing and play.">
-<meta name="theme-color" content="#020508">
+<meta name="description" content="Moheen Mahmood — London-based portfolio exploring technology, investments and ideas.">
+<meta name="theme-color" content="#06101a">
+<title>Moheen Mahmood — Personal Command Centre</title>
+
+<meta property="og:title" content="Moheen Mahmood — Personal Command Centre">
+<meta property="og:description" content="London-based personal portfolio exploring technology, investing, markets, entrepreneurship and ideas.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="index,follow">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/slime786/v10.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/slime786/style.css">
 <link rel="icon" href="/slime786/favicon.svg" type="image/svg+xml">
 <link rel="preload" as="image" href="/slime786/hero-moheen-astronaut.jpg" fetchpriority="high">
-<link rel="manifest" href="/slime786/site.webmanifest">
+
 <link rel="canonical" href="https://slime786.github.io/slime786/">
 <meta property="og:site_name" content="Moheen Mahmood">
-<meta property="og:title" content="Moheen Mahmood — Quiet Command">
-<meta property="og:description" content="Technology. Markets. Building. A cinematic personal command centre from London.">
+<meta property="og:title" content="Moheen Mahmood — Personal Command Centre">
+<meta property="og:description" content="A cinematic personal command centre exploring technology, markets, investing, ideas and building.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://slime786.github.io/slime786/">
 <meta property="og:image" content="https://slime786.github.io/slime786/hero-moheen-astronaut.jpg">
 <meta property="og:image:alt" content="Moheen Mahmood in a cinematic astronaut scene above Earth">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Moheen Mahmood — Personal Command Centre">
+<meta name="twitter:description" content="Technology, markets, ideas and projects from London.">
 <meta name="twitter:image" content="https://slime786.github.io/slime786/hero-moheen-astronaut.jpg">
-</head>
-<body class="v10-home">
-<a class="v10-skip" href="#main">Skip to content</a>
+<meta name="theme-color" content="#03080f">
 
-<header class="v10-nav" id="top">
-  <a class="v10-brand" href="#top" aria-label="Moheen Mahmood home">MM<span>/</span></a>
-  <nav id="v10-menu">
-    <a href="#work">Work</a>
-    <a href="/slime786/journal.html">Journal</a>
+<!-- Analytics hook: set window.MM_ANALYTICS_ENDPOINT only after connecting a real provider. No analytics are transmitted by default. -->
+<link rel="manifest" href="site.webmanifest">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="cursor-dot"></div><div class="cursor-ring"></div>
+
+<header class="nav" id="top">
+  <a class="brand" href="#top">Moheen Mahmood</a>
+  <nav id="nav-links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#now">Now</a>
+    <a href="#markets">Markets</a>
     <a href="/slime786/market-radar.html">Radar</a>
-    <a href="/slime786/arcade.html">Arcade</a>
+    <a href="#tech">Technology</a>
+    <a href="#weekly">Weekly</a>
+    <a href="#ideas">Ideas</a>
+    <a href="/slime786/journal.html">Journal</a>
+    <a href="#github">GitHub</a>
+    <a href="#projects">Projects</a>
+    <a href="#observatory">Observatory</a>
+    <a href="#game">Arcade</a>
     <a href="#contact">Contact</a>
-  </nav>
-  <div class="v10-nav-tools">
-    <span class="v10-online"><i id="network-dot"></i><span id="network-label">LIVE</span></span>
-    <button id="v10-command-trigger" class="v10-command-button" type="button" aria-label="Open command menu">⌘ K</button>
-    <button id="v10-menu-toggle" class="v10-menu-toggle" type="button" aria-expanded="false" aria-controls="v10-menu" aria-label="Open navigation">Menu</button>
-  </div>
+  <button class="command-trigger" id="command-trigger" aria-label="Open command search"><span>⌘</span> K</button></nav><button type="button" id="mobile-nav-toggle" class="mobile-nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span><span></span></button>
+  <a class="connect" href="#contact">Let's Connect</a>
 </header>
 
-<main id="main">
-<section class="v10-hero" id="home">
-  <div class="v10-hero-image" aria-hidden="true"></div>
-  <div class="v10-hero-shade" aria-hidden="true"></div>
-  <div class="v10-hero-grain" aria-hidden="true"></div>
-  <div class="v10-hero-copy">
-    <div class="v10-kicker"><span>LONDON</span><i></i><span>PERSONAL COMMAND CENTRE</span></div>
-    <h1>MOHEEN<br><em>MAHMOOD</em></h1>
-    <p>Technology. Markets. Building.</p>
-    <div class="v10-actions">
-      <a class="v10-button primary" href="#work">Explore selected work <span>↘</span></a>
-      <a class="v10-button ghost" href="/slime786/project-personal-command-centre.html">Project 001</a>
+<section class="command-ticker" aria-label="Live market and technology ticker">
+  <div class="ticker-status">
+    <span class="ticker-live-dot"></span>
+    <b>LIVE</b>
+    <small id="ticker-updated">SYNCING</small>
+  </div>
+
+  <div class="ticker-window">
+    <div class="ticker-marquee" id="ticker-marquee">
+
+      <div class="ticker-group">
+        <div class="ticker-chip spark-chip">
+          <span>BTC / GBP</span>
+          <strong id="ticker-btc">—</strong>
+          <canvas id="btc-spark" width="120" height="34" aria-label="Bitcoin 24 hour sparkline"></canvas>
+          <em id="ticker-btc-change">—</em>
+        </div>
+
+        <div class="ticker-chip spark-chip">
+          <span>ETH / GBP</span>
+          <strong id="ticker-eth">—</strong>
+          <canvas id="eth-spark" width="120" height="34" aria-label="Ethereum 24 hour sparkline"></canvas>
+          <em id="ticker-eth-change">—</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>LONDON</span>
+          <strong id="ticker-london-time">—</strong>
+          <em>LOCAL</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>US SESSION</span>
+          <strong id="ticker-us">—</strong>
+          <em>INDICATIVE</em>
+        </div>
+
+        <div class="ticker-chip headline-chip">
+          <span>TECH SIGNAL</span>
+          <strong id="ticker-headline">Scanning current technology stories…</strong>
+          <em id="ticker-headline-source">LIVE FEED</em>
+        </div>
+
+        <div class="ticker-chip signal-chip">
+          <span>HIGH SIGNAL</span>
+          <strong id="signal-title">Assessing current stories…</strong>
+          <em id="signal-score">—</em>
+        </div>
+      </div>
+
+      <div class="ticker-group" aria-hidden="true">
+        <div class="ticker-chip">
+          <span>BTC / GBP</span>
+          <strong class="mirror-btc">—</strong>
+          <em class="mirror-btc-change">—</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>ETH / GBP</span>
+          <strong class="mirror-eth">—</strong>
+          <em class="mirror-eth-change">—</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>LONDON</span>
+          <strong class="mirror-london">—</strong>
+          <em>LOCAL</em>
+        </div>
+
+        <div class="ticker-chip">
+          <span>US SESSION</span>
+          <strong class="mirror-us">—</strong>
+          <em>INDICATIVE</em>
+        </div>
+
+        <div class="ticker-chip headline-chip">
+          <span>TECH SIGNAL</span>
+          <strong class="mirror-headline">Live technology feed</strong>
+          <em class="mirror-headline-source">LIVE FEED</em>
+        </div>
+
+        <div class="ticker-chip signal-chip">
+          <span>HIGH SIGNAL</span>
+          <strong class="mirror-signal-title">Current important story</strong>
+          <em class="mirror-signal-score">—</em>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="v10-live-dock" aria-label="Live automated status">
-    <div><small>LONDON</small><strong id="v10-clock">--:--</strong></div>
-    <div><small>BTC / GBP</small><strong id="v10-btc">—</strong><span id="v10-btc-change">—</span></div>
-    <div><small>ETH / GBP</small><strong id="v10-eth">—</strong><span id="v10-eth-change">—</span></div>
-    <div class="v10-github-dock"><small>GITHUB</small><strong id="v10-github">SYNCING</strong><span id="v10-github-time">—</span></div>
-  </div>
+  <button class="ticker-pause" id="ticker-pause" type="button" aria-pressed="false" aria-label="Pause live ticker">Ⅱ</button>
 </section>
 
-<section class="v10-statement v10-wrap">
-  <p class="v10-overline">01 / POINT OF VIEW</p>
-  <h2>Less noise.<br>More <em>signal.</em></h2>
-  <p class="v10-statement-copy">A personal space for the things I’m building, watching and learning — without trying to put everything on one screen.</p>
-</section>
 
-<section class="v10-work v10-wrap" id="work">
-  <div class="v10-section-head">
-    <div><p class="v10-overline">02 / SELECTED</p><h2>Three doors.</h2></div>
-    <p>Everything else stays one click away.</p>
-  </div>
-
-  <div class="v10-work-grid">
-    <a class="v10-work-card featured" href="/slime786/project-personal-command-centre.html">
-      <span class="v10-card-no">001</span>
-      <div class="v10-card-art v10-art-project"><i></i></div>
-      <div class="v10-card-copy"><small>CASE STUDY</small><h3>Personal Command Centre</h3><p>The site itself — from portfolio to living system.</p><b>Open project ↗</b></div>
-    </a>
-    <a class="v10-work-card" href="/slime786/market-radar.html">
-      <span class="v10-card-no">LIVE</span>
-      <div class="v10-card-art v10-art-radar"><i></i><i></i><i></i></div>
-      <div class="v10-card-copy"><small>MARKETS</small><h3>Market Radar</h3><p>Research themes and live context.</p><b>Enter radar ↗</b></div>
-    </a>
-    <a class="v10-work-card" href="/slime786/journal.html">
-      <span class="v10-card-no" id="v10-note-count">08</span>
-      <div class="v10-card-art v10-art-journal"><span>NOTES<br>FROM THE<br>RADAR.</span></div>
-      <div class="v10-card-copy"><small>JOURNAL</small><h3>Notes from the Radar</h3><p>Reviewed notes on technology, markets and building.</p><b>Read journal ↗</b></div>
-    </a>
-  </div>
-</section>
-
-<section class="v10-signal">
-  <div class="v10-wrap v10-signal-grid">
-    <div class="v10-signal-main">
-      <p class="v10-overline">03 / LIVE SIGNAL</p>
-      <div class="v10-signal-state"><i></i><span>AUTOMATIC / 5 MIN</span></div>
-      <a id="v10-signal-link" href="https://news.ycombinator.com/" target="_blank" rel="noopener noreferrer">
-        <small id="v10-signal-source">TECH SIGNAL</small>
-        <h2 id="v10-signal-title">Scanning the technology feed…</h2>
-        <span>Open source ↗</span>
-      </a>
+<main id="main-content">
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">IDEAS · INVESTMENTS · IMPACT.</p>
+    <h1>Moheen<br>Mahmood</h1>
+    <p class="hero-text">Exploring technology, global markets and bold ideas to create a smarter, more innovative tomorrow.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#about">Explore My Work →</a>
+      <a class="btn" href="#about">About Me</a>
     </div>
-    <aside class="v10-activity">
-      <p class="v10-overline">LATEST BUILD TRACE</p>
-      <strong id="v10-activity-title">Checking GitHub…</strong>
-      <p id="v10-activity-meta">@slime786</p>
-      <a href="https://github.com/slime786" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+  </div>
+
+  <aside class="live-panel" id="markets">
+    <div class="market-item">
+      <span class="coin btc">₿</span>
+      <div><small>Bitcoin (BTC)</small><strong id="btc">Loading…</strong><em id="btc-change">—</em></div>
+    </div>
+    <div class="market-item">
+      <span class="coin eth">◆</span>
+      <div><small>Ethereum (ETH)</small><strong id="eth">Loading…</strong><em id="eth-change">—</em></div>
+    </div>
+    <div class="market-item london">
+      <span class="flag">🇬🇧</span>
+      <div><small>London, UK</small><strong id="clock">--:--:--</strong><em id="date">Loading…</em></div>
+    </div>
+  </aside>
+</section>
+
+<section class="quick-cards">
+  <article><h3>Investments</h3><p>Markets, opportunities and long-term thinking.</p><a href="#markets">Explore →</a></article>
+  <article id="tech"><h3>Technology Pulse</h3><p>AI, innovation and the future of our world.</p><a href="#tech-feed">Explore →</a></article>
+  <article id="github"><h3>GitHub Activity</h3><p>Building, learning and shipping ideas.</p><a href="https://github.com/slime786" target="_blank" rel="noopener">View GitHub →</a></article>
+  <article><h3>Rocket Game</h3><p>Play the space game and reach new heights.</p><a href="#game">Launch →</a></article>
+  <article><h3>Contact</h3><p>Let's connect and build the future.</p><a href="#contact">Get in Touch →</a></article>
+</section>
+
+<section id="about" class="section about">
+  <div>
+    <p class="eyebrow">ABOUT ME</p>
+    <h2>Curious about where<br>technology and capital meet.</h2>
+  </div>
+  <div class="about-copy">
+    <p>I'm Moheen Mahmood, based in London. My interests sit across technology, investing, entrepreneurship and the ideas shaping the next decade.</p>
+    <p>I enjoy understanding businesses, following emerging technologies, learning from markets and thinking about the connections between innovation, capital and long-term opportunity.</p>
+  </div>
+</section>
+
+
+<section id="now" class="section now-section">
+  <div class="section-title split-title">
+    <div>
+      <p class="eyebrow">NOW / CURRENTLY</p>
+      <h2>What has my<br>attention right now.</h2>
+    </div>
+    <p class="section-intro">A living snapshot of the themes I keep coming back to — updated as my interests evolve.</p>
+  </div>
+
+  <div class="now-grid">
+    <article>
+      <span>01</span>
+      <h3>Artificial Intelligence</h3>
+      <p>Following how AI changes software, work, productivity and the economics of building digital products.</p>
+      <b>LEARNING →</b>
+    </article>
+    <article>
+      <span>02</span>
+      <h3>Markets & Businesses</h3>
+      <p>Understanding companies, incentives, capital allocation and the difference between short-term noise and long-term value.</p>
+      <b>RESEARCHING →</b>
+    </article>
+    <article>
+      <span>03</span>
+      <h3>Building on the Web</h3>
+      <p>Turning ideas into interactive digital experiences — including this portfolio and the experiments inside it.</p>
+      <b>BUILDING →</b>
+    </article>
+  </div>
+</section>
+
+<section class="section data-section">
+  <div class="section-title">
+    <p class="eyebrow">LIVE INFORMATION</p>
+    <h2>Markets & Technology</h2>
+  </div>
+  <div class="data-grid">
+    <div class="market-box">
+      <h3>Market Watch</h3>
+      <div class="row"><span>Bitcoin</span><strong id="btc2">—</strong></div>
+      <div class="row"><span>Ethereum</span><strong id="eth2">—</strong></div>
+      <div class="row"><span>US Market</span><strong id="us-status">Checking…</strong></div>
+      <p class="fine">Informational only. External market data can be delayed.</p>
+    </div>
+    <div class="news-box" id="tech-feed">
+      <h3>Technology Pulse</h3>
+      <div id="news">Loading the latest technology stories…</div>
+    </div>
+  </div>
+
+<div class="watchlist-box">
+  <div class="watchlist-head">
+    <div><p class="eyebrow">PERSONAL WATCHLIST</p><h3>Signals I like to watch.</h3></div>
+    <span class="live-badge"><i></i> LIVE / INDICATIVE</span>
+  </div>
+  <div class="watchlist-grid">
+    <div><small>BTC / GBP</small><strong id="watch-btc">—</strong><span id="watch-btc-change">—</span></div>
+    <div><small>ETH / GBP</small><strong id="watch-eth">—</strong><span id="watch-eth-change">—</span></div>
+    <div><small>US SESSION</small><strong id="watch-us">—</strong><span>NEW YORK</span></div>
+    <div><small>LONDON</small><strong id="watch-time">—</strong><span>LOCAL TIME</span></div>
+  </div>
+  <p class="fine">A lightweight personal dashboard for context, not financial advice. External data can be delayed or unavailable.</p>
+<a class="radar-launch" href="/slime786/market-radar.html">LAUNCH MARKET RADAR ↗</a>
+</div>
+
+</section>
+
+
+<section class="signal-alert-panel">
+  <div class="signal-alert-kicker"><span class="ticker-live-dot"></span> IMPORTANT / HIGH SIGNAL</div>
+  <div class="signal-alert-copy">
+    <h3 id="important-title">Scanning current technology stories…</h3>
+    <p id="important-meta">Automatically highlights unusually active stories from the live technology feed.</p>
+  </div>
+  <a id="important-link" href="#weekly">OPEN SIGNAL ↗</a>
+</section>
+<section id="weekly" class="section weekly-section">
+  <div class="weekly-head">
+    <div><p class="eyebrow">WEEKLY BRIEF / AUTOMATIC EDITION</p><h2>This week in<br>technology.</h2></div>
+    <div class="edition"><small>CURRENT EDITION</small><strong id="weekly-edition">—</strong><span id="weekly-date">—</span></div>
+  </div>
+  <div class="weekly-grid">
+    <article class="weekly-lead">
+      <span>LIVE CURATION</span>
+      <h3 id="weekly-title">Loading this week’s technology brief…</h3>
+      <p id="weekly-summary">The page builds a fresh weekly reading list from the current technology feed. It refreshes automatically when visitors return.</p>
+      <div id="weekly-stories" class="weekly-stories"></div>
+    </article>
+    <aside class="weekly-side">
+      <p class="eyebrow">MOHEEN'S LENS</p>
+      <h3>What I’m looking for.</h3>
+      <ul>
+        <li>Where AI is becoming useful infrastructure.</li>
+        <li>Businesses with durable technology advantages.</li>
+        <li>Changes in compute, chips, energy and software.</li>
+        <li>Ideas that connect innovation with long-term value.</li>
+      </ul>
+      <a href="/slime786/article-weekly-notes.html">Read my weekly lens ↗</a>
+    </aside>
+  </div>
+  <p class="weekly-disclaimer">The live reading list is automatically assembled from public technology stories and is not written or endorsed by Moheen. My authored notes remain separate below.</p>
+</section>
+<section id="ideas" class="section ideas-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">IDEAS / JOURNAL</p><h2>Notes on what<br>I’m thinking about.</h2></div>
+    <p class="section-intro">Short-form thinking rather than formal essays — ideas, questions and themes worth revisiting.</p>
+  </div>
+
+  <div class="ideas-grid">
+    <article class="idea-card featured">
+      <span class="idea-no">01</span>
+      <p class="idea-tag">AI / PRODUCTS</p>
+      <h3>AI is becoming an interface, not just a feature.</h3>
+      <p>The interesting shift is not only what models can do, but how naturally intelligence becomes part of everyday software.</p>
+      <a href="/slime786/article-ai-interface.html">Read note ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">02</span>
+      <p class="idea-tag">INVESTING</p>
+      <h3>Good businesses make complexity look simple.</h3>
+      <p>I’m interested in companies where strong products, distribution and execution compound over long periods.</p>
+      <a href="/slime786/article-good-businesses.html">Read note ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">03</span>
+      <p class="idea-tag">TECHNOLOGY</p>
+      <h3>Infrastructure becomes interesting before it becomes obvious.</h3>
+      <p>The tools behind a platform shift can be as important as the applications everyone notices first.</p>
+      <a href="/slime786/article-infrastructure.html">Read note ↗</a>
+    </article>
+    <article class="idea-card">
+      <span class="idea-no">04</span>
+      <p class="idea-tag">BUILDING</p>
+      <h3>A portfolio should feel alive.</h3>
+      <p>This website is an experiment in turning a personal page into a living command centre: data, ideas, code and play in one place.</p>
+      <a href="/slime786/article-living-portfolio.html">Read note ↗</a>
+    </article>
+  </div>
+<div class="section-end-cta"><a class="btn secondary" href="/slime786/journal.html">OPEN FULL JOURNAL ↗</a></div>
+</section>
+
+<section class="astronaut-section">
+  <img loading="lazy" decoding="async" src="astronaut-clean-hd.jpg" alt="Astronaut overlooking Earth">
+  <div class="astro-copy">
+    <p class="eyebrow">POINT OF VIEW</p>
+    <h2>EXPLORE.<br>PUSH.<br>IMPROVE.<br>REPEAT.</h2>
+    <p>Keep moving forward. Keep learning. Keep looking at what others might miss.</p>
+  </div>
+</section>
+
+
+<section id="projects" class="section projects-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">PROJECTS / BUILT HERE</p><h2>Real experiments,<br>running on this site.</h2></div>
+    <p class="section-intro">These are not placeholder client projects. They are working modules I have built into this portfolio and can keep developing in public.</p>
+  </div>
+  <div class="projects-grid">
+    <article class="project-card">
+      <div class="project-visual project-market"><span>PROJECT 01 / LIVE</span><b>MARKET<br>COMMAND</b></div>
+      <div class="project-copy"><p>JAVASCRIPT / API / DATA UI</p><h3>Market Command Centre</h3><span>Live Bitcoin and Ethereum pricing, London time and US-session context presented as a compact personal market dashboard.</span><a href="#markets">Use project ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-space"><span>PROJECT 02 / PLAYABLE</span><b>ORBIT<br>RUNNER</b></div>
+      <div class="project-copy"><p>JAVASCRIPT / GAME LOGIC / UI</p><h3>Orbit Runner</h3><span>A keyboard-controlled browser game with collision detection, increasing difficulty, lives and persistent local high scores.</span><a href="#game">Play project ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-code"><span>PROJECT 03 / PUBLIC</span><b>DEV<br>RADAR</b></div>
+      <div class="project-copy"><p>GITHUB / API / ACTIVITY</p><h3>Developer Radar</h3><span>A live window into my public GitHub work at @slime786, connecting the portfolio to what I am actually building.</span><a href="https://github.com/slime786" target="_blank" rel="noopener">View source ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-observe"><span>PROJECT 04 / COMMUNITY</span><b>THE<br>OBSERVATORY</b></div>
+      <div class="project-copy"><p>PUBLISHING / INTERACTION</p><h3>The Observatory</h3><span>A lightweight community experiment for open questions, reactions, signals and discussion around technology and markets.</span><a href="#observatory">Enter project ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-pulse"><span>PROJECT 05 / LIVE</span><b>TECH<br>PULSE</b></div>
+      <div class="project-copy"><p>API / NEWS / CURATION</p><h3>Technology Pulse</h3><span>A continuously refreshed technology feed that brings current stories into the command centre without turning the site into a news clone.</span><a href="#tech-feed">Open feed ↗</a></div>
+    </article>
+    <article class="project-card">
+      <div class="project-visual project-journal"><span>PROJECT 06 / PUBLISHING</span><b>IDEAS<br>LOG</b></div>
+      <div class="project-copy"><p>WRITING / STATIC WEB</p><h3>Ideas Log</h3><span>A growing collection of short notes about AI, infrastructure, businesses, investing and building on the web.</span><a href="#ideas">Read notes ↗</a></div>
+    </article>
+  </div>
+</section>
+
+<section id="game" class="section game-section arcade-section" aria-label="Moheen Arcade">
+  <div class="section-head">
+    <div class="section-title"><span class="eyebrow">MOHEEN // ARCADE</span><h2>SELECT<br>MISSION.</h2></div>
+    <p>Short browser games built into the Command Centre. Progress and high scores stay on this device.</p>
+  </div>
+
+  <div class="arcade-profile">
+    <div><small>ARCADE XP</small><strong id="arcade-xp">0000</strong></div>
+    <div><small>MISSIONS</small><strong id="arcade-missions">00</strong></div>
+    <div><small>BEST BOOST</small><strong id="best">0000</strong></div>
+    <button id="sound-toggle" class="arcade-mini-btn" type="button" aria-pressed="false">SOUND / OFF</button>
+  </div>
+
+  <div class="arcade-selector" aria-label="Arcade missions">
+    <button class="mission-card active" data-game="boost"><span>01</span><b>SPACE BOOST 2.0</b><small>FLIGHT / SURVIVAL</small></button>
+    <button class="mission-card" data-game="defender"><span>02</span><b>ORBITAL DEFENDER</b><small>DEFENCE / WAVES</small></button>
+    <button class="mission-card" data-game="signal"><span>03</span><b>SIGNAL DECODE</b><small>LOGIC / MEMORY</small></button>
+  </div>
+
+  <div class="arcade-stage">
+    <div class="arcade-panel active" id="arcade-boost">
+      <div class="game-instructions"><b>SPACE BOOST 2.0</b><span>← → / A D steer · Space boosts · P pauses · collect energy · dodge asteroids</span></div>
+      <div class="game-shell" tabindex="0" id="game-shell" aria-label="Space Boost 2.0 game">
+        <div class="game-bg"></div><div class="stars"></div>
+        <div class="game-hud">
+          <span>SCORE <b id="score">0000</b></span>
+          <span>SHIELD <b id="shield">100</b></span>
+          <span>ENERGY <b id="energy">0</b></span>
+          <span>LIVES <b id="lives">♥ ♥ ♥</b></span>
+        </div>
+        <div id="objects"></div>
+        <div class="rocket" id="rocket"><i></i><span></span></div>
+        <div class="game-message" id="game-message">
+          <h3>SPACE BOOST 2.0</h3>
+          <p>Survive the asteroid field and collect energy cells.</p>
+          <button id="launch">Launch Mission →</button>
+        </div>
+        <button id="pause-game" class="pause-game" type="button" aria-label="Pause game">Ⅱ</button>
+      </div>
+    </div>
+
+    <div class="arcade-panel" id="arcade-defender">
+      <div class="mini-game-shell">
+        <div class="mini-game-head"><div><small>MISSION 02</small><h3>ORBITAL DEFENDER</h3></div><div>WAVE <b id="def-wave">1</b> · SCORE <b id="def-score">0</b></div></div>
+        <p>Protect Earth. Click or tap incoming objects before they reach the defence line.</p>
+        <div id="defender-field" class="defender-field"><div class="earth-defence">EARTH</div></div>
+        <button id="def-start" class="btn primary">Start Defence →</button>
+      </div>
+    </div>
+
+    <div class="arcade-panel" id="arcade-signal">
+      <div class="mini-game-shell">
+        <div class="mini-game-head"><div><small>MISSION 03</small><h3>SIGNAL DECODE</h3></div><div>ROUND <b id="sig-round">0</b> · BEST <b id="sig-best">0</b></div></div>
+        <p>Memorise the signal sequence, then reproduce it. Each round adds another node.</p>
+        <div class="signal-grid">
+          <button data-signal="0" aria-label="Signal node 1"></button><button data-signal="1" aria-label="Signal node 2"></button>
+          <button data-signal="2" aria-label="Signal node 3"></button><button data-signal="3" aria-label="Signal node 4"></button>
+        </div>
+        <div id="signal-status" class="signal-status">SYSTEM READY</div>
+        <button id="sig-start" class="btn primary">Decode Signal →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="observatory" class="section observatory-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">THE OBSERVATORY / COMMUNITY</p><h2>Ideas are better<br>when challenged.</h2></div>
+    <p class="section-intro">A lightweight community layer for questions about technology, markets and the future — without turning the site into an empty traditional forum.</p>
+  </div>
+  <div class="observatory-layout">
+    <article class="open-question">
+      <div class="question-top"><span class="live-badge"><i></i> OPEN QUESTION</span><span>Q / 001</span></div>
+      <p class="question-topic">AI / NEXT 10 YEARS</p>
+      <h3>What part of today’s AI boom will still matter in 2036?</h3>
+      <p>Models, chips, energy, data, interfaces, robotics — or something we are underestimating?</p>
+      <div class="signal-votes" data-poll="ai2036">
+        <button data-choice="models">Models <b>0</b></button>
+        <button data-choice="chips">Chips <b>0</b></button>
+        <button data-choice="energy">Energy <b>0</b></button>
+        <button data-choice="robotics">Robotics <b>0</b></button>
+      </div>
+      <p class="local-note">Reactions are stored on this device only. The site does not collect personal data for this poll.</p>
+      <a class="btn secondary" href="mailto:moheenmahmood@hotmail.co.uk?subject=The%20Observatory%20%E2%80%94%20AI%20in%202036&body=My%20take%3A%20">Send me your take ↗</a>
+    </article>
+    <aside class="observatory-side">
+      <div class="signal-card"><span>THE SIGNAL</span><h3>Short notes. Useful links. Things worth watching.</h3><p>A publishing format for observations that are too small for an essay but too interesting to lose.</p><a href="#ideas">Read current notes ↑</a></div>
+      <div class="signal-card"><span>CONTRIBUTE</span><h3>See something I should be watching?</h3><p>Send an article, company, technology or idea. The best suggestions can become future Observatory questions.</p><a href="mailto:moheenmahmood@hotmail.co.uk?subject=Signal%20for%20Moheen&body=Thought%20you%20might%20find%20this%20interesting%3A%20">Send a signal ↗</a></div>
     </aside>
   </div>
 </section>
-
-<section class="v10-now v10-wrap">
-  <div class="v10-section-head">
-    <div><p class="v10-overline">04 / NOW</p><h2>Current orbit.</h2></div>
-  </div>
-  <div class="v10-now-grid">
-    <div><small>BUILDING</small><strong>Useful digital systems</strong></div>
-    <div><small>WATCHING</small><strong>AI · infrastructure · markets</strong></div>
-    <div><small>LEARNING</small><strong>Products · capital · execution</strong></div>
+<section class="section subscribe-section">
+  <div class="subscribe-inner">
+    <div><p class="eyebrow">TRANSMISSION / UPDATES</p><h2>Stay in the loop.</h2><p>Occasional notes on technology, markets, things I’m building and ideas worth revisiting. Until a mailing service is connected, this opens a real email subscription request rather than pretending to collect an address.</p></div>
+    <a class="btn primary subscribe-btn" href="mailto:moheenmahmood@hotmail.co.uk?subject=Subscribe%20me%20to%20Moheen%27s%20updates&body=Hi%20Moheen%2C%0A%0APlease%20add%20me%20to%20your%20future%20updates.%0A">Request updates ↗</a>
   </div>
 </section>
 
-<a class="v10-arcade v10-wrap" href="/slime786/arcade.html" aria-label="Enter Moheen Arcade">
-  <div class="v10-arcade-space"><i></i><i></i><i></i><span class="v10-orbit"></span></div>
-  <div class="v10-arcade-copy">
-    <p class="v10-overline">05 / PLAY</p>
-    <h2>MOHEEN<br>// ARCADE</h2>
-    <p>Three missions. Local high scores. Zero accounts.</p>
-    <span class="v10-button primary">Enter arcade <b>↗</b></span>
+<section class="section timeline-section">
+  <div class="section-title split-title">
+    <div><p class="eyebrow">PERSONAL TIMELINE</p><h2>A simple<br>through-line.</h2></div>
+    <p class="section-intro">Not a résumé — just the themes that define the direction of this site and what I want to keep exploring.</p>
   </div>
-  <div class="v10-arcade-meta"><span>SPACE BOOST 2.0</span><span>ORBITAL DEFENDER</span><span>SIGNAL DECODE</span></div>
-</a>
+  <div class="timeline">
+    <div><span>01</span><h3>London</h3><p>Home base — a global city where technology, capital and culture constantly overlap.</p></div>
+    <div><span>02</span><h3>Technology</h3><p>A long-term curiosity about software, AI, digital products and the infrastructure behind them.</p></div>
+    <div><span>03</span><h3>Investing</h3><p>An interest in businesses, markets, capital allocation and thinking beyond short-term headlines.</p></div>
+    <div><span>04</span><h3>Building</h3><p>Turning those interests into projects, experiments, research and digital experiences.</p></div>
+  </div>
+</section>
 
-<section class="v10-contact" id="contact">
-  <div class="v10-wrap">
-    <p class="v10-overline">06 / CONTACT</p>
-    <h2>Say hello.</h2>
-    <a class="v10-email" href="mailto:moheenmahmood@hotmail.co.uk">moheenmahmood<br>@hotmail.co.uk <span>↗</span></a>
-    <div class="v10-socials">
-      <a href="https://github.com/slime786" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="https://www.instagram.com/slime786/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://wa.me/447848390059" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      <a href="mailto:moheenmahmood@hotmail.co.uk">Email</a>
+<section id="contact" class="section contact">
+  <div><p class="eyebrow">CONTACT</p><h2>Let's connect and build the future.</h2></div>
+  <div class="contact-side">
+    <a class="email" href="mailto:moheenmahmood@hotmail.co.uk">moheenmahmood@hotmail.co.uk</a>
+    <div class="socials">
+      <a href="mailto:moheenmahmood@hotmail.co.uk?subject=Hello%20Moheen">Email ↗</a>
+      <a href="https://wa.me/447848390059" target="_blank" rel="noopener">WhatsApp ↗</a>
+      <a href="https://www.instagram.com/slime786/" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="https://github.com/slime786" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
   </div>
+
+<div class="contact-form-wrap">
+  <p class="eyebrow">DIRECT MESSAGE</p>
+  <form id="contact-form" class="contact-form">
+    <label><span>Name</span><input id="cf-name" type="text" autocomplete="name" required placeholder="Your name"></label>
+    <label><span>Email</span><input id="cf-email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+    <label class="full"><span>Subject</span><input id="cf-subject" type="text" required placeholder="What would you like to discuss?"></label>
+    <label class="full"><span>Message</span><textarea id="cf-message" rows="5" required placeholder="Tell me a little more..."></textarea></label>
+    <div class="full form-actions"><button class="btn primary" type="submit">Open email draft ↗</button><small>No form data is uploaded by this website. Submitting opens your email app with the message pre-filled.</small></div>
+  </form>
+</div>
+
 </section>
+<section class="section command-centre" id="command-centre">
+<div class="section-head"><div class="section-title"><span class="eyebrow">V9 / PERSONAL COMMAND CENTRE</span><h2>THE SIGNAL<br>BOARD.</h2></div><p class="section-intro">One place for what I’m building, watching, learning and publishing — designed to stay useful rather than static.</p></div>
+<div class="command-grid">
+<article class="command-card command-card--wide"><div class="command-card-head"><span>01 / NOW</span><span class="live-dot">ACTIVE</span></div><h3>Current focus</h3><p>Building a living personal platform around technology, markets, projects and ideas.</p><div class="focus-lines"><span>BUILDING <b>Personal Command Centre</b></span><span>RESEARCHING <b>AI · infrastructure · digital markets</b></span><span>IMPROVING <b>Publishing · systems · product thinking</b></span></div><a href="#now" class="text-link">Open Now →</a></article>
+<article class="command-card"><div class="command-card-head"><span>02 / MARKET RADAR</span><span>LIVE DATA</span></div><h3>Watch the signal</h3><p>Live crypto, market context and the themes currently on my radar.</p><a href="market-radar.html" class="text-link">Enter Radar →</a></article>
+<article class="command-card"><div class="command-card-head"><span>03 / JOURNAL</span><span>NOTES</span></div><h3>Thinking in public</h3><p>Working notes on technology, businesses, infrastructure, markets and building.</p><a href="journal.html" class="text-link">Read Journal →</a></article>
+<article class="command-card"><div class="command-card-head"><span>04 / PROJECTS</span><span>BUILD LOG</span></div><h3>Ship, learn, repeat</h3><p>Projects become case studies: what I tried, how I built it and what changed.</p><a href="project-personal-command-centre.html" class="text-link">View Project 001 →</a></article>
+<article class="command-card"><div class="command-card-head"><span>05 / GITHUB</span><span>OPEN SOURCE</span></div><h3>Code trail</h3><p>Follow the repositories and experiments behind the site.</p><a href="https://github.com/slime786" target="_blank" rel="noopener noreferrer" class="text-link">Open GitHub →</a></article>
+</div></section>
 </main>
 
-<footer class="v10-footer v10-wrap">
-  <span>© 2026 MOHEEN MAHMOOD</span>
-  <span id="v10-sync">AUTOMATION READY</span>
-  <a href="#top">TOP ↑</a>
-</footer>
+<footer><span>© 2026 Moheen Mahmood</span><span>London, UK</span><a href="#top">Back to top ↑</a></footer>
+<script src="/slime786/script.js"></script>
 
-<div class="v10-command" id="v10-command" aria-hidden="true">
-  <button class="v10-command-backdrop" data-v10-close aria-label="Close command menu"></button>
-  <div class="v10-command-box" role="dialog" aria-modal="true" aria-label="Quick navigation">
-    <div class="v10-command-top"><span>GO TO</span><button data-v10-close aria-label="Close">ESC</button></div>
-    <a href="/slime786/project-personal-command-centre.html"><small>01</small><b>Project 001</b><span>↗</span></a>
-    <a href="/slime786/market-radar.html"><small>02</small><b>Market Radar</b><span>↗</span></a>
-    <a href="/slime786/journal.html"><small>03</small><b>Journal</b><span>↗</span></a>
-    <a href="/slime786/arcade.html"><small>04</small><b>Arcade</b><span>↗</span></a>
-    <a href="https://github.com/slime786" target="_blank" rel="noopener noreferrer"><small>05</small><b>GitHub</b><span>↗</span></a>
+<div class="command-palette" id="command-palette" aria-hidden="true">
+  <div class="command-backdrop" data-command-close></div>
+  <div class="command-box" role="dialog" aria-modal="true" aria-label="Command Centre Search">
+    <div class="command-input-row"><span>⌘</span><input id="command-input" type="search" autocomplete="off" placeholder="Search the command centre…"><kbd>ESC</kbd></div>
+    <div class="command-results" id="command-results"></div>
+    <div class="command-foot"><span>↑ ↓ Navigate</span><span>Enter Open</span><span>Esc Close</span></div>
   </div>
 </div>
 
-<script src="/slime786/home-v10.js"></script>
 </body>
 </html>
