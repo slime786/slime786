@@ -10,6 +10,7 @@ const inventory = [
 
 let activeCategory = "all";
 let sortMode = "featured";
+let searchTerm = "";
 const cart = new Map();
 
 const grid = document.querySelector("#product-grid");
@@ -29,7 +30,11 @@ function money(value){return new Intl.NumberFormat("en-GB",{style:"currency",cur
 function displayCategory(item){return `${item.game} · ${item.type}`}
 
 function renderProducts(){
-  const filtered = inventory.filter(item => activeCategory === "all" || item.kind === activeCategory);
+  const filtered = inventory.filter(item => {
+    const categoryMatch = activeCategory === "all" || item.kind === activeCategory;
+    const haystack = `${item.game} ${item.type} ${item.name} ${item.set} ${item.condition} ${item.notes}`.toLowerCase();
+    return categoryMatch && haystack.includes(searchTerm);
+  });
   const items = [...filtered].sort((a,b)=>{
     if(sortMode === "price-low") return a.price-b.price;
     if(sortMode === "price-high") return b.price-a.price;
@@ -120,3 +125,52 @@ function loadPayPal(){
 }
 
 renderProducts();renderCart();loadPayPal();
+
+
+function activateCategory(category){
+  activeCategory = category;
+  document.querySelectorAll("[data-category]").forEach(b=>b.classList.toggle("active", b.dataset.category===category));
+  renderProducts();
+  document.querySelector("#shop")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+document.querySelectorAll("[data-hero-filter]").forEach(button=>button.addEventListener("click",()=>{
+  const mode=button.dataset.heroFilter;
+  if(mode==="yugioh") activateCategory("yugioh-single");
+  if(mode==="pokemon") activateCategory("pokemon-single");
+  if(mode==="sealed"){
+    activeCategory="all";
+    document.querySelectorAll("[data-category]").forEach(b=>b.classList.remove("active"));
+    renderProducts();
+    document.querySelector("#shop")?.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  if(mode==="singles"){
+    activeCategory="all";
+    document.querySelectorAll("[data-category]").forEach(b=>b.classList.remove("active"));
+    renderProducts();
+    document.querySelector("#shop")?.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+}));
+
+document.querySelectorAll("[data-nav-filter]").forEach(link=>link.addEventListener("click",()=>{
+  const mode=link.dataset.navFilter;
+  if(mode==="sealed"){
+    searchTerm="sealed";
+  }else if(mode==="singles"){
+    searchTerm="single";
+  }
+  const input=document.querySelector("#site-search");
+  if(input) input.value = mode==="sealed" ? "sealed" : "single";
+  activeCategory="all";
+  renderProducts();
+}));
+
+const searchInput=document.querySelector("#site-search");
+if(searchInput){
+  searchInput.addEventListener("input",e=>{
+    searchTerm=e.target.value.trim().toLowerCase();
+    activeCategory="all";
+    document.querySelectorAll("[data-category]").forEach(b=>b.classList.toggle("active", b.dataset.category==="all"));
+    renderProducts();
+  });
+}
