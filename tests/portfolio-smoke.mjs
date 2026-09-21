@@ -30,3 +30,16 @@ if (missing.length) {
 }
 
 console.log("Portfolio local links, assets and core sections verified.");
+
+const uniqueMeta = [
+  ['name', 'theme-color'],
+  ['name', 'twitter:card'],
+  ['property', 'og:title'],
+  ['property', 'og:description'],
+  ['property', 'og:type'],
+];
+for (const [attribute, value] of uniqueMeta) {
+  const pattern = new RegExp(`<meta\\s+[^>]*${attribute}=["']${value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["'][^>]*>`, "gi");
+  const count = [...html.matchAll(pattern)].length;
+  if (count !== 1) missing.push(`Duplicate metadata ${attribute}=${value} (found ${count})`);
+}
