@@ -18,6 +18,11 @@ for (const id of ["main-content", "work", "about", "projects", "contact"]) {
   if (!html.includes(`id="${id}"`)) missing.push(`#${id}`);
 }
 
+const ids = new Set([...html.matchAll(/\bid=["']([^"']+)["']/gi)].map(match => match[1]));
+for (const match of html.matchAll(/href=["']#([^"']+)["']/gi)) {
+  if (!ids.has(match[1])) missing.push(`Internal anchor #${match[1]}`);
+}
+
 if (missing.length) {
   console.error("Portfolio smoke check failed.");
   [...new Set(missing)].forEach(item => console.error("Missing:", item));
