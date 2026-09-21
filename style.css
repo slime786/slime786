@@ -876,3 +876,24 @@ button:focus-visible,
   .product-first{padding:64px 20px}
   .product-card{min-height:260px;padding:24px}
 }
+
+/* V10.1 product case studies */
+.product-card.product-food{background:radial-gradient(circle at 90% 10%,rgba(255,193,7,.12),transparent 36%),linear-gradient(145deg,#11100c,#0c0b09);border-color:#5a4611}
+.product-card.product-food>span{color:#ffc107}
+.product-card.product-lab{background:linear-gradient(145deg,#080e16,#07101a)}
+.product-cases{background:#03080f}
+.case-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:44px}
+.case-card{min-height:390px;border:1px solid #173f5d;border-radius:18px;background:linear-gradient(145deg,#071522,#050c14);padding:30px;display:flex;flex-direction:column;scroll-margin-top:96px}
+.case-card.case-primary{background:radial-gradient(circle at 90% 10%,rgba(29,242,138,.12),transparent 34%),linear-gradient(145deg,#071522,#050c14);border-color:#1f6a52}
+.case-card.case-food{background:radial-gradient(circle at 90% 10%,rgba(255,193,7,.12),transparent 34%),linear-gradient(145deg,#11100c,#0c0b09);border-color:#5a4611}
+.case-card.case-lab{background:linear-gradient(145deg,#050b12,#03080f)}
+.case-meta{display:flex;justify-content:space-between;gap:18px;color:#69869c;font:700 10px/1.2 ui-monospace,monospace;letter-spacing:.13em}
+.case-primary .case-meta b{color:#48e69d}.case-food .case-meta b{color:#ffc107}
+.case-card h3{font:800 clamp(38px,5vw,64px)/.95 Space Grotesk,sans-serif;letter-spacing:-.055em;margin:42px 0 16px}
+.case-lede{color:#a9bdcd;font-size:17px;line-height:1.65;max-width:620px}
+.case-points{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}
+.case-points span{border:1px solid #173f5d;border-radius:999px;padding:7px 10px;color:#86a0b4;font-size:11px}
+.case-card>a{margin-top:auto;padding-top:24px;color:#4db8ff;font-weight:800;text-decoration:none}
+.case-card>a:hover{text-decoration:underline}
+@media(max-width:900px){.case-grid{grid-template-columns:1fr}.case-card{min-height:330px}}
+@media(max-width:600px){.case-card{padding:24px;min-height:0}.case-card h3{margin-top:30px}.case-lede{font-size:15px}}
