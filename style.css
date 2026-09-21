@@ -876,3 +876,6 @@ button:focus-visible,
   .product-first{padding:64px 20px}
   .product-card{min-height:260px;padding:24px}
 }
+
+/* Product-first homepage polish */
+.lab-signal-intro{max-width:1180px;margin:0 auto;padding:56px 5vw 20px;border-top:1px solid #10283b;background:#03070d}.lab-signal-intro p:last-child{max-width:720px;color:#8fa8be;line-height:1.7;margin-top:10px}.product-first-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}.product-food{border-color:#6c5314!important}.product-food span{color:#f7b718!important}@media(max-width:700px){.lab-signal-intro{padding:42px 20px 16px}.command-ticker{position:relative;top:auto}}
