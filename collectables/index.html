@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Slime's Collectables — personal Yu-Gi-Oh! and Pokémon TCG singles and sealed items, sold from my own collection.">
+  <meta name="theme-color" content="#080b08">
+  <title>Slime's Collectables — Yu-Gi-Oh! & Pokémon TCG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#shop">Skip to shop</a>
+  <div class="announcement">Personal collection · UK based · Singles + sealed · More stock added as I sort through my binders</div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Slime's Collectables home">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span><strong>Slime's</strong><small>Collectables</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#shop">Shop</a>
+      <a href="#story">My collection</a>
+      <a href="#buying">Buying</a>
+    </nav>
+    <button class="cart-button" id="cart-open" type="button" aria-controls="cart-drawer" aria-expanded="false">Basket <span id="cart-count">0</span></button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">FROM MY BINDER TO YOURS</p>
+        <h1>Cards I collected.<br><em>Not warehouse stock.</em></h1>
+        <p class="hero-text">A small personal shop for Yu-Gi-Oh! and Pokémon TCG singles and sealed items from my own collection. I list condition clearly, show the item you are actually buying, and pack every order the way I would want mine packed.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#shop">Browse the collection →</a>
+          <a class="button ghost" href="#story">Why I’m selling</a>
+        </div>
+        <div class="hero-notes" aria-label="Shop principles">
+          <span>Actual-item photos</span><span>Honest condition notes</span><span>PayPal first</span><span>Singles + sealed</span>
+        </div>
+      </div>
+
+      <div class="binder-art" aria-label="Decorative collector binder illustration">
+        <div class="binder-label"><small>SLIME'S BINDER</small><strong>001</strong></div>
+        <div class="card-fan">
+          <div class="mini-card yugioh"><span>YGO</span><b>YOUR CARD<br>PHOTO</b></div>
+          <div class="mini-card pokemon"><span>PKM</span><b>YOUR CARD<br>PHOTO</b></div>
+          <div class="mini-card sealed"><span>SEALED</span><b>BOX / PACK<br>PHOTO</b></div>
+        </div>
+        <p>Each listing should use photos of the exact single or sealed item you will receive.</p>
+      </div>
+    </section>
+
+    <section class="shop-section" id="shop">
+      <div class="section-head">
+        <div><p class="eyebrow">THE COLLECTION</p><h2>Available items</h2></div>
+        <p>This starter build uses clearly marked demo listings so nothing can be accidentally purchased. Replace them in <code>app.js</code> with your real singles and sealed stock.</p>
+      </div>
+
+      <div class="shop-toolbar" aria-label="Product filters">
+        <div class="filter-pills" id="category-filters">
+          <button class="active" type="button" data-category="all">Everything</button>
+          <button type="button" data-category="yugioh-single">Yu-Gi-Oh! singles</button>
+          <button type="button" data-category="pokemon-single">Pokémon singles</button>
+          <button type="button" data-category="yugioh-sealed">Yu-Gi-Oh! sealed</button>
+          <button type="button" data-category="pokemon-sealed">Pokémon sealed</button>
+        </div>
+        <label class="sort-control">Sort
+          <select id="sort-select">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+            <option value="newest">Newest first</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="product-grid" id="product-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="story-section" id="story">
+      <div class="story-card">
+        <p class="eyebrow">A PERSONAL COLLECTION</p>
+        <h2>I’m not trying to be another giant card shop.</h2>
+        <p>I collect because I like the artwork, nostalgia and the chase. This site is a simple way to move on duplicates, singles and sealed pieces I no longer need, so they can end up in somebody else’s binder, deck or display.</p>
+        <p>That means stock will be small, a little random, and personal. When something sells, it is gone unless I happen to own another copy.</p>
+        <div class="signature">— Slime</div>
+      </div>
+      <div class="promise-grid">
+        <article><span>01</span><h3>The item you see</h3><p>Use photographs of the exact single or sealed item for sale, especially for higher-value listings.</p></article>
+        <article><span>02</span><h3>No vague grading</h3><p>List a condition and add plain-English notes for whitening, scratches, dents, seal damage or other issues.</p></article>
+        <article><span>03</span><h3>Packed like a collector</h3><p>Singles get sensible sleeve/top-loader protection; sealed items get proper box protection and weather-resistant outer packing.</p></article>
+        <article><span>04</span><h3>Room to grow</h3><p>The category system already supports adding other TCGs, accessories or graded cards later without rebuilding the shop.</p></article>
+      </div>
+    </section>
+
+    <section class="buying-section" id="buying">
+      <div class="section-head compact">
+        <div><p class="eyebrow">BUYING FROM ME</p><h2>Simple, clear checkout.</h2></div>
+      </div>
+      <div class="buying-steps">
+        <article><b>1</b><h3>Pick your items</h3><p>Add available singles or sealed products to your basket. Quantities are limited to the copies actually listed.</p></article>
+        <article><b>2</b><h3>Pay securely</h3><p>PayPal is the first checkout method. Card wallets or another provider can be added later without changing the catalogue.</p></article>
+        <article><b>3</b><h3>I pack & post</h3><p>Final UK shipping rules should be confirmed before live checkout is enabled, especially for sealed products and higher-value orders.</p></article>
+      </div>
+      <aside class="launch-note">
+        <strong>Launch status: catalogue preview</strong>
+        <p>Checkout stays locked until a PayPal Client ID is added and the demo stock is replaced with real inventory. That prevents accidental payments while the shop is being set up.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>Slime's Collectables</strong><span>Yu-Gi-Oh! · Pokémon · singles · sealed</span></div>
+    <div class="footer-links"><a href="https://github.com/slime786" target="_blank" rel="noopener">GitHub ↗</a><a href="https://slime786.github.io/slime786/">slime786 ↗</a></div>
+    <small>© 2026 Slime's Collectables. Yu-Gi-Oh! and Pokémon are trademarks of their respective owners. Independent personal resale site.</small>
+  </footer>
+
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true" aria-labelledby="cart-title">
+    <div class="cart-head"><div><p class="eyebrow">YOUR BASKET</p><h2 id="cart-title">Binder picks</h2></div><button id="cart-close" type="button" aria-label="Close basket">×</button></div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-empty" id="cart-empty"><strong>Your basket is empty.</strong><p>Add an item and it’ll show up here.</p></div>
+    <div class="cart-summary">
+      <div><span>Items</span><strong id="cart-subtotal">£0.00</strong></div>
+      <div><span>Shipping</span><strong>Calculated later</strong></div>
+      <div class="cart-total"><span>Current total</span><strong id="cart-total">£0.00</strong></div>
+      <button class="button primary checkout-button" id="checkout-button" type="button" disabled>Pay with PayPal</button>
+      <p id="checkout-note">Checkout is intentionally disabled until real inventory and PayPal are configured.</p>
+      <div id="paypal-button-container" aria-live="polite"></div>
+    </div>
+  </aside>
+
+  <template id="product-template">
+    <article class="product-card">
+      <div class="product-image-wrap">
+        <div class="product-image"></div>
+        <span class="condition-badge"></span>
+        <span class="demo-badge">DEMO LISTING</span>
+      </div>
+      <div class="product-meta"><span class="category"></span><span class="set"></span></div>
+      <h3></h3>
+      <p class="card-notes"></p>
+      <div class="product-bottom"><strong class="price"></strong><button class="add-button" type="button">Add to basket</button></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
