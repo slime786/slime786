@@ -3,70 +3,113 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Slime's Collectables — personal Yu-Gi-Oh! and Pokémon TCG singles and sealed items, sold from my own collection.">
-  <meta name="theme-color" content="#080b08">
+  <meta name="description" content="Slime's Collectables — a personal Yu-Gi-Oh! and Pokémon TCG collection shop for singles and sealed items.">
+  <meta name="theme-color" content="#080b12">
   <title>Slime's Collectables — Yu-Gi-Oh! & Pokémon TCG</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip-link" href="#shop">Skip to shop</a>
-  <div class="announcement">Personal collection · UK based · Singles + sealed · More stock added as I sort through my binders</div>
 
-  <header class="site-header">
+  <header class="site-header" id="top">
     <a class="brand" href="#top" aria-label="Slime's Collectables home">
-      <span class="brand-mark" aria-hidden="true">S</span>
-      <span><strong>Slime's</strong><small>Collectables</small></span>
+      <span class="slime-logo" aria-hidden="true"><i></i><b>•‿•</b></span>
+      <span class="brand-copy"><strong>Slime’s Collectables</strong><small>Good cards. Better memories.</small></span>
     </a>
+
     <nav aria-label="Main navigation">
+      <a class="active" href="#top">Home</a>
       <a href="#shop">Shop</a>
-      <a href="#story">My collection</a>
+      <a href="#shop" data-nav-filter="sealed">Sealed</a>
+      <a href="#shop" data-nav-filter="singles">Singles</a>
+      <a href="#story">About</a>
       <a href="#buying">Buying</a>
     </nav>
-    <button class="cart-button" id="cart-open" type="button" aria-controls="cart-drawer" aria-expanded="false">Basket <span id="cart-count">0</span></button>
+
+    <div class="header-tools">
+      <label class="site-search">
+        <span aria-hidden="true">⌕</span>
+        <input id="site-search" type="search" placeholder="Search cards, sets, or anything…" aria-label="Search collection">
+      </label>
+      <button class="cart-button" id="cart-open" type="button" aria-controls="cart-drawer" aria-expanded="false" aria-label="Open basket">🛒<span id="cart-count">0</span></button>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">FROM MY BINDER TO YOURS</p>
-        <h1>Cards I collected.<br><em>Not warehouse stock.</em></h1>
-        <p class="hero-text">A small personal shop for Yu-Gi-Oh! and Pokémon TCG singles and sealed items from my own collection. I list condition clearly, show the item you are actually buying, and pack every order the way I would want mine packed.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#shop">Browse the collection →</a>
-          <a class="button ghost" href="#story">Why I’m selling</a>
-        </div>
-        <div class="hero-notes" aria-label="Shop principles">
-          <span>Actual-item photos</span><span>Honest condition notes</span><span>PayPal first</span><span>Singles + sealed</span>
-        </div>
-      </div>
+  <main>
+    <section class="nostalgia-hero" aria-labelledby="hero-title">
+      <div class="room-glow glow-left"></div>
+      <div class="room-glow glow-right"></div>
 
-      <div class="binder-art" aria-label="Decorative collector binder illustration">
-        <div class="binder-label"><small>SLIME'S BINDER</small><strong>001</strong></div>
-        <div class="card-fan">
-          <div class="mini-card yugioh"><span>YGO</span><b>YOUR CARD<br>PHOTO</b></div>
-          <div class="mini-card pokemon"><span>PKM</span><b>YOUR CARD<br>PHOTO</b></div>
-          <div class="mini-card sealed"><span>SEALED</span><b>BOX / PACK<br>PHOTO</b></div>
+      <aside class="memory-wall memory-wall-left" aria-hidden="true">
+        <div class="desk-lamp"><i></i><b></b></div>
+        <div class="memory-note rotate-a">SAME KID<br>DIFFERENT<br>CARDS ♥</div>
+        <div class="collector-box"><span>GOOD CARDS</span><span>GOOD PEOPLE</span><span>GREAT TIMES</span></div>
+        <div class="card-stack stack-a"></div>
+        <div class="slime-pal"><i></i><b>•‿•</b></div>
+      </aside>
+
+      <aside class="memory-wall memory-wall-right" aria-hidden="true">
+        <div class="shelf-packs"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="memory-note neon-note">CARDS MAKE A<br>BRIGHTER<br>TOMORROW ♥</div>
+        <div class="binder-box">COLLECT<br>WHAT MAKES<br>YOU HAPPY ☺</div>
+        <div class="collector-mug">JUST<br>ONE MORE<br>PACK…</div>
+      </aside>
+
+      <div class="hero-centre">
+        <p class="hero-kicker">CARDS <span>✦</span> COMMUNITY <span>✦</span> GOOD VIBES</p>
+        <div class="hero-logo" aria-hidden="true"><span class="crown">♛</span><span class="mini-slime">•‿•</span></div>
+        <h1 id="hero-title">Slime’s</h1>
+        <div class="collectables-word">COLLECTABLES</div>
+        <p class="hero-subtitle">Singles, sealed products, and the cards I grew up loving.</p>
+        <div class="hero-divider"></div>
+        <p class="hero-tagline">SAME PASSION. A BIGGER SHELF.</p>
+
+        <div class="game-gates" aria-label="Shop by game">
+          <button class="game-gate yugioh-gate" type="button" data-hero-filter="yugioh">
+            <span class="gate-art" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="gate-copy"><strong>Yu-Gi-Oh!</strong><small>DUEL · COLLECT · RELIVE</small></span>
+            <b class="gate-arrow">›</b>
+          </button>
+          <button class="game-gate pokemon-gate" type="button" data-hero-filter="pokemon">
+            <span class="gate-art pokemon-art" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="gate-copy"><strong>Pokémon</strong><small>CATCH · COLLECT · RELIVE</small></span>
+            <b class="gate-arrow">›</b>
+          </button>
         </div>
-        <p>Each listing should use photos of the exact single or sealed item you will receive.</p>
+
+        <div class="hero-shortcuts">
+          <button type="button" data-hero-filter="sealed"><span>◇</span> Sealed Products</button>
+          <button type="button" data-hero-filter="singles"><span>▱</span> Singles</button>
+          <a href="#shop"><span>⌕</span> Browse Collection</a>
+        </div>
+
+        <p class="desk-message">MORE THAN CARDS — A SMALL PIECE OF A BRIGHTER YESTERDAY ♥</p>
       </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Shop values">
+      <article><span>▣</span><div><strong>CAREFULLY PACKED</strong><small>Your cards arrive safe</small></div></article>
+      <article><span>♡</span><div><strong>COLLECTOR RUN</strong><small>A real person, real passion</small></div></article>
+      <article><span>☆</span><div><strong>HONEST LISTINGS</strong><small>Clear condition notes</small></div></article>
+      <article><span>♧</span><div><strong>SAME HOBBY</strong><small>Thanks for being here ♥</small></div></article>
     </section>
 
     <section class="shop-section" id="shop">
       <div class="section-head">
-        <div><p class="eyebrow">THE COLLECTION</p><h2>Available items</h2></div>
-        <p>This starter build uses clearly marked demo listings so nothing can be accidentally purchased. Replace them in <code>app.js</code> with your real singles and sealed stock.</p>
+        <div><p class="eyebrow">THE COLLECTION</p><h2>What’s in the binder.</h2></div>
+        <p>For now these are clearly marked demo listings. When you’re ready, we’ll replace them with photos and details for your actual Yu-Gi-Oh!, Pokémon and sealed stock.</p>
       </div>
 
       <div class="shop-toolbar" aria-label="Product filters">
         <div class="filter-pills" id="category-filters">
           <button class="active" type="button" data-category="all">Everything</button>
-          <button type="button" data-category="yugioh-single">Yu-Gi-Oh! singles</button>
-          <button type="button" data-category="pokemon-single">Pokémon singles</button>
-          <button type="button" data-category="yugioh-sealed">Yu-Gi-Oh! sealed</button>
-          <button type="button" data-category="pokemon-sealed">Pokémon sealed</button>
+          <button class="ygo-pill" type="button" data-category="yugioh-single">Yu-Gi-Oh! singles</button>
+          <button class="pkm-pill" type="button" data-category="pokemon-single">Pokémon singles</button>
+          <button class="ygo-pill" type="button" data-category="yugioh-sealed">Yu-Gi-Oh! sealed</button>
+          <button class="pkm-pill" type="button" data-category="pokemon-sealed">Pokémon sealed</button>
         </div>
         <label class="sort-control">Sort
           <select id="sort-select">
@@ -84,31 +127,31 @@
     <section class="story-section" id="story">
       <div class="story-card">
         <p class="eyebrow">A PERSONAL COLLECTION</p>
-        <h2>I’m not trying to be another giant card shop.</h2>
-        <p>I collect because I like the artwork, nostalgia and the chase. This site is a simple way to move on duplicates, singles and sealed pieces I no longer need, so they can end up in somebody else’s binder, deck or display.</p>
-        <p>That means stock will be small, a little random, and personal. When something sells, it is gone unless I happen to own another copy.</p>
+        <h2>The cards I grew up loving deserve another shelf.</h2>
+        <p>I collect for the artwork, nostalgia and the chase. Slime’s Collectables is my way of moving on duplicates, singles and sealed pieces I no longer need — without turning it into a faceless warehouse shop.</p>
+        <p>Stock will be small, sometimes random, and personal. If something sells, it may genuinely be the only one I have.</p>
         <div class="signature">— Slime</div>
       </div>
       <div class="promise-grid">
-        <article><span>01</span><h3>The item you see</h3><p>Use photographs of the exact single or sealed item for sale, especially for higher-value listings.</p></article>
-        <article><span>02</span><h3>No vague grading</h3><p>List a condition and add plain-English notes for whitening, scratches, dents, seal damage or other issues.</p></article>
-        <article><span>03</span><h3>Packed like a collector</h3><p>Singles get sensible sleeve/top-loader protection; sealed items get proper box protection and weather-resistant outer packing.</p></article>
-        <article><span>04</span><h3>Room to grow</h3><p>The category system already supports adding other TCGs, accessories or graded cards later without rebuilding the shop.</p></article>
+        <article><span>01</span><h3>The item you see</h3><p>Real listings will use photos of the exact single or sealed item being sold.</p></article>
+        <article><span>02</span><h3>Condition without waffle</h3><p>Whitening, scratches, dents, seal tears and shelf wear get plain-English notes.</p></article>
+        <article><span>03</span><h3>Packed like a collector</h3><p>Singles get proper protection and sealed products get sensible box protection.</p></article>
+        <article><span>04</span><h3>Built to grow</h3><p>More TCGs, graded cards or accessories can be added later without rebuilding the shop.</p></article>
       </div>
     </section>
 
     <section class="buying-section" id="buying">
       <div class="section-head compact">
-        <div><p class="eyebrow">BUYING FROM ME</p><h2>Simple, clear checkout.</h2></div>
+        <div><p class="eyebrow">BUYING FROM ME</p><h2>Simple checkout. No fuss.</h2></div>
       </div>
       <div class="buying-steps">
-        <article><b>1</b><h3>Pick your items</h3><p>Add available singles or sealed products to your basket. Quantities are limited to the copies actually listed.</p></article>
-        <article><b>2</b><h3>Pay securely</h3><p>PayPal is the first checkout method. Card wallets or another provider can be added later without changing the catalogue.</p></article>
-        <article><b>3</b><h3>I pack & post</h3><p>Final UK shipping rules should be confirmed before live checkout is enabled, especially for sealed products and higher-value orders.</p></article>
+        <article><b>1</b><h3>Pick your cards</h3><p>Add available singles or sealed products to your basket. Quantities stay limited to what I actually own.</p></article>
+        <article><b>2</b><h3>Pay securely</h3><p>PayPal is the first payment method. Other methods can be added later without changing the catalogue.</p></article>
+        <article><b>3</b><h3>I pack & post</h3><p>Shipping rules will be finalised before live checkout is enabled, especially for sealed and higher-value orders.</p></article>
       </div>
       <aside class="launch-note">
         <strong>Launch status: catalogue preview</strong>
-        <p>Checkout stays locked until a PayPal Client ID is added and the demo stock is replaced with real inventory. That prevents accidental payments while the shop is being set up.</p>
+        <p>Checkout remains locked until your real inventory replaces the demo stock and your PayPal Client ID is connected.</p>
       </aside>
     </section>
   </main>
