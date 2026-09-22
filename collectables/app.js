@@ -1,6 +1,9 @@
-const PAYPAL_CLIENT_ID = "test";
+const PAYPAL_CLIENT_ID = ""; // Public browser Client ID only. Add later when PayPal is connected.
 const PAYPAL_MODE = "sandbox";
 const DEMO_MODE = true;
+const CHECKOUT_API_BASE = "https://cbqtqcnudwnlfxtlrioz.supabase.co/functions/v1";
+let pendingLocalOrderId = null;
+let usingLiveCatalog = false;
 
 const inventory = [
   {id:"ygo-001",game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"single",typeLabel:"Single",name:"Demo Yu-Gi-Oh! Single",set:"Binder demo",condition:"Near Mint",notes:"Replace with the exact card name, set/code, rarity, condition notes and your own photos.",price:12.50,stock:1,newest:8,tags:["new","picks"]},
@@ -69,7 +72,14 @@ function renderProducts(){
     const node=template.content.firstElementChild.cloneNode(true);
     node.dataset.game=item.game;
     node.dataset.type=item.type;
-    node.querySelector(".condition-badge").textContent=item.condition;
+    node.querySelector(".condition-badge").textContent=item.condition || "See notes";
+    const photo=node.querySelector(".product-image");
+    if(item.imageUrl){
+      photo.style.backgroundImage=`linear-gradient(rgba(5,10,9,.08),rgba(5,10,9,.08)),url("${item.imageUrl}")`;
+      photo.style.backgroundSize="cover";
+      photo.style.backgroundPosition="center";
+      photo.querySelector("span").style.display="none";
+    }
     const newBadge=node.querySelector(".new-badge");
     if(item.tags.includes("new")) newBadge.hidden=false;
     node.querySelector(".category").textContent=displayCategory(item);
@@ -77,7 +87,14 @@ function renderProducts(){
     node.querySelector("h3").textContent=item.name;
     node.querySelector(".card-notes").textContent=item.notes;
     node.querySelector(".price").textContent=money(item.price);
-    node.querySelector(".add-button").addEventListener("click",()=>addToCart(item.id));
+    const addButton=node.querySelector(".add-button");
+    if(item.stock<=0){
+      addButton.disabled=true;
+      addButton.textContent="Sold out";
+      node.classList.add("sold-out");
+    }else{
+      addButton.addEventListener("click",()=>addToCart(item.id));
+    }
     grid.append(node);
   });
 }
@@ -174,13 +191,57 @@ function loadPayPal(){
     if(!window.paypal)return;
     const paypalButtons=window.paypal.Buttons({
       style:{layout:"vertical",shape:"rect",label:"paypal"},
-      createOrder(data,actions){
-        const subtotal=[...cart].reduce((sum,[id,count])=>{const item=inventory.find(x=>x.id===id);return sum+(item?item.price*count:0)},0);
-        const hasSealed=[...cart.keys()].some(id=>inventory.find(x=>x.id===id)?.type==="sealed");
-        const shipping=subtotal>=100?0:(hasSealed?5.49:3.99);
-        return actions.order.create({purchase_units:[{amount:{currency_code:"GBP",value:(subtotal+shipping).toFixed(2)}}]});
+      async createOrder(){
+        const payload=[...cart].map(([id,quantity])=>({id,quantity}));
+        if(!payload.length) throw new Error("Your basket is empty.");
+        checkoutNote.textContent="Checking stock and creating your secure PayPal order…";
+        const res=await fetch(`${CHECKOUT_API_BASE}/collectables-create-order`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({cart:payload})
+        });
+        const data=await res.json();
+        if(!res.ok){
+          const message=data?.error==="paypal_not_configured"
+            ?"PayPal sandbox credentials still need to be connected."
+            : "Checkout could not be started. Stock may have changed.";
+          checkoutNote.textContent=message;
+          throw new Error(message);
+        }
+        pendingLocalOrderId=data.order_number ? data.id || null : null;
+        // The backend returns the PayPal order id as id. Store the local order id separately below.
+        pendingLocalOrderId=data.local_order_id || pendingLocalOrderId;
+        window.__slimeLocalOrderId=data.local_order_id || null;
+        return data.id;
       },
-      onApprove(data,actions){return actions.order.capture().then(()=>{cart.clear();renderCart();checkoutNote.textContent="Payment captured. Add your order-confirmation workflow before launch."})}
+      async onApprove(data){
+        const localOrderId=window.__slimeLocalOrderId || pendingLocalOrderId;
+        checkoutNote.textContent="Confirming your payment…";
+        const res=await fetch(`${CHECKOUT_API_BASE}/collectables-capture-order`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            paypal_order_id:data.orderID,
+            local_order_id:localOrderId
+          })
+        });
+        const result=await res.json();
+        if(!res.ok){
+          checkoutNote.textContent="Payment needs checking. Please do not retry repeatedly — contact me if PayPal shows a charge.";
+          throw new Error(result?.error || "capture_failed");
+        }
+        cart.clear();
+        pendingLocalOrderId=null;
+        window.__slimeLocalOrderId=null;
+        renderCart();
+        checkoutNote.textContent=`Payment confirmed. Your order number is ${result.order_number}. Thank you! 💚`;
+      },
+      onCancel(){
+        checkoutNote.textContent="Checkout cancelled. Your basket is still here.";
+      },
+      onError(){
+        checkoutNote.textContent="PayPal checkout hit an error. No order has been marked paid.";
+      }
     });
     paypalButtons.render("#paypal-button-container");
     if(DEMO_MODE){const container=document.querySelector("#paypal-button-container");if(container)container.style.opacity=".72"}
@@ -188,4 +249,40 @@ function loadPayPal(){
   document.head.append(script);
 }
 
-renderProducts();renderCart();loadPayPal();
+async function loadCatalog(){
+  try{
+    const res=await fetch(`${CHECKOUT_API_BASE}/collectables-catalog`,{cache:"no-store"});
+    if(!res.ok) throw new Error("catalog_fetch_failed");
+    const data=await res.json();
+    if(!Array.isArray(data.products) || !data.products.length) return;
+
+    const mapped=data.products.map((p,index)=>({
+      id:p.id,
+      game:p.game,
+      gameLabel:p.game==="pokemon"?"Pokémon":"Yu-Gi-Oh!",
+      type:p.product_type,
+      typeLabel:p.product_type.charAt(0).toUpperCase()+p.product_type.slice(1),
+      name:p.name,
+      set:p.set_name||"",
+      condition:p.condition||"",
+      notes:p.notes||"",
+      price:Number(p.price_pence||0)/100,
+      stock:Number(p.available_stock||0),
+      newest:1000-index,
+      imageUrl:p.image_url||"",
+      tags:[
+        ...(p.is_new?["new"]:[]),
+        ...(p.is_slime_pick?["picks"]:[])
+      ]
+    }));
+
+    inventory.splice(0,inventory.length,...mapped);
+    usingLiveCatalog=true;
+    renderProducts();
+    renderCart();
+  }catch(err){
+    console.warn("Using demo catalogue until live inventory is available.");
+  }
+}
+
+renderProducts();renderCart();loadCatalog();loadPayPal();
