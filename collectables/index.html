@@ -65,7 +65,7 @@
         <div class="collectables-word">COLLECTABLES</div>
         <p class="hero-subtitle">Singles, sealed products, and the cards I grew up loving.</p>
         <div class="hero-divider"></div>
-        <p class="hero-tagline">SAME PASSION. A BIGGER SHELF.</p>
+        <p class="hero-tagline">SAME PASSION. A BIGGER SHELF. <span class="uk-only">UK ONLY</span></p>
 
         <div class="game-gates" aria-label="Shop by game">
           <button class="game-gate yugioh-gate" type="button" data-hero-filter="yugioh">
@@ -91,7 +91,7 @@
     </section>
 
     <section class="trust-strip" aria-label="Shop values">
-      <article><span>▣</span><div><strong>CAREFULLY PACKED</strong><small>Your cards arrive safe</small></div></article>
+      <article><span>▣</span><div><strong>UK DELIVERY</strong><small>Royal Mail tracked services</small></div></article>
       <article><span>♡</span><div><strong>COLLECTOR RUN</strong><small>A real person, real passion</small></div></article>
       <article><span>☆</span><div><strong>HONEST LISTINGS</strong><small>Clear condition notes</small></div></article>
       <article><span>♧</span><div><strong>SAME HOBBY</strong><small>Thanks for being here ♥</small></div></article>
@@ -147,7 +147,7 @@
       <div class="buying-steps">
         <article><b>1</b><h3>Pick your cards</h3><p>Add available singles or sealed products to your basket. Quantities stay limited to what I actually own.</p></article>
         <article><b>2</b><h3>Pay securely</h3><p>PayPal is the first payment method. Other methods can be added later without changing the catalogue.</p></article>
-        <article><b>3</b><h3>I pack & post</h3><p>Shipping rules will be finalised before live checkout is enabled, especially for sealed and higher-value orders.</p></article>
+        <article><b>3</b><h3>I pack & post</h3><p>UK only. I aim to dispatch within 1–2 working days using Royal Mail tracked services, with higher-value orders sent on a more secure service.</p></article>
       </div>
       <aside class="launch-note">
         <strong>Launch status: catalogue preview</strong>
@@ -158,7 +158,14 @@
 
   <footer>
     <div><strong>Slime's Collectables</strong><span>Yu-Gi-Oh! · Pokémon · singles · sealed</span></div>
-    <div class="footer-links"><a href="https://github.com/slime786/slimes-collectables" target="_blank" rel="noopener">Shop repo ↗</a><a href="https://slime786.github.io/slime786/">slime786 ↗</a></div>
+    <div class="footer-links">
+      <a href="/slime786/collectables/shipping-returns.html">Shipping & Returns</a>
+      <a href="/slime786/collectables/condition-guide.html">Condition Guide</a>
+      <a href="/slime786/collectables/terms.html">Terms</a>
+      <a href="/slime786/collectables/privacy.html">Privacy</a>
+      <a href="/slime786/collectables/contact.html">Contact</a>
+      <a href="https://github.com/slime786/slimes-collectables" target="_blank" rel="noopener">Shop repo ↗</a>
+    </div>
     <small>© 2026 Slime's Collectables. Yu-Gi-Oh! and Pokémon are trademarks of their respective owners. Independent personal resale site.</small>
   </footer>
 
@@ -169,7 +176,7 @@
     <div class="cart-empty" id="cart-empty"><strong>Your basket is empty.</strong><p>Add an item and it’ll show up here.</p></div>
     <div class="cart-summary">
       <div><span>Items</span><strong id="cart-subtotal">£0.00</strong></div>
-      <div><span>Shipping</span><strong>Calculated later</strong></div>
+      <div><span id="shipping-method">UK shipping</span><strong id="cart-shipping">£0.00</strong></div>
       <div class="cart-total"><span>Current total</span><strong id="cart-total">£0.00</strong></div>
       <button class="button primary checkout-button" id="checkout-button" type="button" disabled>Pay with PayPal</button>
       <p id="checkout-note">Checkout is intentionally disabled until real inventory and PayPal are configured.</p>
