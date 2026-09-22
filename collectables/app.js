@@ -1,4 +1,5 @@
-const PAYPAL_CLIENT_ID = ""; // Add a real PayPal client ID before enabling checkout.
+const PAYPAL_CLIENT_ID = "test"; // Replace with your live PayPal Client ID before launch. Public ID only — never put the Client Secret in this file.
+const PAYPAL_MODE = "sandbox";
 const DEMO_MODE = true;
 
 const inventory = [
@@ -92,7 +93,7 @@ function renderCart(){
   if(shippingMethod) shippingMethod.textContent=qty===0 ? "UK shipping" : (total>=100 ? "UK shipping · free over £100" : (hasSealed ? "UK sealed shipping" : "UK tracked shipping"));
   cartTotal.textContent=money(total+shipping);
   cartEmpty.hidden=qty>0;
-  checkoutButton.disabled = qty===0 || DEMO_MODE || !PAYPAL_CLIENT_ID;
+  checkoutButton.disabled = true;
 }
 
 function openCart(){cartDrawer.classList.add("open");cartDrawer.setAttribute("aria-hidden","false");backdrop.hidden=false;document.querySelector("#cart-open").setAttribute("aria-expanded","true")}
@@ -111,15 +112,19 @@ document.querySelectorAll("[data-category]").forEach(button=>button.addEventList
 document.querySelector("#sort-select").addEventListener("change",e=>{sortMode=e.target.value;renderProducts()});
 
 function loadPayPal(){
-  if(DEMO_MODE || !PAYPAL_CLIENT_ID){
-    checkoutNote.textContent = "Checkout is intentionally disabled until real inventory and a PayPal Client ID are configured.";
+  if(!PAYPAL_CLIENT_ID){
+    checkoutNote.textContent = "PayPal is not configured yet.";
     return;
   }
+  if(PAYPAL_MODE === "sandbox"){
+    checkoutNote.textContent = "PayPal sandbox is connected for testing. Real payments remain disabled until live inventory and your live PayPal Client ID are added.";
+  }
   const script=document.createElement("script");
-  script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=GBP`;
+  script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=GBP&components=buttons`;
   script.onload=()=>{
     if(!window.paypal) return;
-    window.paypal.Buttons({
+    const paypalButtons = window.paypal.Buttons({
+      style:{layout:"vertical",shape:"rect",label:"paypal"},
       createOrder(data,actions){
         const subtotal=[...cart].reduce((sum,[id,count])=>{const item=inventory.find(x=>x.id===id);return sum+(item?item.price*count:0)},0);
         const hasSealed=[...cart.keys()].some(id=>inventory.find(x=>x.id===id)?.type==="Sealed");
@@ -127,7 +132,12 @@ function loadPayPal(){
         return actions.order.create({purchase_units:[{amount:{currency_code:"GBP",value:(subtotal+shipping).toFixed(2)}}]});
       },
       onApprove(data,actions){return actions.order.capture().then(()=>{cart.clear();renderCart();checkoutNote.textContent="Payment captured. Add your order-confirmation workflow before launch."})}
-    }).render("#paypal-button-container");
+    });
+    paypalButtons.render("#paypal-button-container");
+    if(DEMO_MODE){
+      const container=document.querySelector("#paypal-button-container");
+      if(container) container.style.opacity="0.72";
+    }
   };
   document.head.append(script);
 }
