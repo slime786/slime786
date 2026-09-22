@@ -2,7 +2,7 @@
 import json,re,urllib.request,xml.etree.ElementTree as ET
 from datetime import datetime,timezone
 from html import unescape
-FEEDS=[("BBC Business","https://feeds.bbci.co.uk/news/business/rss.xml")]
+FEEDS=[("BBC Business","https://feeds.bbci.co.uk/news/business/rss.xml"),("Guardian Technology","https://www.theguardian.com/technology/rss"),("Guardian Business","https://www.theguardian.com/uk/business/rss")]
 def clean(s):
  s=re.sub(r"<[^>]+>"," ",s or "")
  return re.sub(r"\s+"," ",unescape(s)).strip()
@@ -18,4 +18,4 @@ stories=[]
 for name,url in FEEDS:
  try: stories.extend(fetch(name,url))
  except Exception as e: print(f"{name}: {e}")
-with open("newsletter-latest.json","w",encoding="utf-8") as f: json.dump({"generated_at":datetime.now(timezone.utc).isoformat(),"stories":stories[:8]},f,ensure_ascii=False,indent=2)
+with open("newsletter-latest.json","w",encoding="utf-8") as f: json.dump({"generated_at":datetime.now(timezone.utc).isoformat(),"editorial_note":"A weekly source pack for Moheen’s personal technology and finance email. Summarise in your own words and link to originals.","stories":stories[:12]},f,ensure_ascii=False,indent=2)
