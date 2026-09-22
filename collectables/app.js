@@ -22,6 +22,8 @@ const cartItems = document.querySelector("#cart-items");
 const cartEmpty = document.querySelector("#cart-empty");
 const cartSubtotal = document.querySelector("#cart-subtotal");
 const cartTotal = document.querySelector("#cart-total");
+const cartShipping = document.querySelector("#cart-shipping");
+const shippingMethod = document.querySelector("#shipping-method");
 const checkoutButton = document.querySelector("#checkout-button");
 const checkoutNote = document.querySelector("#checkout-note");
 
@@ -83,8 +85,12 @@ function renderCart(){
     cartItems.append(row);
   });
   cartCount.textContent=qty;
+  const hasSealed=[...cart.keys()].some(id=>inventory.find(x=>x.id===id)?.type==="Sealed");
+  const shipping=qty===0 ? 0 : (total>=100 ? 0 : (hasSealed ? 5.49 : 3.99));
   cartSubtotal.textContent=money(total);
-  cartTotal.textContent=money(total);
+  if(cartShipping) cartShipping.textContent=shipping===0 && qty>0 ? "FREE" : money(shipping);
+  if(shippingMethod) shippingMethod.textContent=qty===0 ? "UK shipping" : (total>=100 ? "UK shipping · free over £100" : (hasSealed ? "UK sealed shipping" : "UK tracked shipping"));
+  cartTotal.textContent=money(total+shipping);
   cartEmpty.hidden=qty>0;
   checkoutButton.disabled = qty===0 || DEMO_MODE || !PAYPAL_CLIENT_ID;
 }
@@ -115,8 +121,10 @@ function loadPayPal(){
     if(!window.paypal) return;
     window.paypal.Buttons({
       createOrder(data,actions){
-        const total=[...cart].reduce((sum,[id,count])=>{const item=inventory.find(x=>x.id===id);return sum+(item?item.price*count:0)},0);
-        return actions.order.create({purchase_units:[{amount:{currency_code:"GBP",value:total.toFixed(2)}}]});
+        const subtotal=[...cart].reduce((sum,[id,count])=>{const item=inventory.find(x=>x.id===id);return sum+(item?item.price*count:0)},0);
+        const hasSealed=[...cart.keys()].some(id=>inventory.find(x=>x.id===id)?.type==="Sealed");
+        const shipping=subtotal>=100 ? 0 : (hasSealed ? 5.49 : 3.99);
+        return actions.order.create({purchase_units:[{amount:{currency_code:"GBP",value:(subtotal+shipping).toFixed(2)}}]});
       },
       onApprove(data,actions){return actions.order.capture().then(()=>{cart.clear();renderCart();checkoutNote.textContent="Payment captured. Add your order-confirmation workflow before launch."})}
     }).render("#paypal-button-container");
