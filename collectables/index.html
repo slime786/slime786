@@ -42,6 +42,10 @@
       mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent)
     }
 
+    .cinematic-light{position:absolute;z-index:-2;pointer-events:none;width:34vw;height:86vh;top:6vh;filter:blur(34px);opacity:.13;animation:lightBreathe 8s ease-in-out infinite}
+    .light-left{left:-13vw;background:linear-gradient(112deg,transparent 8%,rgba(255,76,116,.34) 50%,transparent 78%);transform:rotate(-9deg)}
+    .light-right{right:-13vw;background:linear-gradient(68deg,transparent 8%,rgba(53,180,255,.34) 50%,transparent 78%);transform:rotate(9deg);animation-delay:-4s}
+
     .world{
       position:absolute;top:50%;width:min(32vw,400px);height:min(72vh,660px);
       transform:translateY(-50%);z-index:-1;pointer-events:none
@@ -53,13 +57,17 @@
     }
     .world-ygo .world-glow{background:radial-gradient(circle,var(--ygo),rgba(124,36,94,.45) 38%,transparent 70%)}
     .world-pkm .world-glow{background:radial-gradient(circle,var(--pkm),rgba(255,215,79,.32) 38%,transparent 70%);animation-delay:-2s}
+    .world:after{content:"";position:absolute;inset:18% 8%;border-radius:50%;opacity:.22;z-index:-1;animation:haloTurn 18s linear infinite}
+    .world-ygo:after{background:conic-gradient(from 0deg,transparent 0 22%,rgba(255,92,124,.22) 27%,transparent 34% 65%,rgba(151,88,255,.17) 71%,transparent 77%)}
+    .world-pkm:after{background:conic-gradient(from 20deg,transparent 0 23%,rgba(53,180,255,.22) 29%,transparent 36% 66%,rgba(255,216,76,.14) 72%,transparent 79%)}
     .world-label{
       position:absolute;left:50%;top:8%;transform:translateX(-50%);
-      font-size:.62rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap
+      font-size:.62rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;animation:labelReveal .9s .4s ease both
     }
     .world-ygo .world-label{color:#ffb1bf;text-shadow:0 0 18px rgba(255,77,109,.45)}
     .world-pkm .world-label{color:#a9dbff;text-shadow:0 0 18px rgba(53,180,255,.45)}
-    .cards{position:absolute;inset:15% 0 8%;perspective:900px;transform-style:preserve-3d}
+    .cards{position:absolute;inset:15% 0 8%;perspective:900px;transform-style:preserve-3d;animation:showcaseReveal 1.15s cubic-bezier(.2,.8,.2,1) both}
+    .world-ygo .cards{animation-delay:.18s}.world-pkm .cards{animation-delay:.32s}
     .visual-card{
       --r:0deg;--delay:0s;
       position:absolute;width:80px;height:116px;border-radius:10px;border:1px solid rgba(255,255,255,.28);
@@ -76,10 +84,9 @@
       content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
       border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),inset 0 -18px 30px rgba(0,0,0,.12)
     }
-    .world-ygo .visual-card{border-color:#a63757;box-shadow:0 20px 35px rgba(0,0,0,.42),0 0 25px rgba(255,77,109,.13)}
-    .world-ygo .visual-card:before{background:radial-gradient(circle at 50% 42%,rgba(255,82,130,.28),transparent 23%),linear-gradient(145deg,#3e1727,#18131f)}
-    .world-pkm .visual-card{border-color:#3f8ec0;box-shadow:0 20px 35px rgba(0,0,0,.42),0 0 25px rgba(53,180,255,.13)}
-    .world-pkm .visual-card:before{background:radial-gradient(circle at 50% 42%,rgba(255,214,79,.27),transparent 23%),linear-gradient(145deg,#113c5b,#152c47)}
+    .world-ygo .visual-card{border-color:rgba(255,115,145,.46);box-shadow:0 20px 35px rgba(0,0,0,.42),0 0 28px rgba(255,77,109,.16)}
+    .world-pkm .visual-card{border-color:rgba(99,198,255,.48);box-shadow:0 20px 35px rgba(0,0,0,.42),0 0 28px rgba(53,180,255,.17)}
+    .card-a{opacity:.58}.card-b{opacity:.47}.card-c{opacity:.40}
     .visual-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
     .character-art{position:absolute;display:block;max-width:none;z-index:3;filter:drop-shadow(0 20px 28px rgba(0,0,0,.58));animation:characterFloat 6.8s ease-in-out infinite}
     .ygo-blue{width:188px;left:-4px;top:50%;animation-delay:-.4s}
@@ -128,7 +135,8 @@
       animation:contentIn .9s cubic-bezier(.2,.8,.2,1) both
     }
     .kicker{margin:0 0 .8rem;color:#c9aa68;font-size:.68rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
-    .logo-wrap{position:relative;margin:0 auto;max-width:700px}
+    .logo-wrap{position:relative;margin:0 auto;max-width:700px;overflow:visible}
+    .logo-wrap:after{content:"";position:absolute;z-index:2;pointer-events:none;top:8%;left:-18%;width:24%;height:78%;opacity:0;background:linear-gradient(105deg,transparent,rgba(255,247,181,.34),rgba(255,255,255,.12),transparent);filter:blur(7px);transform:skewX(-14deg);animation:logoSweep 7.5s ease-in-out infinite}
     .logo-wrap:before{
       content:"";position:absolute;inset:11% 7%;z-index:-1;
       background:radial-gradient(circle,rgba(119,255,78,.25),rgba(50,207,101,.07) 45%,transparent 72%);
@@ -163,6 +171,13 @@
     .meta{margin-top:1rem;color:#81918a;font-size:.74rem;letter-spacing:.055em}
 
     @keyframes ambientDrift{to{transform:translate3d(3%,-2%,0) scale(1.04)}}
+    @keyframes lightBreathe{0%,100%{opacity:.08;transform:scale(.96) rotate(-8deg)}50%{opacity:.17;transform:scale(1.04) rotate(-4deg)}}
+    .light-right{animation-name:lightBreatheRight}
+    @keyframes lightBreatheRight{0%,100%{opacity:.08;transform:scale(.96) rotate(8deg)}50%{opacity:.17;transform:scale(1.04) rotate(4deg)}}
+    @keyframes haloTurn{to{rotate:360deg}}
+    @keyframes showcaseReveal{from{opacity:0;filter:blur(10px);clip-path:inset(12% 10% 12% 10%)}to{opacity:1;filter:blur(0);clip-path:inset(0)}}
+    @keyframes labelReveal{from{opacity:0;letter-spacing:.42em;transform:translateX(-50%) translateY(-6px)}to{opacity:1;letter-spacing:.22em;transform:translateX(-50%) translateY(0)}}
+    @keyframes logoSweep{0%,64%{left:-18%;opacity:0}70%{opacity:.58}84%{left:106%;opacity:.18}100%{left:106%;opacity:0}}
     @keyframes glowPulse{50%{opacity:.68;transform:scale(1.08)}}
     @keyframes cardFloat{0%,100%{margin-top:0}50%{margin-top:-16px}}
     @keyframes cardDrift{
@@ -190,6 +205,7 @@
     }
     @media(max-width:680px){
       .splash{padding:1rem .9rem}
+      .cinematic-light{opacity:.07;width:52vw}.world:after{opacity:.12}
       .world{width:176px;height:395px;opacity:.54;top:49%}
       .world-ygo{left:-56px}.world-pkm{right:-56px}
       .world-label{display:none}.visual-card{width:43px;height:62px;border-radius:7px;opacity:.18}
@@ -212,6 +228,8 @@
 </head>
 <body>
   <main class="splash">
+    <div class="cinematic-light light-left" aria-hidden="true"></div>
+    <div class="cinematic-light light-right" aria-hidden="true"></div>
     <aside class="world world-ygo" aria-hidden="true">
       <div class="world-glow"></div>
       <span class="world-label">Yu-Gi-Oh! Collection</span>
