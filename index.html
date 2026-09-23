@@ -3,201 +3,453 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="slime786 — products, experiments and ideas by Moheen Mahmood.">
-<title>slime786 — Enter</title>
+<meta name="description" content="Moheen Mahmood — London-based product builder creating practical software, AI tools and focused digital products.">
+<title>Moheen Mahmood — Product Builder</title>
+<meta name="theme-color" content="#03070d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="/slime786/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#050508">
+<link rel="preload" as="image" href="/slime786/hero-moheen-astronaut.jpg" fetchpriority="high">
 <style>
 :root{
-  --ink:#f6f8f3;
-  --muted:#98a398;
-  --lime:#b7ff2a;
-  --acid:#77ff4a;
-  --deep:#081106;
-  --line:rgba(255,255,255,.13);
-  --px:0px;
-  --py:0px;
+  --bg:#03070d;
+  --panel:#07111c;
+  --line:#153550;
+  --text:#f4f8ff;
+  --muted:#8fa8be;
+  --blue:#108cff;
+  --green:#1df28a;
+  --mx:0px;
+  --my:0px;
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#050508;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,sans-serif}
 body{min-height:100svh;overflow:hidden}
 a{color:inherit;text-decoration:none}
-button,a{-webkit-tap-highlight-color:transparent}
-.shell{
+.splash{
   position:relative;
   min-height:100svh;
+  overflow:hidden;
+  isolation:isolate;
   display:grid;
   grid-template-rows:auto 1fr auto;
-  padding:clamp(22px,4vw,54px);
-  isolation:isolate;
-  overflow:hidden;
+  padding:0 3.5vw;
+  background:#02060b;
+}
+.hero-bg{
+  position:absolute;
+  inset:-4%;
+  z-index:-5;
+  background:url('/slime786/hero-moheen-astronaut.jpg') center 28%/cover no-repeat;
+  transform:translate3d(calc(var(--mx) * -.28),calc(var(--my) * -.20),0) scale(1.07);
+  animation:cinematicDrift 16s ease-in-out infinite alternate;
+  will-change:transform;
+}
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  z-index:-4;
   background:
-    radial-gradient(circle at 75% 32%,rgba(183,255,42,.11),transparent 24%),
-    radial-gradient(circle at 12% 86%,rgba(119,255,74,.07),transparent 28%),
-    linear-gradient(135deg,#050508 0%,#080b09 52%,#050508 100%);
+    linear-gradient(90deg,rgba(1,5,10,.97) 0%,rgba(2,7,13,.85) 36%,rgba(1,7,15,.28) 66%,rgba(1,5,10,.50) 100%),
+    linear-gradient(180deg,rgba(3,8,15,.25),rgba(2,6,11,.35));
 }
-.noise{position:absolute;inset:0;pointer-events:none;opacity:.23;mix-blend-mode:soft-light;z-index:-1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E")}
-.grid{position:absolute;inset:0;z-index:-2;opacity:.19;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,transparent,black 18%,black 76%,transparent)}
-.top,.foot{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:20px;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
-.brand{font-weight:800;letter-spacing:-.02em;text-transform:none;font-size:15px}
-.brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 22px var(--lime);margin-right:9px}
-.status{color:var(--muted)} .status b{color:var(--lime);font-weight:600}
-.hero{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.62fr);align-items:center;gap:6vw;max-width:1500px;width:100%;margin:auto}
-.hero-copy{position:relative;z-index:3}
-.kicker{color:var(--lime);font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 24px;animation:rise .8s .08s both}
-h1{font-size:clamp(72px,14vw,220px);line-height:.72;letter-spacing:-.08em;margin:0;font-weight:900;filter:drop-shadow(0 18px 54px rgba(0,0,0,.35))}
-h1 .solid,h1 .outline{display:block;animation:rise .9s both}
-h1 .solid{animation-delay:.14s}
-h1 .outline{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.72);animation-delay:.2s}
-.copy{max-width:580px;margin-top:34px;color:#c8cec8;font-size:clamp(16px,1.5vw,21px);line-height:1.55;animation:rise .9s .28s both}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;animation:rise .9s .36s both}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border:1px solid var(--line);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;transition:.25s ease;background:rgba(255,255,255,.01);backdrop-filter:blur(12px)}
-.btn.primary{background:var(--lime);color:#050508;border-color:var(--lime);box-shadow:0 0 0 0 rgba(183,255,42,0)}
-.btn:hover{transform:translateY(-2px);border-color:rgba(183,255,42,.72);box-shadow:0 14px 40px rgba(0,0,0,.28)}
-.btn.primary:hover{box-shadow:0 0 42px rgba(183,255,42,.18),0 14px 40px rgba(0,0,0,.32)}
-.slime-stage{position:relative;min-height:min(60vw,620px);display:grid;place-items:center;transform:translate3d(calc(var(--px) * .25),calc(var(--py) * .25),0);transition:transform .25s ease-out}
-.slime-aura{position:absolute;width:min(48vw,560px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(183,255,42,.15),rgba(183,255,42,.03) 38%,transparent 68%);filter:blur(10px);animation:breathe 5s ease-in-out infinite}
-.goo{position:absolute;width:min(38vw,460px);aspect-ratio:1;filter:url("#goo-filter") drop-shadow(0 24px 50px rgba(0,0,0,.42));transform:translate3d(calc(var(--px) * .35),calc(var(--py) * .35),0)}
-.blob{position:absolute;display:block;border-radius:50%;background:
-radial-gradient(circle at 30% 24%,rgba(240,255,194,.94) 0 5%,rgba(206,255,105,.55) 7%,transparent 20%),
-radial-gradient(circle at 70% 70%,#214808 0 14%,transparent 45%),
-linear-gradient(145deg,#dfff7d 0%,#aaff35 35%,#63c617 72%,#142908 100%);
-box-shadow:inset -18px -22px 42px rgba(0,0,0,.42),inset 14px 10px 28px rgba(255,255,255,.13),0 0 34px rgba(183,255,42,.16)}
-.blob-main{width:66%;height:66%;left:17%;top:17%;animation:mainMorph 6.5s ease-in-out infinite alternate}
-.blob-one{width:30%;height:30%;left:2%;top:8%;animation:blobOne 7.2s ease-in-out infinite}
-.blob-two{width:24%;height:24%;right:3%;top:21%;animation:blobTwo 6s ease-in-out infinite}
-.blob-three{width:20%;height:20%;left:16%;bottom:3%;animation:blobThree 7.8s ease-in-out infinite}
-.blob-four{width:15%;height:15%;right:12%;bottom:4%;animation:blobFour 5.8s ease-in-out infinite}
-.gloss{position:absolute;width:min(26vw,315px);aspect-ratio:1;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 33% 24%,rgba(255,255,255,.22),transparent 12%),linear-gradient(145deg,rgba(255,255,255,.06),transparent 40%);border:1px solid rgba(226,255,184,.08);mix-blend-mode:screen;transform:translate3d(calc(var(--px) * .5),calc(var(--py) * .5),0)}
-.orbit{position:absolute;width:min(46vw,545px);aspect-ratio:1;border:1px solid rgba(183,255,42,.22);border-radius:50%;animation:spin 16s linear infinite}
-.orbit:before{content:"";position:absolute;width:11px;height:11px;border-radius:50%;background:var(--lime);top:50%;left:-6px;box-shadow:0 0 22px var(--lime)}
-.orbit.two{width:min(33vw,390px);border-style:dashed;border-color:rgba(255,255,255,.13);animation-duration:22s;animation-direction:reverse}
-.orbit.two:before{width:7px;height:7px;left:auto;right:-4px;background:#e7ffc0;box-shadow:0 0 16px rgba(231,255,192,.7)}
-.crosshair{position:absolute;width:min(49vw,585px);aspect-ratio:1;border-radius:50%;opacity:.6}
-.crosshair:before,.crosshair:after{content:"";position:absolute;background:linear-gradient(90deg,transparent,rgba(183,255,42,.16),transparent)}
-.crosshair:before{width:100%;height:1px;top:50%;left:0}.crosshair:after{height:100%;width:1px;left:50%;top:0;background:linear-gradient(transparent,rgba(183,255,42,.16),transparent)}
-.tag{position:absolute;right:2%;bottom:8%;padding:10px 12px;border:1px solid var(--line);background:rgba(5,5,8,.48);backdrop-filter:blur(10px);font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#d9ded8;animation:tagPulse 3s ease-in-out infinite}
-.tag:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:8px;background:var(--lime);box-shadow:0 0 12px var(--lime)}
-.foot{color:#7f887f}.foot a{color:#c8cec8}.foot a:hover{color:var(--lime)}
-.filters{position:absolute;width:0;height:0}
-body.is-leaving .shell{animation:leave .52s cubic-bezier(.6,.02,.3,1) forwards}
-body.is-leaving .slime-stage{animation:collapse .52s cubic-bezier(.6,.02,.3,1) forwards}
-@keyframes rise{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
-@keyframes breathe{50%{transform:scale(1.08);opacity:.72}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes tagPulse{50%{border-color:rgba(183,255,42,.35);color:#efffe0}}
-@keyframes mainMorph{0%{transform:translate(0,0) scale(1)}35%{transform:translate(3%,-2%) scale(1.05,.96)}70%{transform:translate(-2%,3%) scale(.97,1.06)}100%{transform:translate(2%,1%) scale(1.03,.98)}}
-@keyframes blobOne{0%,100%{transform:translate(20%,45%) scale(.84)}35%{transform:translate(80%,82%) scale(1.06)}68%{transform:translate(30%,130%) scale(.92)}}
-@keyframes blobTwo{0%,100%{transform:translate(-24%,12%) scale(.9)}40%{transform:translate(-88%,54%) scale(1.16)}75%{transform:translate(-44%,118%) scale(.84)}}
-@keyframes blobThree{0%,100%{transform:translate(38%,-10%) scale(.82)}42%{transform:translate(98%,-70%) scale(1.12)}72%{transform:translate(142%,-20%) scale(.92)}}
-@keyframes blobFour{0%,100%{transform:translate(-20%,-12%) scale(.8)}44%{transform:translate(-118%,-76%) scale(1.2)}76%{transform:translate(-70%,-142%) scale(.88)}}
-@keyframes leave{to{opacity:0;transform:scale(1.018);filter:blur(10px)}}
-@keyframes collapse{to{transform:scale(.72) rotate(-4deg);opacity:0}}
-@media (max-width:850px){
+.vignette{
+  position:absolute;
+  inset:0;
+  z-index:-3;
+  pointer-events:none;
+  box-shadow:inset 0 0 180px rgba(0,0,0,.72);
+}
+.grid{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  opacity:.12;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(92,164,215,.11) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(92,164,215,.11) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 14%,#000 82%,transparent 100%);
+}
+.scan{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  overflow:hidden;
+}
+.scan::after{
+  content:"";
+  position:absolute;
+  left:-20%;
+  top:0;
+  width:16%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(16,140,255,.15),rgba(145,211,255,.20),transparent);
+  filter:blur(10px);
+  transform:skewX(-10deg);
+  animation:scanPass 7s cubic-bezier(.55,.06,.43,.97) infinite;
+}
+.topbar{
+  height:74px;
+  position:relative;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(21,53,80,.72);
+  font-size:12px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.identity{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.identity strong{
+  font-size:20px;
+  letter-spacing:-.04em;
+  text-transform:none;
+}
+.handle{color:#6e8da5}
+.status{display:flex;align-items:center;gap:9px;color:#91aabd}
+.status i{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 14px var(--green);
+}
+.hero{
+  position:relative;
+  z-index:3;
+  display:grid;
+  grid-template-columns:minmax(0,720px) 1fr;
+  align-items:center;
+  gap:5vw;
+  max-width:1500px;
+  width:100%;
+  margin:auto;
+  padding:5vh 0 7vh;
+}
+.copy{position:relative}
+.eyebrow{
+  margin:0 0 22px;
+  color:#d7e9f7;
+  font-size:13px;
+  letter-spacing:.35em;
+  animation:rise .8s .06s both;
+}
+h1{
+  margin:0;
+  font:800 clamp(68px,8.2vw,132px)/.83 Space Grotesk,sans-serif;
+  letter-spacing:-.07em;
+  max-width:760px;
+}
+h1 span{display:block;animation:rise .9s both}
+h1 span:first-child{animation-delay:.13s}
+h1 span:last-child{animation-delay:.20s;color:#d8ecff}
+.intro{
+  max-width:590px;
+  margin-top:26px;
+  color:#c9d8e5;
+  font-size:clamp(17px,1.5vw,21px);
+  line-height:1.6;
+  animation:rise .9s .28s both;
+}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:30px;
+  animation:rise .9s .36s both;
+}
+.btn{
+  min-height:52px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 22px;
+  border:1px solid #2a78ad;
+  border-radius:10px;
+  background:rgba(4,16,27,.62);
+  backdrop-filter:blur(14px);
+  font-size:14px;
+  font-weight:600;
+  transition:.24s ease;
+}
+.btn.primary{
+  background:#0e8cff;
+  border-color:#0e8cff;
+  color:#fff;
+  box-shadow:0 0 0 rgba(14,140,255,0);
+}
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:#43adff;
+}
+.btn.primary:hover{
+  box-shadow:0 14px 42px rgba(14,140,255,.25);
+}
+.visual{
+  position:relative;
+  min-height:520px;
+  display:grid;
+  place-items:center;
+  transform:translate3d(calc(var(--mx) * .18),calc(var(--my) * .14),0);
+  transition:transform .16s linear;
+}
+.orbit{
+  position:absolute;
+  width:min(37vw,500px);
+  aspect-ratio:1;
+  border:1px solid rgba(91,178,239,.32);
+  border-radius:50%;
+  transform:rotate(-12deg);
+  animation:orbitSpin 24s linear infinite;
+  box-shadow:0 0 80px rgba(16,140,255,.08);
+}
+.orbit::before,.orbit::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  background:#bfe5ff;
+  box-shadow:0 0 16px #108cff;
+}
+.orbit::before{width:8px;height:8px;left:-4px;top:52%}
+.orbit::after{width:5px;height:5px;right:7%;top:12%}
+.orbit.small{
+  width:min(27vw,360px);
+  border-style:dashed;
+  border-color:rgba(191,225,255,.20);
+  animation-duration:34s;
+  animation-direction:reverse;
+}
+.target{
+  position:absolute;
+  width:min(31vw,420px);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at center,rgba(16,140,255,.15),transparent 44%),
+    conic-gradient(from 30deg,transparent 0 18%,rgba(16,140,255,.11) 18% 18.6%,transparent 18.6% 48%,rgba(16,140,255,.09) 48% 48.6%,transparent 48.6%);
+  mask-image:radial-gradient(circle,#000 0 57%,transparent 58%);
+  opacity:.82;
+  animation:targetPulse 5s ease-in-out infinite;
+}
+.signal-card{
+  position:absolute;
+  right:3%;
+  bottom:11%;
+  width:min(330px,28vw);
+  padding:18px 19px;
+  border:1px solid #1d5a84;
+  border-radius:12px;
+  background:rgba(4,16,27,.86);
+  backdrop-filter:blur(16px);
+  box-shadow:0 18px 55px rgba(0,0,0,.28);
+  animation:cardFloat 5.4s ease-in-out infinite;
+}
+.signal-card small{
+  display:block;
+  margin-bottom:8px;
+  color:#6f91aa;
+  font-size:9px;
+  letter-spacing:.13em;
+}
+.signal-card strong{
+  display:block;
+  font:600 20px/1.1 Space Grotesk,sans-serif;
+}
+.signal-card span{
+  display:block;
+  margin-top:8px;
+  color:#8fa8be;
+  font-size:11px;
+}
+.coordinates{
+  position:absolute;
+  left:7%;
+  top:17%;
+  font:500 10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.12em;
+  color:#6d8ba2;
+  text-transform:uppercase;
+}
+.coordinates b{color:#3eaeff;font-weight:600}
+.footer{
+  position:relative;
+  z-index:10;
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(21,53,80,.72);
+  color:#688196;
+  font-size:11px;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.footer a{color:#a9c5da}
+.footer a:hover{color:#41afff}
+.progress{
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  height:2px;
+  width:32%;
+  background:linear-gradient(90deg,#108cff,#67c8ff,transparent);
+  animation:progressMove 4.8s ease-in-out infinite;
+}
+body.is-leaving .splash{animation:pageOut .55s cubic-bezier(.6,.02,.3,1) forwards}
+body.is-leaving .hero-bg{animation:zoomOut .55s cubic-bezier(.6,.02,.3,1) forwards}
+body.is-leaving .visual{animation:visualOut .55s cubic-bezier(.6,.02,.3,1) forwards}
+@keyframes rise{
+  from{opacity:0;transform:translateY(20px);filter:blur(7px)}
+  to{opacity:1;transform:none;filter:none}
+}
+@keyframes cinematicDrift{
+  0%{transform:translate3d(calc(var(--mx) * -.28),calc(var(--my) * -.20),0) scale(1.07)}
+  100%{transform:translate3d(calc(var(--mx) * -.28 + 10px),calc(var(--my) * -.20 - 8px),0) scale(1.11)}
+}
+@keyframes scanPass{
+  0%,13%{transform:translateX(0) skewX(-10deg);opacity:0}
+  20%{opacity:1}
+  72%{opacity:.85}
+  86%,100%{transform:translateX(780%) skewX(-10deg);opacity:0}
+}
+@keyframes orbitSpin{to{transform:rotate(348deg)}}
+@keyframes targetPulse{50%{transform:scale(1.04);opacity:.58}}
+@keyframes cardFloat{50%{transform:translateY(-8px)}}
+@keyframes progressMove{
+  0%{transform:translateX(-105%)}
+  65%,100%{transform:translateX(420%)}
+}
+@keyframes pageOut{to{opacity:0;filter:blur(9px)}}
+@keyframes zoomOut{to{transform:scale(1.16);filter:brightness(.6) blur(3px)}}
+@keyframes visualOut{to{transform:scale(.82);opacity:0}}
+@media(max-width:900px){
   body{overflow:auto}
-  .shell{min-height:100svh}
-  .hero{grid-template-columns:1fr;padding:6vh 0 6vh;gap:3vh}
-  .slime-stage{min-height:300px;order:-1}
-  .goo{width:min(72vw,350px)}
-  .slime-aura{width:min(84vw,410px)}
-  .orbit{width:min(86vw,420px)}
-  .orbit.two{width:min(64vw,310px)}
-  .crosshair{width:min(90vw,440px)}
-  .gloss{width:min(50vw,245px)}
-  h1{font-size:clamp(64px,25vw,130px)}
-  .copy{max-width:42ch}
-  .tag{right:4%;bottom:2%}
-  .foot{align-items:flex-end;flex-direction:column;text-align:right}
+  .splash{min-height:100svh;padding:0 5vw}
+  .topbar{height:68px}
+  .hero{
+    grid-template-columns:1fr;
+    padding:7vh 0 6vh;
+    align-items:start;
+  }
+  h1{font-size:clamp(62px,16vw,94px);max-width:620px}
+  .intro{font-size:17px;max-width:520px}
+  .visual{
+    min-height:300px;
+    order:-1;
+    margin-bottom:-10px;
+  }
+  .orbit{width:min(76vw,410px)}
+  .orbit.small{width:min(56vw,300px)}
+  .target{width:min(66vw,355px)}
+  .signal-card{width:min(280px,72vw);right:0;bottom:2%}
+  .coordinates{left:0;top:8%}
+  .hero-bg{background-position:62% 20%}
+  .footer{gap:18px;align-items:flex-end;flex-direction:column;padding:18px 0;text-align:right}
 }
-@media (prefers-reduced-motion:reduce){
+@media(max-width:600px){
+  .identity strong{font-size:18px}
+  .handle{display:none}
+  .status{font-size:10px}
+  .visual{min-height:260px}
+  .signal-card{font-size:10px;padding:14px 15px}
+  .signal-card strong{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){
   *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-  .slime-stage,.goo,.gloss{transform:none!important}
+  .hero-bg,.visual{transform:none!important}
 }
 </style>
 </head>
 <body>
-<svg class="filters" aria-hidden="true">
-  <filter id="goo-filter">
-    <feGaussianBlur in="SourceGraphic" stdDeviation="13" result="blur"/>
-    <feColorMatrix in="blur" mode="matrix" values="
-      1 0 0 0 0
-      0 1 0 0 0
-      0 0 1 0 0
-      0 0 0 27 -11" result="goo"/>
-    <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
-  </filter>
-</svg>
+<main class="splash">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="vignette"></div>
+  <div class="grid"></div>
+  <div class="scan"></div>
 
-<main class="shell">
-  <div class="noise"></div><div class="grid"></div>
-  <header class="top">
-    <a class="brand" href="/slime786/"><i></i>slime786</a>
-    <div class="status">Portfolio <b>/ online</b></div>
+  <header class="topbar">
+    <div class="identity">
+      <strong>Moheen Mahmood</strong>
+      <span class="handle">@slime786</span>
+    </div>
+    <div class="status"><i></i> Product builder · London</div>
   </header>
 
   <section class="hero" aria-labelledby="splash-title">
-    <div class="hero-copy">
-      <p class="kicker">Products · experiments · ideas</p>
-      <h1 id="splash-title"><span class="solid">SLIME</span><span class="outline">786</span></h1>
-      <p class="copy">A digital playground by Moheen Mahmood — building useful software, testing ideas and shipping things that deserve to exist.</p>
+    <div class="copy">
+      <p class="eyebrow">PRODUCTS · EXPERIMENTS · IDEAS</p>
+      <h1 id="splash-title">
+        <span>BUILD.</span>
+        <span>SHIP.</span>
+      </h1>
+      <p class="intro">Software, AI experiments and practical products built around real problems worth solving.</p>
       <div class="actions">
-        <a class="btn primary" data-enter href="/slime786/portfolio.html">Enter site →</a>
-        <a class="btn" href="https://github.com/slime786" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn primary" data-enter href="/slime786/portfolio.html">Enter portfolio →</a>
+        <a class="btn" href="/slime786/portfolio.html#work">View products</a>
       </div>
     </div>
 
-    <div class="slime-stage" id="slime-stage" aria-hidden="true">
-      <div class="slime-aura"></div>
-      <div class="crosshair"></div>
+    <div class="visual" aria-hidden="true">
       <div class="orbit"></div>
-      <div class="orbit two"></div>
-      <div class="goo">
-        <span class="blob blob-main"></span>
-        <span class="blob blob-one"></span>
-        <span class="blob blob-two"></span>
-        <span class="blob blob-three"></span>
-        <span class="blob blob-four"></span>
+      <div class="orbit small"></div>
+      <div class="target"></div>
+      <div class="coordinates">
+        SYS / PORTFOLIO<br>
+        STATUS / <b>ONLINE</b><br>
+        MODE / BUILD
       </div>
-      <div class="gloss"></div>
-      <div class="tag">S786 // LIQUID CORE</div>
+      <div class="signal-card">
+        <small>01 / CURRENT FOCUS</small>
+        <strong>Useful software.<br>Built to ship.</strong>
+        <span>Products first. Experiments in public.</span>
+      </div>
     </div>
   </section>
 
-  <footer class="foot">
+  <footer class="footer">
     <span>© 2026 Moheen Mahmood</span>
-    <span>London, UK · <a href="/slime786/portfolio.html#work">View products</a></span>
+    <span>London, UK · Digital product portfolio</span>
+    <div class="progress"></div>
   </footer>
 </main>
 
 <script>
 (() => {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const stage = document.getElementById('slime-stage');
-  if (!reduceMotion && stage && window.matchMedia('(pointer:fine)').matches) {
-    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
-    const tick = () => {
-      x += (tx - x) * .08;
-      y += (ty - y) * .08;
-      document.documentElement.style.setProperty('--px', x.toFixed(2) + 'px');
-      document.documentElement.style.setProperty('--py', y.toFixed(2) + 'px');
-      raf = requestAnimationFrame(tick);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduced && matchMedia('(pointer:fine)').matches) {
+    let tx=0,ty=0,x=0,y=0,raf=0;
+    const tick=()=>{
+      x+=(tx-x)*.055;
+      y+=(ty-y)*.055;
+      document.documentElement.style.setProperty('--mx',x.toFixed(2)+'px');
+      document.documentElement.style.setProperty('--my',y.toFixed(2)+'px');
+      raf=requestAnimationFrame(tick);
     };
-    window.addEventListener('pointermove', (e) => {
-      tx = ((e.clientX / innerWidth) - .5) * 28;
-      ty = ((e.clientY / innerHeight) - .5) * 22;
-    }, {passive:true});
+    addEventListener('pointermove',(e)=>{
+      tx=((e.clientX/innerWidth)-.5)*28;
+      ty=((e.clientY/innerHeight)-.5)*20;
+    },{passive:true});
     tick();
-    window.addEventListener('pagehide', () => cancelAnimationFrame(raf), {once:true});
+    addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
   }
 
-  const enter = document.querySelector('[data-enter]');
-  if (enter) {
-    enter.addEventListener('click', (e) => {
-      if (reduceMotion || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  const enter=document.querySelector('[data-enter]');
+  if(enter){
+    enter.addEventListener('click',(e)=>{
+      if(reduced || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       document.body.classList.add('is-leaving');
-      const href = enter.href;
-      setTimeout(() => { window.location.href = href; }, 470);
+      const href=enter.href;
+      setTimeout(()=>{location.href=href},500);
     });
   }
 })();
