@@ -2,32 +2,56 @@
 
 **Products, technology & independent ventures.**
 
-A public portfolio of products and experiments built by Moheen Mahmood under the SLIME786 creator brand.
+A public portfolio of products, experiments and independent ventures built by Moheen Mahmood under the SLIME786 creator brand.
 
-## Current focus
+## Products
 
-**GUARD** — software designed to surface overlooked financial opportunities and help people act on them. Currently in validation and secure product development.
+**GUARD** — consumer financial software designed to surface overlooked financial opportunities and reduce the admin needed to act.
 
-**Handoff** — private device-to-device file transfer. The web experience is in beta and a native Android application track is in development.
+**Handoff** — private device-to-device file transfer, with a web beta and native Android development track.
 
-**WHY** — a calmer product for capturing and understanding the reasons behind decisions and ideas.
+**WHY?** — a calmer way to save screenshots, links, photos and messages by remembering the reason they matter.
 
-**Called-It** — an experimental prediction community with transparent calls and an advisory AI referee.
+**Rewind** — a cross-platform product exploring reversible purchases, bookings, subscriptions and other time-sensitive decisions.
 
-**Mo'Fries** — a separate food and consumer-brand project in development.
+**Called It.** — a prediction-driven community with transparent calls, evidence-based resolution and an advisory AI referee.
 
-## Portfolio direction
+**Life Admin Autopilot** — a personal command centre for renewals, bills, appointments, subscriptions, documents and everyday tasks.
 
-The site is being evolved from a personal command-centre experiment into a clearer professional product portfolio. Existing experiments such as the market tools, journal and arcade are retained as supporting work rather than the primary first impression.
+## Ventures
+
+**Mo'Fries** — an independent food and consumer-brand venture in development.
+
+**Slime's Collectables** — a collectables storefront project focused on trading-card singles and sealed products.
+
+## Games
+
+**Iron Vultures** — an original 2D arcade run-and-gun game project for Android.
+
+## Experiments
+
+**Decision Coin** — an intentionally paused lightweight decision-tool concept retained for possible future validation.
 
 ## Principles
 
 - Build useful products, not just demos.
 - Be explicit about beta, experimental and production status.
 - Protect user data and avoid publishing secrets.
-- Make the primary experience accessible and mobile-friendly.
+- Make primary experiences accessible and mobile-friendly.
 - Validate customer value before scaling complexity.
+- Keep product claims aligned with what is actually implemented.
+
+## Brand standard
+
+The portfolio uses **SLIME786™** as the consistent parent signature while individual products and ventures keep their own identities.
+
+See [BRAND.md](BRAND.md) for the naming, endorsement, trademark-use and attribution standard applied across the repositories.
 
 ## Development
 
-The website is static and deployed through GitHub Pages. Preserve existing public anchors where practical so old links continue to work.
+The public portfolio site is deployed through GitHub Pages. Existing public anchors should be preserved where practical so older links continue to work.
+
+---
+
+**SLIME786™ — Products, technology & independent ventures.**  
+© 2026 Moheen Mahmood. All rights reserved unless otherwise stated.
