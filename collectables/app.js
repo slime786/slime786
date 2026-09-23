@@ -286,3 +286,26 @@ async function loadCatalog(){
 }
 
 renderProducts();renderCart();loadCatalog();loadPayPal();
+
+
+function applyUrlFilter(){
+  const params=new URLSearchParams(window.location.search);
+  const filter=params.get("filter");
+  if(!filter) return;
+  const allowed=new Set([
+    "all",
+    "game:yugioh","game:pokemon",
+    "type:single","type:sealed","type:graded","type:bundle",
+    "tag:new","tag:picks"
+  ]);
+  if(!allowed.has(filter)) return;
+  activeFilter=filter;
+  document.querySelectorAll("[data-filter]").forEach(button=>{
+    button.classList.toggle("active",button.dataset.filter===filter);
+  });
+  renderProducts();
+  if(window.location.hash==="#shop"){
+    setTimeout(()=>document.querySelector("#shop")?.scrollIntoView({block:"start"}),80);
+  }
+}
+applyUrlFilter();
