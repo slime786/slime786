@@ -879,3 +879,68 @@ button:focus-visible,
 
 /* Product-first homepage polish */
 .lab-signal-intro{max-width:1180px;margin:0 auto;padding:56px 5vw 20px;border-top:1px solid #10283b;background:#03070d}.lab-signal-intro p:last-child{max-width:720px;color:#8fa8be;line-height:1.7;margin-top:10px}.product-first-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}.product-food{border-color:#6c5314!important}.product-food span{color:#f7b718!important}@media(max-width:700px){.lab-signal-intro{padding:42px 20px 16px}.command-ticker{position:relative;top:auto}}
+
+
+/* V10 — cinematic floating portfolio hero */
+.hero{
+  --hero-x:0px;
+  --hero-y:0px;
+  isolation:isolate;
+  background:#02060b;
+}
+.hero-bg{
+  inset:-5%;
+  background:url('/slime786/portfolio-hero-v4.jpg') 68% center/cover no-repeat;
+  transform-origin:70% 50%;
+  will-change:transform;
+  animation:portfolioHeroFloat 13s ease-in-out infinite alternate;
+}
+.hero-bg:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.22;
+  background-image:
+    radial-gradient(circle at 13% 21%,rgba(255,255,255,.9) 0 1px,transparent 1.6px),
+    radial-gradient(circle at 73% 35%,rgba(118,200,255,.9) 0 1px,transparent 1.7px),
+    radial-gradient(circle at 43% 76%,rgba(255,255,255,.58) 0 1px,transparent 1.5px);
+  background-size:113px 113px,173px 173px,239px 239px;
+  animation:portfolioStars 20s linear infinite;
+}
+.hero-bg:after{
+  content:"";
+  position:absolute;
+  width:48vw;
+  height:48vw;
+  right:10%;
+  bottom:-24vw;
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,rgba(34,151,255,.12),rgba(21,94,170,.045) 38%,transparent 68%);
+  filter:blur(18px);
+  animation:portfolioAtmosphere 8s ease-in-out infinite;
+}
+.hero-overlay{
+  background:
+    linear-gradient(90deg,rgba(1,5,10,.97) 0%,rgba(2,7,13,.88) 31%,rgba(1,7,15,.34) 57%,rgba(1,5,10,.18) 78%,rgba(1,5,10,.28) 100%),
+    linear-gradient(180deg,rgba(0,3,8,.18),rgba(0,5,11,.12) 55%,rgba(0,4,10,.34));
+}
+@keyframes portfolioHeroFloat{
+  0%{transform:translate3d(calc(var(--hero-x) - 5px),calc(var(--hero-y) + 5px),0) scale(1.075) rotate(-.04deg)}
+  50%{transform:translate3d(calc(var(--hero-x) + 2px),calc(var(--hero-y) - 5px),0) scale(1.09) rotate(.03deg)}
+  100%{transform:translate3d(calc(var(--hero-x) + 7px),calc(var(--hero-y) + 1px),0) scale(1.08) rotate(.05deg)}
+}
+@keyframes portfolioStars{
+  to{background-position:18px -42px,-24px -66px,12px -31px}
+}
+@keyframes portfolioAtmosphere{
+  50%{opacity:.62;transform:scale(1.06) translateY(-8px)}
+}
+@media(max-width:900px){
+  .hero-bg{background-position:68% center;inset:-3%;animation-duration:15s}
+  .hero-bg:after{width:80vw;height:80vw;right:-6%;bottom:-34vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-bg,.hero-bg:before,.hero-bg:after{animation:none!important;transform:none!important}
+}
