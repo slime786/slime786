@@ -8,84 +8,100 @@
   <title>Welcome — Slime's Collectables</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#05090a;--ink:#f7f8f4;--muted:#a5b1ad;--green:#83ff54;--gold:#ffc85a;--red:#ff4b68;--blue:#30a9ff}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#05090a;color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}
-    body{min-height:100svh;display:grid;place-items:center;overflow-x:hidden;background:
-      radial-gradient(circle at 18% 20%,rgba(255,147,73,.12),transparent 24%),
-      radial-gradient(circle at 78% 30%,rgba(61,255,122,.12),transparent 25%),
-      radial-gradient(circle at 50% 90%,rgba(71,92,255,.08),transparent 28%),
-      linear-gradient(145deg,#040708,#08110e 55%,#05080a)}
-    .shell{position:relative;width:min(1180px,100%);min-height:100svh;padding:2rem 1.2rem 2.4rem;display:grid;align-content:center;overflow:hidden}
-    .shell:before{content:"";position:absolute;inset:0;pointer-events:none;background:
-      linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px),
-      linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
-    .topbar{position:absolute;top:1.1rem;left:1.2rem;right:1.2rem;display:flex;justify-content:space-between;align-items:center;z-index:2}
-    .topbar span{font-size:.72rem;letter-spacing:.16em;color:#a7b3af;text-transform:uppercase}.topbar a{color:#d8e4df;text-decoration:none;font-weight:700;font-size:.82rem}.topbar a:hover{color:var(--green)}
-    .welcome{position:relative;z-index:1;text-align:center;max-width:920px;margin:auto}
-    .eyebrow{margin:0 0 1rem;color:#c6a96a;font-size:.7rem;letter-spacing:.22em;font-weight:800;text-transform:uppercase}
-    .logo-wrap{position:relative;margin:auto;max-width:760px}.logo-wrap:before{content:"";position:absolute;inset:12% 8%;background:radial-gradient(circle,rgba(113,255,75,.22),transparent 68%);filter:blur(30px);z-index:-1}
-    .logo{display:block;width:100%;height:auto;filter:drop-shadow(0 22px 46px rgba(0,0,0,.52))}
-    h1{font-family:"DM Serif Display";font-weight:400;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.96;margin:.45rem 0 1rem}
-    h1 em{font-style:normal;color:var(--green);text-shadow:0 0 22px rgba(131,255,84,.2)}
-    .lead{max-width:680px;margin:0 auto;color:#bcc8c3;font-size:clamp(.98rem,2vw,1.12rem);line-height:1.7}
-    .main-actions{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin:2rem 0 1.5rem}
-    .button{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:.9rem 1.3rem;border-radius:14px;text-decoration:none;font-weight:800;border:1px solid #2a4439;transition:.2s transform,.2s box-shadow,.2s border-color}
-    .button:hover{transform:translateY(-2px)}.primary{background:linear-gradient(180deg,#96ff67,#58e943);color:#061506;border-color:#8cff60;box-shadow:0 0 30px rgba(98,255,75,.2)}
-    .secondary{background:#0b1316;color:#eff6f2;border-color:#354a43}
-    .game-entry{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;max-width:760px;margin:1rem auto 0}
-    .game-card{position:relative;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:98px;padding:1.15rem 1.25rem;border-radius:20px;text-decoration:none;color:#fff;overflow:hidden;border:1px solid}
-    .game-card:before{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-35px;top:-40px;filter:blur(10px);opacity:.17}
-    .game-card strong,.game-card small,.game-card b{position:relative;display:block}.game-card strong{font-family:"DM Serif Display";font-size:1.55rem}.game-card small{margin-top:.2rem;color:#e2e8e5}.game-card b{font-size:1.35rem}
-    .ygo{background:linear-gradient(135deg,#3d101a,#7b1934);border-color:#b9485c;box-shadow:0 12px 34px rgba(180,45,75,.15)}.ygo:before{background:#ff4b68}
-    .pokemon{background:linear-gradient(135deg,#0c3151,#0b6daa);border-color:#368ac2;box-shadow:0 12px 34px rgba(48,169,255,.14)}.pokemon:before{background:#30a9ff}
-    .trust{display:flex;justify-content:center;gap:1rem 1.4rem;flex-wrap:wrap;margin:1.8rem auto 0;color:#d0dbd6;font-size:.78rem}.trust span{display:flex;gap:.35rem;align-items:center}
-    .note{margin-top:1.3rem;color:#7f9089;font-size:.74rem}
-    .decor{position:absolute;inset:0;pointer-events:none}.card{position:absolute;width:68px;height:98px;border-radius:8px;border:2px solid #365449;background:linear-gradient(145deg,#0f1b19,#17282a);box-shadow:0 0 25px rgba(72,255,128,.08)}.c1{left:3%;top:28%;transform:rotate(-12deg)}.c2{left:8%;bottom:15%;transform:rotate(9deg)}.c3{right:6%;top:24%;transform:rotate(11deg)}.c4{right:2%;bottom:18%;transform:rotate(-8deg)}
-    @media(max-width:720px){.shell{padding:5.2rem .95rem 2rem;align-content:center}.topbar{top:1rem;left:.95rem;right:.95rem}.topbar span{font-size:.62rem}.topbar a{font-size:.75rem}.welcome{width:100%}.logo-wrap{max-width:100%}h1{font-size:3rem}.lead{font-size:.95rem}.main-actions{display:grid;grid-template-columns:1fr}.button{width:100%}.game-entry{grid-template-columns:1fr}.game-card{min-height:88px}.trust{display:grid;grid-template-columns:1fr 1fr;text-align:left}.decor{opacity:.4}.card{width:52px;height:76px}}
-    @media(max-width:420px){h1{font-size:2.6rem}.trust{grid-template-columns:1fr}.topbar span{max-width:55%}.game-card strong{font-size:1.4rem}}
+    :root{--ink:#f7f8f4;--muted:#a7b3ae;--green:#88ff5a;--gold:#ffc85a}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#05090a;color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}
+    body{
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 18% 22%,rgba(255,157,74,.12),transparent 28%),
+        radial-gradient(circle at 82% 26%,rgba(79,255,124,.14),transparent 30%),
+        radial-gradient(circle at 50% 105%,rgba(68,91,255,.10),transparent 34%),
+        linear-gradient(145deg,#040708,#08110e 58%,#05080a)
+    }
+    .splash{
+      position:relative;
+      width:min(920px,100%);
+      min-height:100svh;
+      padding:2rem 1.25rem;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      overflow:hidden
+    }
+    .splash:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px),
+        linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px);
+      background-size:72px 72px;
+      mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent)
+    }
+    .content{position:relative;z-index:1;width:100%;max-width:760px}
+    .kicker{margin:0 0 .9rem;color:#c8aa68;font-size:.7rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+    .logo-wrap{position:relative;margin:0 auto;max-width:720px}
+    .logo-wrap:before{content:"";position:absolute;inset:15% 8%;z-index:-1;background:radial-gradient(circle,rgba(112,255,77,.22),transparent 70%);filter:blur(32px)}
+    .logo{display:block;width:100%;height:auto;filter:drop-shadow(0 24px 46px rgba(0,0,0,.5))}
+    h1{font-family:"DM Serif Display";font-weight:400;font-size:clamp(2.3rem,5vw,4.5rem);line-height:1;margin:.45rem 0 .85rem}
+    h1 em{font-style:normal;color:var(--green);text-shadow:0 0 22px rgba(136,255,90,.2)}
+    .message{max-width:620px;margin:0 auto;color:#bcc8c3;font-size:clamp(.96rem,1.8vw,1.08rem);line-height:1.65}
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:230px;
+      min-height:54px;
+      margin-top:1.8rem;
+      padding:.95rem 1.4rem;
+      border-radius:14px;
+      border:1px solid #93ff6a;
+      background:linear-gradient(180deg,#9cff70,#5be844);
+      color:#071506;
+      text-decoration:none;
+      font-weight:800;
+      box-shadow:0 0 32px rgba(93,255,71,.2);
+      transition:.2s transform,.2s box-shadow
+    }
+    .cta:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(93,255,71,.3)}
+    .meta{margin-top:1rem;color:#7f9089;font-size:.74rem;letter-spacing:.05em}
+    .corner{position:absolute;width:70px;height:100px;border-radius:9px;border:2px solid #314b41;background:linear-gradient(145deg,#0e1716,#152425);opacity:.35;box-shadow:0 0 24px rgba(79,255,124,.06)}
+    .c1{left:4%;top:20%;transform:rotate(-11deg)}.c2{right:5%;bottom:18%;transform:rotate(10deg)}
+    @media(max-width:600px){
+      .splash{padding:1.2rem .95rem}
+      .kicker{font-size:.62rem}
+      h1{font-size:2.65rem}
+      .message{font-size:.94rem}
+      .cta{width:100%;max-width:340px}
+      .corner{width:48px;height:70px;opacity:.2}
+    }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <div class="decor" aria-hidden="true"><i class="card c1"></i><i class="card c2"></i><i class="card c3"></i><i class="card c4"></i></div>
+  <main class="splash">
+    <i class="corner c1" aria-hidden="true"></i>
+    <i class="corner c2" aria-hidden="true"></i>
 
-    <div class="topbar">
-      <span>UK collector-run card shop</span>
-      <a href="/slime786/collectables/shop.html">Skip intro →</a>
-    </div>
+    <section class="content" aria-labelledby="welcome-title">
+      <p class="kicker">WELCOME TO THE COLLECTION</p>
 
-    <section class="welcome" aria-labelledby="welcome-title">
-      <p class="eyebrow">WELCOME TO THE COLLECTION</p>
       <div class="logo-wrap">
         <img class="logo" src="https://cdn.openart.ai/openart-uploads/production/attachment-transfers/82b9037255f7a1c2a644d619c0f34ba2657bfab0a22bef0d5dafdf104016cc9e.png" alt="Slime's Collectables">
       </div>
-      <h1 id="welcome-title">Collect what makes<br><em>you happy.</em></h1>
-      <p class="lead">A small, personal collection of Yu-Gi-Oh! and Pokémon singles, sealed products, graded cards and collector bundles — listed by a collector, for collectors.</p>
 
-      <div class="main-actions">
-        <a class="button primary" href="/slime786/collectables/shop.html">Enter the Collection →</a>
-        <a class="button secondary" href="/slime786/collectables/shop.html#story">About Slime’s Collectables</a>
-      </div>
+      <h1 id="welcome-title">Collect what makes <em>you happy.</em></h1>
+      <p class="message">A personal collection of Yu-Gi-Oh! and Pokémon cards, sealed products and collector pieces — from my shelf to yours.</p>
 
-      <div class="game-entry" aria-label="Jump straight to a game">
-        <a class="game-card ygo" href="/slime786/collectables/shop.html?filter=game:yugioh#shop">
-          <span><strong>Yu-Gi-Oh!</strong><small>Singles · sealed · graded</small></span><b>→</b>
-        </a>
-        <a class="game-card pokemon" href="/slime786/collectables/shop.html?filter=game:pokemon#shop">
-          <span><strong>Pokémon</strong><small>Singles · sealed · graded</small></span><b>→</b>
-        </a>
-      </div>
+      <a class="cta" href="/slime786/collectables/shop.html">Enter Site →</a>
 
-      <div class="trust">
-        <span>✓ Honest listings</span>
-        <span>▣ UK tracked delivery</span>
-        <span>♡ Collector run</span>
-        <span>★ Small-batch stock</span>
-      </div>
-
-      <p class="note">UK only at launch · Personal collection · Exact-item photos as stock is added</p>
+      <p class="meta">UK only · Collector run · Honest listings</p>
     </section>
   </main>
 </body>
