@@ -51,6 +51,10 @@ See [BRAND.md](BRAND.md) for the naming, endorsement, trademark-use and attribut
 
 The public portfolio site is deployed through GitHub Pages. Existing public anchors should be preserved where practical so older links continue to work.
 
+Older experiments and supporting pages are documented in [LEGACY.md](LEGACY.md) so they can remain available without being mistaken for the current flagship portfolio.
+
+The repository is publicly viewable for portfolio purposes but is not automatically open source; see [LICENSE.md](LICENSE.md) for the repository notice.
+
 ---
 
 **SLIME786™ — Products, technology & independent ventures.**  
