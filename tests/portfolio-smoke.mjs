@@ -2,25 +2,38 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const splash = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const portfolio = fs.readFileSync(path.join(root, "portfolio.html"), "utf8");
 const missing = [];
 
-for (const match of html.matchAll(/(?:href|src)=["']([^"']+)["']/gi)) {
-  const value = match[1].split("?")[0].split("#")[0];
-  if (!value || /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(value)) continue;
-  const clean = value.replace(/^\/slime786\//, "").replace(/^\.\//, "").replace(/^\//, "");
-  if (!clean) continue;
-  const target = path.join(root, clean);
-  if (!fs.existsSync(target)) missing.push(value);
+function checkLocalRefs(html, label) {
+  for (const match of html.matchAll(/(?:href|src)=["']([^"']+)["']/gi)) {
+    const value = match[1].split("?")[0].split("#")[0];
+    if (!value || /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(value)) continue;
+    const clean = value.replace(/^\/slime786\//, "").replace(/^\.\//, "").replace(/^\//, "");
+    if (!clean) continue;
+    const target = path.join(root, clean);
+    if (!fs.existsSync(target)) missing.push(`${label}: ${value}`);
+  }
 }
+
+checkLocalRefs(splash, "splash");
+checkLocalRefs(portfolio, "portfolio");
 
 for (const id of ["main-content", "work", "about", "projects", "contact"]) {
-  if (!html.includes(`id="${id}"`)) missing.push(`#${id}`);
+  if (!portfolio.includes(`id="${id}"`)) missing.push(`portfolio:#${id}`);
 }
 
-const ids = new Set([...html.matchAll(/\bid=["']([^"']+)["']/gi)].map(match => match[1]));
-for (const match of html.matchAll(/href=["']#([^"']+)["']/gi)) {
-  if (!ids.has(match[1])) missing.push(`Internal anchor #${match[1]}`);
+const portfolioIds = new Set([...portfolio.matchAll(/\bid=["']([^"']+)["']/gi)].map(match => match[1]));
+for (const match of portfolio.matchAll(/href=["']#([^"']+)["']/gi)) {
+  if (!portfolioIds.has(match[1])) missing.push(`portfolio internal anchor #${match[1]}`);
+}
+
+if (!splash.includes('href="/slime786/portfolio.html"')) {
+  missing.push("splash entry link to portfolio.html");
+}
+if (!splash.includes('splash-theme-v15-refresh')) {
+  missing.push("splash build marker");
 }
 
 if (missing.length) {
@@ -29,17 +42,4 @@ if (missing.length) {
   process.exit(1);
 }
 
-console.log("Portfolio local links, assets and core sections verified.");
-
-const uniqueMeta = [
-  ['name', 'theme-color'],
-  ['name', 'twitter:card'],
-  ['property', 'og:title'],
-  ['property', 'og:description'],
-  ['property', 'og:type'],
-];
-for (const [attribute, value] of uniqueMeta) {
-  const pattern = new RegExp(`<meta\\s+[^>]*${attribute}=["']${value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["'][^>]*>`, "gi");
-  const count = [...html.matchAll(pattern)].length;
-  if (count !== 1) missing.push(`Duplicate metadata ${attribute}=${value} (found ${count})`);
-}
+console.log("Splash and portfolio local links, assets and core sections verified.");
