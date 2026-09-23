@@ -1,6 +1,8 @@
-# Moheen Mahmood — Product Portfolio
+# SLIME786™ — Product Portfolio
 
-A public portfolio for products and experiments built by Moheen Mahmood.
+**Products, technology & independent ventures.**
+
+A public portfolio of products and experiments built by Moheen Mahmood under the SLIME786 creator brand.
 
 ## Current focus
 
