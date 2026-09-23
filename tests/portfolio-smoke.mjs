@@ -32,7 +32,7 @@ for (const match of portfolio.matchAll(/href=["']#([^"']+)["']/gi)) {
 if (!splash.includes('href="/slime786/portfolio.html"')) {
   missing.push("splash entry link to portfolio.html");
 }
-if (!splash.includes('splash-theme-v15-refresh')) {
+if (!splash.includes('splash-command-center-v17')) {
   missing.push("splash build marker");
 }
 
