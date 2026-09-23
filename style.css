@@ -890,7 +890,10 @@ button:focus-visible,
 }
 .hero-bg{
   inset:-5%;
-  background:url('/slime786/portfolio-hero-v4.jpg') 68% center/cover no-repeat;
+  background-image:url('/slime786/portfolio-hero-v4.jpg?v=19')!important;
+  background-size:cover!important;
+  background-position:68% center!important;
+  background-repeat:no-repeat!important;
   transform-origin:70% 50%;
   will-change:transform;
   animation:portfolioHeroFloat 13s ease-in-out infinite alternate;
@@ -938,7 +941,7 @@ button:focus-visible,
   50%{opacity:.62;transform:scale(1.06) translateY(-8px)}
 }
 @media(max-width:900px){
-  .hero-bg{background-position:68% center;inset:-3%;animation-duration:15s}
+  .hero-bg{background-position:68% center!important;inset:-3%;animation-duration:15s}
   .hero-bg:after{width:80vw;height:80vw;right:-6%;bottom:-34vw}
 }
 @media(prefers-reduced-motion:reduce){
