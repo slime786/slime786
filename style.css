@@ -889,8 +889,8 @@ button:focus-visible,
   background:#02060b;
 }
 .hero-bg{
-  inset:-5%;
-  background-image:url('/slime786/portfolio-hero-v4.jpg?v=19')!important;
+  inset:-2.2%;
+  background-image:url('https://cdn.openart.ai/openart-uploads/production/attachment-transfers/2514bced1eddbbcfd0a22b59487bd0e58248f8d9f7d94e5535ac58d1c44c00f9.png')!important;
   background-size:cover!important;
   background-position:68% center!important;
   background-repeat:no-repeat!important;
@@ -930,9 +930,9 @@ button:focus-visible,
     linear-gradient(180deg,rgba(0,3,8,.18),rgba(0,5,11,.12) 55%,rgba(0,4,10,.34));
 }
 @keyframes portfolioHeroFloat{
-  0%{transform:translate3d(calc(var(--hero-x) - 5px),calc(var(--hero-y) + 5px),0) scale(1.075) rotate(-.04deg)}
-  50%{transform:translate3d(calc(var(--hero-x) + 2px),calc(var(--hero-y) - 5px),0) scale(1.09) rotate(.03deg)}
-  100%{transform:translate3d(calc(var(--hero-x) + 7px),calc(var(--hero-y) + 1px),0) scale(1.08) rotate(.05deg)}
+  0%{transform:translate3d(calc(var(--hero-x) - 3px),calc(var(--hero-y) + 3px),0) scale(1.025) rotate(-.02deg)}
+  50%{transform:translate3d(calc(var(--hero-x) + 1px),calc(var(--hero-y) - 3px),0) scale(1.032) rotate(.01deg)}
+  100%{transform:translate3d(calc(var(--hero-x) + 4px),calc(var(--hero-y) + 1px),0) scale(1.027) rotate(.02deg)}
 }
 @keyframes portfolioStars{
   to{background-position:18px -42px,-24px -66px,12px -31px}
@@ -941,7 +941,7 @@ button:focus-visible,
   50%{opacity:.62;transform:scale(1.06) translateY(-8px)}
 }
 @media(max-width:900px){
-  .hero-bg{background-position:68% center!important;inset:-3%;animation-duration:15s}
+  .hero-bg{background-position:68% center!important;inset:-1.5%;animation-duration:16s}
   .hero-bg:after{width:80vw;height:80vw;right:-6%;bottom:-34vw}
 }
 @media(prefers-reduced-motion:reduce){
