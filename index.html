@@ -114,7 +114,7 @@ body.is-leaving .slime-stage{animation:collapse .52s cubic-bezier(.6,.02,.3,1) f
   .slime-stage,.goo,.gloss{transform:none!important}
 }
 </style>
-</head>
+<link rel="stylesheet" href="/slime786/splash-v3.css">\n</head>
 <body>
 <svg class="filters" aria-hidden="true">
   <filter id="goo-filter">
@@ -151,15 +151,15 @@ body.is-leaving .slime-stage{animation:collapse .52s cubic-bezier(.6,.02,.3,1) f
       <div class="crosshair"></div>
       <div class="orbit"></div>
       <div class="orbit two"></div>
-      <div class="goo">
-        <span class="blob blob-main"></span>
-        <span class="blob blob-one"></span>
-        <span class="blob blob-two"></span>
-        <span class="blob blob-three"></span>
-        <span class="blob blob-four"></span>
+      <div class="slime-v3-wrap" id="slime-v3-wrap">
+        <canvas id="slime-v3-canvas"></canvas>
+        <div class="slime-v3-shine"></div>
+        <div class="slime-v3-rim"></div>
+        <div class="slime-v3-scan"></div>
+        <div class="slime-v3-pulse" id="slime-v3-pulse"></div>
       </div>
-      <div class="gloss"></div>
-      <div class="tag">S786 // LIQUID CORE</div>
+      <div class="slime-v3-hint">move pointer / tap slime</div>
+      <div class="tag">S786 // REACTIVE SLIME</div>
     </div>
   </section>
 
@@ -202,5 +202,5 @@ body.is-leaving .slime-stage{animation:collapse .52s cubic-bezier(.6,.02,.3,1) f
   }
 })();
 </script>
-</body>
+<script src="/slime786/splash-v3.js"></script>\n</body>
 </html>
