@@ -75,7 +75,7 @@ const inventory = [
     set:"Scarlet & Violet—151 · Special Illustration Rare",
     condition:"Raw market guide",
     notes:"Preview example only — not current Slime’s Collectables stock. UK raw-card market guide.",
-    price:318.50,stock:1,newest:6,tags:["new","picks"],
+    price:306.02,stock:1,newest:6,tags:["new","picks"],
     marketSource:"CardMetric UK",marketUpdated:"11 Sep 2026",
     imageUrl:"https://cdn.openart.ai/openart-uploads/production/attachment-transfers/342ccb19c84339da5c137aed6e796a1cf029f226cf96ed2250989cefae36dfa0.webp"
   },
@@ -86,9 +86,8 @@ const inventory = [
     set:"Scarlet & Violet—151 · Hyper Rare",
     condition:"Raw market guide",
     notes:"Preview example only — not current stock. UK market snapshot for an English raw copy.",
-    price:29.40,stock:1,newest:5,tags:["new"],
+    price:65.80,stock:1,newest:5,tags:["new"],
     marketSource:"CardMetric UK",marketUpdated:"18 Sep 2026",
-    imageUrl:"https://cdn.openart.ai/openart-uploads/production/attachment-transfers/cfdda8ff4300ac84a67e07b501769347e2c15f17e579827c4012b57da6feb1ed.jpg"
   },
   {
     id:"demo-pkm-151-etb",
