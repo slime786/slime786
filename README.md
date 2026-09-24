@@ -51,7 +51,7 @@ Older public URLs are intentionally retained where removing them could break exi
 - Prefer clear README navigation over adding more top-level notes.
 - Store temporary backups under an explicit `backups/` or `archive/` directory.
 
-Brand and attribution guidance lives in [BRAND.md](BRAND.md). Repository usage terms are in [LICENSE.md](LICENSE.md).
+Brand and attribution guidance lives in [BRAND.md](BRAND.md). Repository usage terms are in [LICENSE.md](LICENSE.md). For maintenance, see [RELEASE-READINESS.md](RELEASE-READINESS.md) and [CHANGELOG.md](CHANGELOG.md).
 
 _Last housekeeping review: 24 September 2026._
 
