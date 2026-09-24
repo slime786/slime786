@@ -235,14 +235,23 @@ function renderProducts(){
     node.dataset.type=item.type;
     node.querySelector(".condition-badge").textContent=item.condition || "See notes";
     const photo=node.querySelector(".product-image");
-    if(item.imageUrl){
-      photo.style.backgroundImage=`linear-gradient(rgba(5,10,9,.08),rgba(5,10,9,.08)),url("${item.imageUrl}")`;
-      photo.style.backgroundSize=item.imageFit||"contain";
-      photo.style.backgroundRepeat="no-repeat";
-      photo.style.backgroundPosition=item.imagePosition||"center";
-      photo.style.backgroundColor=item.game==="pokemon"?"#f4f3ee":"#11161c";
-      photo.querySelector("span").style.display="none";
+    const productImg=node.querySelector(".product-photo");
+    const photoFallback=photo.querySelector("span");
+    if(item.imageUrl && productImg){
+      productImg.src=item.imageUrl;
+      productImg.alt=item.name;
+      productImg.hidden=false;
+      productImg.style.objectFit=item.imageFit||"contain";
+      productImg.style.objectPosition=item.imagePosition||"center";
+      photoFallback.hidden=true;
+      productImg.addEventListener("error",()=>{
+        productImg.hidden=true;
+        photoFallback.hidden=false;
+        photo.classList.add("image-failed");
+      },{once:true});
     }
+    const demoBadge=node.querySelector(".demo-badge");
+    if(demoBadge) demoBadge.hidden=usingLiveCatalog;
     const newBadge=node.querySelector(".new-badge");
     if(item.tags.includes("new")) newBadge.hidden=false;
     node.querySelector(".category").textContent=displayCategory(item);
@@ -258,7 +267,7 @@ function renderProducts(){
       marketGuide.hidden=!item.marketSource;
     }
     const addButton=node.querySelector(".add-button");
-    if(DEMO_MODE && !usingLiveCatalog) addButton.textContent="Preview basket";
+    addButton.textContent=(DEMO_MODE || !usingLiveCatalog)?"Preview basket":"Add to basket";
     if(item.stock<=0){
       addButton.disabled=true;
       addButton.textContent="Sold out";
@@ -284,6 +293,33 @@ function addToCart(id){
 }
 function removeFromCart(id){cart.delete(id);renderCart()}
 
+function updateCheckoutState(qty=0){
+  const paypalContainer=document.querySelector("#paypal-button-container");
+  const readyForPayPal=!DEMO_MODE && usingLiveCatalog && Boolean(PAYPAL_CLIENT_ID) && qty>0;
+
+  checkoutButton.hidden=readyForPayPal;
+  checkoutButton.disabled=true;
+  if(paypalContainer) paypalContainer.hidden=!readyForPayPal;
+
+  if(DEMO_MODE){
+    checkoutButton.textContent="Preview checkout";
+    checkoutNote.textContent="Preview mode only — no payment will be taken.";
+  }else if(!usingLiveCatalog){
+    checkoutButton.textContent="Checkout unavailable";
+    checkoutNote.textContent="Checkout waits for verified live inventory.";
+  }else if(!PAYPAL_CLIENT_ID){
+    checkoutButton.textContent="PayPal not configured";
+    checkoutNote.textContent="PayPal Client ID still needs to be connected.";
+  }else if(qty===0){
+    checkoutButton.textContent="Pay with PayPal";
+    checkoutNote.textContent="Add an item to your basket to continue.";
+  }else{
+    checkoutNote.textContent=PAYPAL_MODE==="sandbox"
+      ?"PayPal sandbox checkout is ready for testing."
+      :"Secure PayPal checkout is ready.";
+  }
+}
+
 function renderCart(){
   cartItems.innerHTML="";
   let qty=0,total=0;
@@ -303,7 +339,7 @@ function renderCart(){
   if(shippingMethod) shippingMethod.textContent=qty===0?"UK shipping":(total>=100?"UK shipping · free over £100":(hasSealed?"UK sealed shipping":"UK tracked shipping"));
   cartTotal.textContent=money(total+shipping);
   cartEmpty.hidden=qty>0;
-  checkoutButton.disabled=true;
+  updateCheckoutState(qty);
 }
 
 function openCart(){cartDrawer.classList.add("open");cartDrawer.setAttribute("aria-hidden","false");backdrop.hidden=false;document.querySelector("#cart-open").setAttribute("aria-expanded","true")}
@@ -354,8 +390,8 @@ mobileSearchToggle.addEventListener("click",()=>{
 });
 
 function loadPayPal(){
-  if(!PAYPAL_CLIENT_ID){checkoutNote.textContent="PayPal is not configured yet.";return}
-  if(PAYPAL_MODE==="sandbox") checkoutNote.textContent="PayPal sandbox is prepared for testing. Real payments stay disabled until live inventory and your live PayPal Client ID are added.";
+  if(!PAYPAL_CLIENT_ID){updateCheckoutState(cartCount ? Number(cartCount.textContent||0) : 0);return}
+  if(PAYPAL_MODE==="sandbox" && !DEMO_MODE) checkoutNote.textContent="PayPal sandbox is prepared for testing.";
   const script=document.createElement("script");
   script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=GBP&components=buttons`;
   script.onload=()=>{
@@ -415,7 +451,7 @@ function loadPayPal(){
       }
     });
     paypalButtons.render("#paypal-button-container");
-    if(DEMO_MODE){const container=document.querySelector("#paypal-button-container");if(container)container.style.opacity=".72"}
+    updateCheckoutState(cartCount ? Number(cartCount.textContent||0) : 0);
   };
   document.head.append(script);
 }
