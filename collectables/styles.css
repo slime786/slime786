@@ -239,3 +239,28 @@ footer{max-width:1280px;margin:2rem auto 0;padding:2rem 1.2rem 3rem;border-top:1
 @media(prefers-reduced-motion:reduce){
   .hero-tcg-card{transition:none}
 }
+
+/* Product image polish v3 */
+.product-image{
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:contain;
+}
+.product-image-wrap{
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,255,255,.06),transparent 55%),
+    #080f12;
+}
+.product-card[data-game="pokemon"] .product-image{
+  background-color:#f4f3ee;
+}
+.product-card[data-game="yugioh"] .product-image{
+  background-color:#11161c;
+}
+.product-card[data-type="single"] .product-image,
+.product-card[data-type="graded"] .product-image{
+  padding:.7rem;
+}
+.product-card[data-type="sealed"] .product-image{
+  padding:.35rem;
+}
