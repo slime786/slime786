@@ -154,8 +154,6 @@
       filter:blur(.25px);
     }
 
-    .mobile-enter{display:none}
-
     @keyframes stageIn{
       from{opacity:0;transform:scale(.99);filter:blur(5px) drop-shadow(0 20px 50px rgba(0,0,0,.45))}
       to{opacity:1;transform:scale(1);filter:blur(0) drop-shadow(0 20px 50px rgba(0,0,0,.45))}
@@ -186,35 +184,15 @@
     @media(max-aspect-ratio:4/3){
       .splash{overflow:auto;padding:1rem 0 5.25rem}
       .stage{width:100vw;height:auto;max-height:none}
-      .enter-hotspot{display:none}
+      .enter-hotspot{
+        display:block;
+        z-index:10;
+        width:31%;
+        height:9.4%;
+      }
       .energy{opacity:.10}
       .glint-zone{opacity:.34}
       .particle{opacity:.34}
-      .mobile-enter{
-        display:inline-flex;
-        position:fixed;
-        z-index:10;
-        left:50%;
-        bottom:max(1rem,env(safe-area-inset-bottom));
-        transform:translateX(-50%);
-        align-items:center;
-        justify-content:center;
-        min-width:210px;
-        min-height:52px;
-        padding:.9rem 1.3rem;
-        border-radius:15px;
-        border:1px solid #99ff71;
-        background:linear-gradient(180deg,#a4ff7b,#5ce746);
-        color:#061506;
-        text-decoration:none;
-        font-weight:800;
-        box-shadow:0 0 26px rgba(93,255,71,.24);
-        animation:mobileButtonBreathe 3.6s ease-in-out infinite;
-      }
-      @keyframes mobileButtonBreathe{
-        0%,100%{box-shadow:0 0 18px rgba(93,255,71,.18)}
-        50%{box-shadow:0 0 30px rgba(93,255,71,.32)}
-      }
     }
 
     /* Auto-rotating splash presets. The approved artwork and navigation never change. */
@@ -238,7 +216,7 @@
     }
 
     @media(prefers-reduced-motion:reduce){
-      .stage,.energy,.glint-zone::after,.particle,.enter-hotspot::before,.mobile-enter{animation:none!important}
+      .stage,.energy,.glint-zone::after,.particle,.enter-hotspot::before{animation:none!important}
     }
   </style>
 </head>
@@ -270,7 +248,6 @@
 
       <a class="enter-hotspot" href="/slime786/collectables/shop.html" aria-label="Enter Slime's Collectables shop"></a>
     </div>
-    <a class="mobile-enter" href="/slime786/collectables/shop.html">Enter Site →</a>
   </main>
 </body>
 </html>
