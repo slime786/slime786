@@ -119,25 +119,14 @@
       outline:none;
       cursor:pointer;
     }
-    .enter-hotspot::before{
-      content:"";
-      position:absolute;
-      inset:-4%;
-      border-radius:22px;
-      box-shadow:0 0 0 1px rgba(153,255,113,.14),0 0 14px rgba(93,255,71,.16);
-      animation:buttonBreathe 3.6s ease-in-out infinite;
+    .enter-hotspot::before,
+    .enter-hotspot::after{content:none}
+    .enter-hotspot:focus,
+    .enter-hotspot:focus-visible,
+    .enter-hotspot:active{
+      outline:none;
+      box-shadow:none;
     }
-    .enter-hotspot::after{
-      content:"";
-      position:absolute;
-      inset:-8%;
-      border-radius:22px;
-      opacity:0;
-      box-shadow:0 0 0 2px rgba(149,255,108,.9),0 0 32px rgba(106,255,77,.45);
-      transition:.2s opacity;
-    }
-    .enter-hotspot:hover::after,
-    .enter-hotspot:focus-visible::after{opacity:1}
 
     .artifact-mask{
       position:absolute;
@@ -216,7 +205,7 @@
     }
 
     @media(prefers-reduced-motion:reduce){
-      .stage,.energy,.glint-zone::after,.particle,.enter-hotspot::before{animation:none!important}
+      .stage,.energy,.glint-zone::after,.particle{animation:none!important}
     }
   </style>
 </head>
