@@ -139,6 +139,21 @@
     .enter-hotspot:hover::after,
     .enter-hotspot:focus-visible::after{opacity:1}
 
+    .artifact-mask{
+      position:absolute;
+      z-index:5;
+      left:50%;
+      top:79.15%;
+      width:29.5%;
+      height:3.4%;
+      transform:translateX(-50%);
+      border-radius:999px;
+      pointer-events:none;
+      background:
+        radial-gradient(ellipse at center,rgba(6,14,18,.98) 0%,rgba(5,12,16,.97) 58%,rgba(4,10,14,.92) 78%,rgba(4,10,14,0) 100%);
+      filter:blur(.25px);
+    }
+
     .mobile-enter{display:none}
 
     @keyframes stageIn{
@@ -239,6 +254,7 @@
       <div class="energy energy-right" aria-hidden="true"></div>
       <div class="glint-zone glint-left" aria-hidden="true"></div>
       <div class="glint-zone glint-right" aria-hidden="true"></div>
+      <div class="artifact-mask" aria-hidden="true"></div>
 
       <i class="particle left"  style="--x:7%;--y:28%;--s:4px;--d:4.8s;--delay:-.8s"></i>
       <i class="particle left"  style="--x:17%;--y:63%;--s:3px;--d:5.6s;--delay:-2.1s"></i>
