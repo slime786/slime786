@@ -68,3 +68,14 @@ The currently applied Collectables database foundation is recorded under:
 These files are the schema/RPC recovery reference for the checkout foundation. Real order and inventory data still lives in Supabase and must never be committed to Git.
 
 See [DATA-RECOVERY.md](DATA-RECOVERY.md) and [RELEASE-READINESS.md](RELEASE-READINESS.md) before enabling real payments.
+
+
+## Checkout regression test
+
+A rollback-safe database regression is stored at:
+
+`supabase/tests/order-flow-regression.sql`
+
+It covers empty-cart rejection, single/sealed/free shipping totals, one-copy oversell protection, cancellation release, capture amount mismatch safety, successful stock deduction, idempotent finalisation and reservation expiry.
+
+The test uses synthetic products inside a transaction and ends with `rollback`, so no test inventory/orders remain behind.
