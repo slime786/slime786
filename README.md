@@ -1,59 +1,59 @@
 # SLIME786™ — Product Portfolio
 
-**Products, technology & independent ventures.**
+**Products, technology & independent ventures by Moheen Mahmood.**
 
-A public portfolio of products, experiments and independent ventures built by Moheen Mahmood under the SLIME786 creator brand.
+This repository is the public home for the SLIME786 portfolio and the live Slime's Collectables storefront.
 
-## Products
+## Live
 
-**GUARD** — consumer financial software designed to surface overlooked financial opportunities and reduce the admin needed to act.
+- **Portfolio:** https://slime786.github.io/slime786/
+- **Slime's Collectables:** https://slime786.github.io/slime786/collectables/
 
-**Handoff** — private device-to-device file transfer, with a web beta and native Android development track.
+## Current portfolio
 
-**WHY?** — a calmer way to save screenshots, links, photos and messages by remembering the reason they matter.
+| Project | Status | Repository |
+| --- | --- | --- |
+| GUARD | Active MVP | `slime786/guard-mvp` |
+| Handoff | Private beta / Android alpha | `slime786/handoff` |
+| WHY? | Active mobile MVP | `slime786/why-app` |
+| Rewind | Prototype | `slime786/rewind-app` |
+| Called It. | Phase 5 prototype | `slime786/Called-It` |
+| Life Admin Autopilot | Maintained prototype | `slime786/life-admin-autopilot` |
+| Iron Vultures | Pre-release game prototype | `slime786/Iron-Vultures` |
+| Mo'Fries | Private business venture | `slime786/mofries-business` |
+| Slime's Collectables | Active storefront | this repo: `collectables/` |
+| Decision Coin | Paused experiment | `slime786/decision-coin` |
 
-**Rewind** — a cross-platform product exploring reversible purchases, bookings, subscriptions and other time-sensitive decisions.
+See [REPOSITORIES.md](REPOSITORIES.md) for a one-page map of every repository.
 
-**Called It.** — a prediction-driven community with transparent calls, evidence-based resolution and an advisory AI referee.
+## Repository map
 
-**Life Admin Autopilot** — a personal command centre for renewals, bills, appointments, subscriptions, documents and everyday tasks.
+```text
+index.html / portfolio.html     Public portfolio
+collectables/                   Live Collectables storefront
+article-*.html                  Published notes
+journal.html                    Journal
+arcade.html                     Browser arcade
+market-radar.html               Market experiment
+project-*.html                  Project case studies
+tests/                          Portfolio smoke tests
+.github/workflows/              CI and scheduled maintenance
+```
 
-## Ventures
+Older public URLs are intentionally retained where removing them could break existing links. They are documented in [LEGACY.md](LEGACY.md).
 
-**Mo'Fries** — an independent food and consumer-brand venture in development.
+## Maintenance rules
 
-**Slime's Collectables** — a collectables storefront project focused on trading-card singles and sealed products.
+- Keep the root focused on files that serve the public portfolio.
+- Keep active product code in its dedicated repository.
+- Do not commit credentials, private keys, customer data, or production secrets.
+- Preserve existing public URLs unless there is a deliberate redirect plan.
+- Prefer clear README navigation over adding more top-level notes.
+- Store temporary backups under an explicit `backups/` or `archive/` directory.
 
-## Games
+Brand and attribution guidance lives in [BRAND.md](BRAND.md). Repository usage terms are in [LICENSE.md](LICENSE.md).
 
-**Iron Vultures** — an original 2D arcade run-and-gun game project for Android.
-
-## Experiments
-
-**Decision Coin** — an intentionally paused lightweight decision-tool concept retained for possible future validation.
-
-## Principles
-
-- Build useful products, not just demos.
-- Be explicit about beta, experimental and production status.
-- Protect user data and avoid publishing secrets.
-- Make primary experiences accessible and mobile-friendly.
-- Validate customer value before scaling complexity.
-- Keep product claims aligned with what is actually implemented.
-
-## Brand standard
-
-The portfolio uses **SLIME786™** as the consistent parent signature while individual products and ventures keep their own identities.
-
-See [BRAND.md](BRAND.md) for the naming, endorsement, trademark-use and attribution standard applied across the repositories.
-
-## Development
-
-The public portfolio site is deployed through GitHub Pages. Existing public anchors should be preserved where practical so older links continue to work.
-
-Older experiments and supporting pages are documented in [LEGACY.md](LEGACY.md) so they can remain available without being mistaken for the current flagship portfolio.
-
-The repository is publicly viewable for portfolio purposes but is not automatically open source; see [LICENSE.md](LICENSE.md) for the repository notice.
+_Last housekeeping review: 24 September 2026._
 
 ---
 
