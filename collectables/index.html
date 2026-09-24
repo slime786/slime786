@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-splash-preset="1">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -200,6 +200,26 @@
         0%,100%{box-shadow:0 0 18px rgba(93,255,71,.18)}
         50%{box-shadow:0 0 30px rgba(93,255,71,.32)}
       }
+    }
+
+    /* Auto-rotating splash presets. The approved artwork and navigation never change. */
+    html[data-splash-preset="2"] .energy{filter:blur(28px)}
+    html[data-splash-preset="2"] .energy-left{animation-duration:7.1s}
+    html[data-splash-preset="2"] .energy-right{animation-duration:7.1s}
+    html[data-splash-preset="2"] .glint-zone{opacity:.52}
+    html[data-splash-preset="2"] .glint-zone::after{animation-duration:9.2s}
+    html[data-splash-preset="2"] .particle{opacity:.42;animation-duration:calc(var(--d) * 1.16)}
+    html[data-splash-preset="2"] .enter-hotspot::before{animation-duration:4.4s}
+
+    html[data-splash-preset="3"] .energy{filter:blur(20px);opacity:.18}
+    html[data-splash-preset="3"] .energy-left{animation-duration:6.6s}
+    html[data-splash-preset="3"] .energy-right{animation-duration:6.6s}
+    html[data-splash-preset="3"] .glint-zone{opacity:.72}
+    html[data-splash-preset="3"] .glint-zone::after{animation-duration:8.3s}
+    html[data-splash-preset="3"] .particle{opacity:.56;animation-duration:calc(var(--d) * 1.08)}
+    html[data-splash-preset="3"] .enter-hotspot::before{
+      animation-duration:4s;
+      box-shadow:0 0 0 1px rgba(153,255,113,.16),0 0 17px rgba(93,255,71,.19)
     }
 
     @media(prefers-reduced-motion:reduce){
