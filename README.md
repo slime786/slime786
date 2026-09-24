@@ -24,7 +24,7 @@ This repository is the public home for the SLIME786 portfolio and the live Slime
 | Slime's Collectables | Active storefront | this repo: `collectables/` |
 | Decision Coin | Paused experiment | `slime786/decision-coin` |
 
-See [REPOSITORIES.md](REPOSITORIES.md) for a one-page map of every repository.
+See [REPOSITORIES.md](REPOSITORIES.md) for a one-page map of every repository and [RELEASE-PLAN.md](RELEASE-PLAN.md) for the free-first release standard.
 
 ## Repository map
 
