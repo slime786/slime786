@@ -14,13 +14,20 @@ function checkA11yBasics(html, label) {
   }
 }
 
-function checkLocalRefs(html, label) {
+function checkLocalRefs(html, label, baseDir = "") {
   for (const match of html.matchAll(/(?:href|src)=["']([^"']+)["']/gi)) {
     const value = match[1].split("?")[0].split("#")[0];
     if (!value || /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(value)) continue;
-    const clean = value.replace(/^\/slime786\//, "").replace(/^\.\//, "").replace(/^\//, "");
-    if (!clean) continue;
-    const target = path.join(root, clean);
+
+    let target;
+    if (value.startsWith("/slime786/")) {
+      target = path.join(root, value.slice("/slime786/".length));
+    } else if (value.startsWith("/")) {
+      target = path.join(root, value.replace(/^\//, ""));
+    } else {
+      target = path.join(root, baseDir, value.replace(/^\.\//, ""));
+    }
+
     if (!fs.existsSync(target)) missing.push(`${label}: ${value}`);
   }
 }
@@ -35,7 +42,7 @@ for (const [file, label] of [
   ["collectables/shop.html", "collectables shop"],
 ]) {
   const html = fs.readFileSync(path.join(root, file), "utf8");
-  checkLocalRefs(html, label);
+  checkLocalRefs(html, label, "collectables");
   checkA11yBasics(html, label);
 }
 
