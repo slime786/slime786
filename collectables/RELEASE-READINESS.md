@@ -17,9 +17,10 @@ This is the canonical live storefront checklist. The live code is in `slime786/s
 - [x] Browser-side real payments remain disabled
 - [ ] Add PayPal sandbox credentials to Supabase secrets
 - [ ] Test server-side create/capture flow
-- [ ] Test stock reservation expiry
-- [ ] Test concurrent-order / last-item behaviour
-- [ ] Test cancelled and failed payment paths
+- [x] Test stock reservation expiry at database/RPC level
+- [x] Test concurrent-order / last-item behaviour at database/RPC level
+- [x] Test cancellation release, failed capture amount and idempotent finalisation at database/RPC level
+- [ ] Test cancelled and failed payment paths through PayPal sandbox
 - [ ] Test final paid-order confirmation
 - [ ] Move to live credentials only after sandbox QA is complete
 
