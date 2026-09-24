@@ -1,24 +1,23 @@
 # Legacy & Supporting Portfolio Material
 
-The SLIME786 public repository contains older experiments and supporting work that remain online to preserve existing links and portfolio history.
+This repository keeps a small number of older public pages online so existing links do not break. They are supporting portfolio material, not separate flagship products.
 
-These files are **not the primary product portfolio** and should not be interpreted as current flagship products unless the main README says otherwise.
+## Retained public pages
 
-## Retained legacy/supporting areas
-
-- `arcade.html` and `arcade-v10.js` — earlier arcade experiment.
-- `journal.html` and `journal-v10.js` — earlier journal/command-centre work.
+- `arcade.html` / `arcade-v10.js` — earlier arcade work.
+- `journal.html` / `journal-v10.js` — journal and command-centre work.
 - `market-radar.html` — market-radar experiment.
-- `project-personal-command-centre.html` — earlier personal command-centre project.
-- `weekly-notes.html` and related article pages — writing/supporting portfolio material.
-- `collectables/` — earlier collectables-related portfolio material.
+- `project-personal-command-centre.html` — earlier command-centre case study.
+- `weekly-notes.html` and `article-*.html` — published writing.
 
-## Why these files stay in place
+## Not legacy
 
-Existing public URLs may already be linked externally or indexed. Moving or deleting them solely for visual cleanliness could break those links.
+`collectables/` is an **active** storefront and should not be treated as archived material.
 
-New visitors should treat [README.md](README.md) as the canonical portfolio index and [BRAND.md](BRAND.md) as the brand standard.
+## Rule for future cleanup
 
-Future legacy material should preferably be grouped or clearly marked without breaking published URLs.
+Do not move or delete a published page only to make the repository look tidier. If a public URL is already in use, either keep it in place or add a deliberate redirect first.
 
-**SLIME786™ — Products, technology & independent ventures.**
+For the current project map, use [README.md](README.md) and [REPOSITORIES.md](REPOSITORIES.md).
+
+_Last reviewed: 24 September 2026._
