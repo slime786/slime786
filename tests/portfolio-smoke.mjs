@@ -40,6 +40,11 @@ checkA11yBasics(portfolio, "portfolio");
 for (const [file, label] of [
   ["collectables/index.html", "collectables splash"],
   ["collectables/shop.html", "collectables shop"],
+  ["collectables/shipping-returns.html", "collectables shipping and returns"],
+  ["collectables/condition-guide.html", "collectables condition guide"],
+  ["collectables/terms.html", "collectables terms"],
+  ["collectables/privacy.html", "collectables privacy"],
+  ["collectables/contact.html", "collectables contact"],
 ]) {
   const html = fs.readFileSync(path.join(root, file), "utf8");
   checkLocalRefs(html, label, "collectables");
