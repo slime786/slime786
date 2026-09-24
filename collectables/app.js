@@ -6,14 +6,131 @@ let pendingLocalOrderId = null;
 let usingLiveCatalog = false;
 
 const inventory = [
-  {id:"ygo-001",game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"single",typeLabel:"Single",name:"Demo Yu-Gi-Oh! Single",set:"Binder demo",condition:"Near Mint",notes:"Replace with the exact card name, set/code, rarity, condition notes and your own photos.",price:12.50,stock:1,newest:8,tags:["new","picks"]},
-  {id:"pkm-001",game:"pokemon",gameLabel:"Pokémon",type:"single",typeLabel:"Single",name:"Demo Pokémon Single",set:"Binder demo",condition:"Lightly Played",notes:"Use front/back photos of the exact copy. Add whitening, print line or surface notes where relevant.",price:18.00,stock:1,newest:7,tags:["new"]},
-  {id:"ygo-sealed-001",game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"sealed",typeLabel:"Sealed",name:"Demo Yu-Gi-Oh! Sealed Item",set:"Sealed demo",condition:"Factory Sealed",notes:"Boxes, tins, packs or decks: note seal tears, dents, wrap condition and shelf wear.",price:44.99,stock:1,newest:6,tags:["picks"]},
-  {id:"pkm-sealed-001",game:"pokemon",gameLabel:"Pokémon",type:"sealed",typeLabel:"Sealed",name:"Demo Pokémon Sealed Item",set:"Sealed demo",condition:"Factory Sealed",notes:"Ideal for ETBs, booster boxes, tins, collections or packs. Replace with exact product photos and details.",price:54.99,stock:1,newest:5,tags:["new","picks"]},
-  {id:"ygo-graded-001",game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"graded",typeLabel:"Graded",name:"Demo Graded Yu-Gi-Oh! Card",set:"Slab demo",condition:"PSA / CGC / BGS",notes:"Use the exact grader, grade, certification number and slab photos when you add real stock.",price:79.99,stock:1,newest:4,tags:["picks"]},
-  {id:"pkm-graded-001",game:"pokemon",gameLabel:"Pokémon",type:"graded",typeLabel:"Graded",name:"Demo Graded Pokémon Card",set:"Slab demo",condition:"PSA / CGC / BGS",notes:"Show the exact slab front/back and note scratches or case marks separately from the card grade.",price:89.99,stock:1,newest:3,tags:["new"]},
-  {id:"ygo-bundle-001",game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"bundle",typeLabel:"Bundle",name:"Demo Yu-Gi-Oh! Bundle",set:"Bundle demo",condition:"Mixed",notes:"Useful for playsets, archetype bundles, bulk rares or small collector lots.",price:24.99,stock:1,newest:2,tags:[]},
-  {id:"pkm-bundle-001",game:"pokemon",gameLabel:"Pokémon",type:"bundle",typeLabel:"Bundle",name:"Demo Pokémon Bundle",set:"Bundle demo",condition:"Mixed",notes:"Ideal for duplicate holos, themed bundles, collection lots or starter bundles.",price:29.99,stock:1,newest:1,tags:[]}
+  {
+    id:"demo-ygo-blue-eyes-sdk",
+    game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"single",typeLabel:"Single",
+    name:"Blue-Eyes White Dragon — SDK-001 Unlimited",
+    set:"Starter Deck: Kaiba · SDK-001",
+    condition:"Raw market guide",
+    notes:"Preview example only — not current Slime’s Collectables stock. Vintage Ultra Rare market guide.",
+    price:15.17,stock:1,newest:12,tags:["new","picks"],
+    marketSource:"PriceCharting + GBP conversion",marketUpdated:"24 Sep 2026",
+    imageUrl:"https://cdn.openart.ai/openart-uploads/production/attachment-transfers/94b2dc929192ec4ff720f007f722c3a84dc8dd781d4c537c5f0d997f932dc537.jpg"
+  },
+  {
+    id:"demo-ygo-dmg-mp24",
+    game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"single",typeLabel:"Single",
+    name:"Dark Magician Girl — MP24-EN053",
+    set:"25th Anniversary Tin: Dueling Mirrors",
+    condition:"Near Mint guide",
+    notes:"Preview example only — not current stock. Recent Cardmarket/TCGGraph guide converted to GBP.",
+    price:4.85,stock:1,newest:11,tags:["new"],
+    marketSource:"TCGGraph / Cardmarket",marketUpdated:"24 Sep 2026"
+  },
+  {
+    id:"demo-ygo-qcst-box",
+    game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"sealed",typeLabel:"Sealed",
+    name:"Quarter Century Stampede — Booster Box",
+    set:"24 packs · English",
+    condition:"Factory Sealed",
+    notes:"Preview sealed example only — not current stock. UK retail guide; final price would depend on the exact sealed box condition.",
+    price:96.95,stock:1,newest:10,tags:["picks"],
+    marketSource:"Chaos Cards UK",marketUpdated:"Sep 2026"
+  },
+  {
+    id:"demo-ygo-rarity2-box",
+    game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"sealed",typeLabel:"Sealed",
+    name:"25th Anniversary Rarity Collection II — Booster Box",
+    set:"Rarity Collection II",
+    condition:"Factory Sealed",
+    notes:"Preview sealed example only — not current stock. UK retail guide for a sealed booster box.",
+    price:109.95,stock:1,newest:9,tags:["new"],
+    marketSource:"Romulus Games UK",marketUpdated:"Sep 2026"
+  },
+  {
+    id:"demo-ygo-dmg-psa10",
+    game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"graded",typeLabel:"Graded",
+    name:"Dark Magician Girl — MP24-EN053 · PSA 10",
+    set:"25th Anniversary Tin: Dueling Mirrors",
+    condition:"PSA 10 guide",
+    notes:"Preview graded example only — not current stock. Actual slab value depends on cert, population and recent sold comps.",
+    price:120.92,stock:1,newest:8,tags:["picks"],
+    marketSource:"TCGGraph graded index + GBP conversion",marketUpdated:"22 Sep 2026"
+  },
+  {
+    id:"demo-ygo-nostalgia-duo",
+    game:"yugioh",gameLabel:"Yu-Gi-Oh!",type:"bundle",typeLabel:"Bundle",
+    name:"25th Anniversary Nostalgia Duo",
+    set:"Blue-Eyes White Dragon + Dark Magician Girl · MP24",
+    condition:"Near Mint guide",
+    notes:"Preview two-card bundle only — not current stock. Guide combines recent market values for the two MP24 cards.",
+    price:23.88,stock:1,newest:7,tags:["picks"],
+    marketSource:"TCGGraph / Cardmarket component guides",marketUpdated:"24 Sep 2026",
+    imageUrl:"https://cdn.openart.ai/openart-uploads/production/attachment-transfers/94b2dc929192ec4ff720f007f722c3a84dc8dd781d4c537c5f0d997f932dc537.jpg"
+  },
+  {
+    id:"demo-pkm-charizard-151",
+    game:"pokemon",gameLabel:"Pokémon",type:"single",typeLabel:"Single",
+    name:"Charizard ex — 199/165",
+    set:"Scarlet & Violet—151 · Special Illustration Rare",
+    condition:"Raw market guide",
+    notes:"Preview example only — not current Slime’s Collectables stock. UK raw-card market guide.",
+    price:318.50,stock:1,newest:6,tags:["new","picks"],
+    marketSource:"CardMetric UK",marketUpdated:"11 Sep 2026",
+    imageUrl:"https://cdn.openart.ai/openart-uploads/production/attachment-transfers/342ccb19c84339da5c137aed6e796a1cf029f226cf96ed2250989cefae36dfa0.webp"
+  },
+  {
+    id:"demo-pkm-mew-151",
+    game:"pokemon",gameLabel:"Pokémon",type:"single",typeLabel:"Single",
+    name:"Mew ex — 205/165",
+    set:"Scarlet & Violet—151 · Hyper Rare",
+    condition:"Raw market guide",
+    notes:"Preview example only — not current stock. UK market snapshot for an English raw copy.",
+    price:29.40,stock:1,newest:5,tags:["new"],
+    marketSource:"CardMetric UK",marketUpdated:"18 Sep 2026",
+    imageUrl:"https://cdn.openart.ai/openart-uploads/production/attachment-transfers/cfdda8ff4300ac84a67e07b501769347e2c15f17e579827c4012b57da6feb1ed.jpg"
+  },
+  {
+    id:"demo-pkm-151-etb",
+    game:"pokemon",gameLabel:"Pokémon",type:"sealed",typeLabel:"Sealed",
+    name:"Scarlet & Violet—151 Elite Trainer Box",
+    set:"151 · Standard ETB",
+    condition:"Factory Sealed",
+    notes:"Preview sealed example only — not current stock. Market guides move quickly on older sealed Pokémon products.",
+    price:420.00,stock:1,newest:4,tags:["picks"],
+    marketSource:"HoloHawk UK sealed tracker",marketUpdated:"24 Sep 2026"
+  },
+  {
+    id:"demo-pkm-151-bundle",
+    game:"pokemon",gameLabel:"Pokémon",type:"sealed",typeLabel:"Sealed",
+    name:"Scarlet & Violet—151 Booster Bundle",
+    set:"6 booster packs",
+    condition:"Factory Sealed",
+    notes:"Preview sealed example only — not current stock. Market guide shown for a single sealed booster bundle.",
+    price:130.80,stock:1,newest:3,tags:["new"],
+    marketSource:"PokeValues",marketUpdated:"10 Sep 2026"
+  },
+  {
+    id:"demo-pkm-pikachu-psa10",
+    game:"pokemon",gameLabel:"Pokémon",type:"graded",typeLabel:"Graded",
+    name:"Pikachu — 173/165 · PSA 10",
+    set:"Scarlet & Violet—151 · Illustration Rare",
+    condition:"PSA 10 guide",
+    notes:"Preview graded example only — not current stock. Converted from current graded market guide; exact sold prices vary.",
+    price:416.66,stock:1,newest:2,tags:["picks"],
+    marketSource:"PriceCharting graded guide + GBP conversion",marketUpdated:"Sep 2026",
+    imageUrl:"https://cdn.openart.ai/openart-uploads/production/attachment-transfers/20a81b780943ad269c89d5f69892898de316e81337bd4051c372ee3a7a5e0a94.png"
+  },
+  {
+    id:"demo-pkm-151-starter-trio",
+    game:"pokemon",gameLabel:"Pokémon",type:"bundle",typeLabel:"Bundle",
+    name:"151 Starter Illustration Rare Trio",
+    set:"Bulbasaur 166 · Charmander 168 · Squirtle 170",
+    condition:"Raw market guide",
+    notes:"Preview three-card bundle only — not current stock. Guide is the combined UK market value of the three raw cards.",
+    price:215.14,stock:1,newest:1,tags:["picks"],
+    marketSource:"CardMetric UK component guides",marketUpdated:"24 Sep 2026"
+  }
 ];
 
 let activeFilter = "all";
@@ -87,7 +204,15 @@ function renderProducts(){
     node.querySelector("h3").textContent=item.name;
     node.querySelector(".card-notes").textContent=item.notes;
     node.querySelector(".price").textContent=money(item.price);
+    const marketGuide=node.querySelector(".market-guide");
+    if(marketGuide){
+      marketGuide.textContent=item.marketSource
+        ? `Market guide · ${item.marketSource} · ${item.marketUpdated || "recent"}`
+        : "";
+      marketGuide.hidden=!item.marketSource;
+    }
     const addButton=node.querySelector(".add-button");
+    if(DEMO_MODE && !usingLiveCatalog) addButton.textContent="Preview basket";
     if(item.stock<=0){
       addButton.disabled=true;
       addButton.textContent="Sold out";
@@ -270,6 +395,8 @@ async function loadCatalog(){
       stock:Number(p.available_stock||0),
       newest:1000-index,
       imageUrl:p.image_url||"",
+      marketSource:"",
+      marketUpdated:"",
       tags:[
         ...(p.is_new?["new"]:[]),
         ...(p.is_slime_pick?["picks"]:[])
