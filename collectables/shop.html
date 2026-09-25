@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260925-6">
+  <link rel="stylesheet" href="styles.css?v=20260925-7">
 </head>
 <body>
   <a class="skip-link" href="#shop">Skip to shop</a>
@@ -175,6 +175,7 @@
       </div>
 
       <noscript><aside class="launch-note no-script-note"><strong>JavaScript is required for the catalogue.</strong><p>The shop is currently a preview. Enable JavaScript to browse products, or use the Contact page if you need help.</p></aside></noscript>
+      <aside class="catalog-status" id="catalog-status" role="status" aria-live="polite" hidden></aside>
       <div class="product-grid" id="product-grid" aria-live="polite"></div>
     </section>
 
@@ -221,7 +222,7 @@
   </footer>
 
   <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
-  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true" aria-labelledby="cart-title">
+  <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="cart-title">
     <div class="cart-head"><div><p class="eyebrow">YOUR BASKET</p><h2 id="cart-title">Binder picks</h2></div><button id="cart-close" type="button" aria-label="Close basket">×</button></div>
     <div class="cart-items" id="cart-items"></div>
     <div class="cart-empty" id="cart-empty"><strong>Your basket is empty.</strong><p>Add an item and it’ll show up here.</p></div>
@@ -270,6 +271,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260925-6"></script>
+  <script src="app.js?v=20260925-7"></script>
 </body>
 </html>
