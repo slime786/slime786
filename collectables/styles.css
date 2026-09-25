@@ -408,3 +408,47 @@ select:focus-visible{
 .no-script-note{
   margin:0 0 1rem;
 }
+
+/* Accessibility and live-failure polish v7 */
+body.drawer-open{overflow:hidden}
+.catalog-status{
+  margin:0 0 1rem;
+  padding:.9rem 1rem;
+  border:1px solid #355347;
+  border-radius:12px;
+  background:#0b1714;
+  color:#bdd0c7;
+  font-size:.82rem;
+  line-height:1.5;
+}
+.catalog-status.catalog-error{
+  border-color:#7d4a45;
+  background:#1a0f0f;
+  color:#f1c6bf;
+}
+.button,
+.icon-button,
+.cart-button,
+.menu-button,
+.filter-pills button,
+.sort-control select,
+.category-tile,
+.promo-card,
+.add-button,
+.details-button,
+.product-dialog-close,
+.cart-head button,
+.cart-line button{
+  min-height:44px;
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+}
