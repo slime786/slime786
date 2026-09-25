@@ -81,3 +81,21 @@ A rollback-safe database regression is stored at:
 It covers empty-cart rejection, single/sealed/free shipping totals, one-copy oversell protection, cancellation release, capture amount mismatch safety, successful stock deduction, idempotent finalisation and reservation expiry.
 
 The test uses synthetic products inside a transaction and ends with `rollback`, so no test inventory/orders remain behind.
+
+
+## Edge Function source control
+
+The current intended Edge Function source is now versioned in Git:
+
+- `supabase/functions/collectables-create-order/index.ts`
+- `supabase/functions/collectables-capture-order/index.ts`
+- `supabase/functions/collectables-catalog/index.ts`
+
+The source-controlled versions use exact production-origin matching, allow `localhost` / `127.0.0.1` for local sandbox testing, and send `Cache-Control: no-store`.
+
+Deployment status checked 25 September 2026:
+- `collectables-create-order`: hardened version deployed live (version 3).
+- `collectables-capture-order`: hardened Git copy exists; live redeploy is still pending because the current connector blocked the deployment action.
+- `collectables-catalog`: hardened Git copy exists; live redeploy is still pending because the current connector blocked the deployment action.
+
+Do not treat the pending two functions as aligned with Git until their live source has been rechecked after redeployment.
