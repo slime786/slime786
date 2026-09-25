@@ -340,17 +340,30 @@ function addToCart(id){
 }
 function removeFromCart(id){cart.delete(id);renderCart()}
 
+function isLocalSandboxCheckout(){
+  return DEMO_MODE
+    && PAYPAL_MODE==="sandbox"
+    && ["localhost","127.0.0.1"].includes(window.location.hostname);
+}
+
 function updateCheckoutState(qty=0){
   const paypalContainer=document.querySelector("#paypal-button-container");
-  const readyForPayPal=!DEMO_MODE && usingLiveCatalog && Boolean(PAYPAL_CLIENT_ID) && qty>0;
+  const localSandbox=isLocalSandboxCheckout();
+  const readyForPayPal=usingLiveCatalog
+    && Boolean(PAYPAL_CLIENT_ID)
+    && qty>0
+    && (!DEMO_MODE || localSandbox);
 
   checkoutButton.hidden=readyForPayPal;
   checkoutButton.disabled=true;
   if(paypalContainer) paypalContainer.hidden=!readyForPayPal;
 
-  if(DEMO_MODE){
+  if(DEMO_MODE && !localSandbox){
     checkoutButton.textContent="Preview checkout";
     checkoutNote.textContent="Preview mode only — no payment will be taken.";
+  }else if(localSandbox && !usingLiveCatalog){
+    checkoutButton.textContent="Sandbox waiting for test stock";
+    checkoutNote.textContent="Local PayPal sandbox testing waits for secure catalog test stock.";
   }else if(!usingLiveCatalog){
     checkoutButton.textContent="Checkout unavailable";
     checkoutNote.textContent="Checkout waits for verified live inventory.";
@@ -438,7 +451,7 @@ mobileSearchToggle.addEventListener("click",()=>{
 
 function loadPayPal(){
   if(!PAYPAL_CLIENT_ID){updateCheckoutState(cartCount ? Number(cartCount.textContent||0) : 0);return}
-  if(PAYPAL_MODE==="sandbox" && !DEMO_MODE) checkoutNote.textContent="PayPal sandbox is prepared for testing.";
+  if(PAYPAL_MODE==="sandbox" && (!DEMO_MODE || isLocalSandboxCheckout())) checkoutNote.textContent="PayPal sandbox is prepared for testing.";
   const script=document.createElement("script");
   script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=GBP&components=buttons`;
   script.onload=()=>{
