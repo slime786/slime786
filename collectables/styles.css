@@ -403,3 +403,8 @@ select:focus-visible{
   .product-dialog-image-wrap{min-height:280px}
   .product-dialog-copy{padding:.4rem .2rem 1rem}
 }
+
+/* Preview indexing / no-script polish v6 */
+.no-script-note{
+  margin:0 0 1rem;
+}
