@@ -195,6 +195,9 @@ const cartShipping = document.querySelector("#cart-shipping");
 const shippingMethod = document.querySelector("#shipping-method");
 const checkoutButton = document.querySelector("#checkout-button");
 const checkoutNote = document.querySelector("#checkout-note");
+const productDialog = document.querySelector("#product-dialog");
+const productDialogClose = document.querySelector("#product-dialog-close");
+let productDialogReturnFocus = null;
 
 function money(value){return new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP"}).format(value)}
 function displayCategory(item){return `${item.gameLabel} · ${item.typeLabel}`}
@@ -266,6 +269,8 @@ function renderProducts(){
         : "";
       marketGuide.hidden=!item.marketSource;
     }
+    const detailsButton=node.querySelector(".details-button");
+    if(detailsButton) detailsButton.addEventListener("click",()=>openProductDetails(item,detailsButton));
     const addButton=node.querySelector(".add-button");
     addButton.textContent=(DEMO_MODE || !usingLiveCatalog)?"Preview basket":"Add to basket";
     if(item.stock<=0){
@@ -278,6 +283,48 @@ function renderProducts(){
     grid.append(node);
   });
 }
+
+function openProductDetails(item,trigger){
+  if(!productDialog)return;
+  productDialogReturnFocus=trigger || document.activeElement;
+  const image=productDialog.querySelector("#product-dialog-image");
+  image.src=item.imageUrl || "";
+  image.alt=item.name;
+  image.hidden=!item.imageUrl;
+  productDialog.querySelector("#product-dialog-category").textContent=displayCategory(item);
+  productDialog.querySelector("#product-dialog-title").textContent=item.name;
+  productDialog.querySelector("#product-dialog-set").textContent=item.set || "";
+  productDialog.querySelector("#product-dialog-condition").textContent=item.condition || "See listing notes";
+  productDialog.querySelector("#product-dialog-notes").textContent=item.notes || "";
+  const market=productDialog.querySelector("#product-dialog-market");
+  market.textContent=item.marketSource
+    ? `Market guide · ${item.marketSource} · ${item.marketUpdated || "recent"}`
+    : "";
+  market.hidden=!item.marketSource;
+  productDialog.querySelector("#product-dialog-price").textContent=money(item.price);
+  productDialog.querySelector("#product-dialog-preview").hidden=usingLiveCatalog;
+  if(typeof productDialog.showModal==="function") productDialog.showModal();
+  else productDialog.setAttribute("open","");
+}
+
+function closeProductDetails(){
+  if(!productDialog)return;
+  if(typeof productDialog.close==="function" && productDialog.open) productDialog.close();
+  else productDialog.removeAttribute("open");
+  productDialogReturnFocus?.focus?.();
+  productDialogReturnFocus=null;
+}
+
+productDialogClose?.addEventListener("click",closeProductDetails);
+productDialog?.addEventListener("click",event=>{
+  const rect=productDialog.getBoundingClientRect();
+  const inside=event.clientX>=rect.left && event.clientX<=rect.right && event.clientY>=rect.top && event.clientY<=rect.bottom;
+  if(!inside) closeProductDetails();
+});
+productDialog?.addEventListener("cancel",event=>{
+  event.preventDefault();
+  closeProductDetails();
+});
 
 function setFilter(filter,{scroll=true}={}){
   activeFilter=filter;
@@ -348,7 +395,7 @@ function closeCart(){cartDrawer.classList.remove("open");cartDrawer.setAttribute
 document.querySelector("#cart-open").addEventListener("click",openCart);
 document.querySelector("#cart-close").addEventListener("click",closeCart);
 backdrop.addEventListener("click",closeCart);
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeMobileMenu()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeMobileMenu();closeProductDetails()}});
 
 document.querySelectorAll("[data-filter]").forEach(button=>button.addEventListener("click",()=>setFilter(button.dataset.filter)));
 
