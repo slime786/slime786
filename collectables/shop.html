@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="description" content="Slime's Collectables — a personal UK Yu-Gi-Oh! and Pokémon TCG shop for singles, sealed, graded cards and collector bundles.">
   <meta name="theme-color" content="#07100d">
+  <meta name="robots" content="noindex,follow">
+  <meta name="googlebot" content="noindex,follow">
   <title>Slime's Collectables — Yu-Gi-Oh! & Pokémon TCG</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260925-5">
+  <link rel="stylesheet" href="styles.css?v=20260925-6">
 </head>
 <body>
   <a class="skip-link" href="#shop">Skip to shop</a>
@@ -172,6 +174,7 @@
         </label>
       </div>
 
+      <noscript><aside class="launch-note no-script-note"><strong>JavaScript is required for the catalogue.</strong><p>The shop is currently a preview. Enable JavaScript to browse products, or use the Contact page if you need help.</p></aside></noscript>
       <div class="product-grid" id="product-grid" aria-live="polite"></div>
     </section>
 
@@ -227,7 +230,7 @@
       <div><span id="shipping-method">UK shipping</span><strong id="cart-shipping">£0.00</strong></div>
       <div class="cart-total"><span>Current total</span><strong id="cart-total">£0.00</strong></div>
       <button class="button primary checkout-button" id="checkout-button" type="button" disabled>Pay with PayPal</button>
-      <p id="checkout-note">Checkout is intentionally disabled until real inventory and PayPal are configured.</p>
+      <p id="checkout-note" role="status" aria-live="polite">Checkout is intentionally disabled until real inventory and PayPal are configured.</p>
       <div id="paypal-button-container" aria-live="polite"></div>
     </div>
   </aside>
@@ -267,6 +270,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260925-5"></script>
+  <script src="app.js?v=20260925-6"></script>
 </body>
 </html>
