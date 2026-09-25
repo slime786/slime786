@@ -20,6 +20,12 @@ if(/PAYPAL_CLIENT_SECRET\s*=|sb_secret_|sk_live_|sk_test_/i.test(app)) {
 if(!app.includes('["localhost","127.0.0.1"].includes(window.location.hostname)')) {
   fail("demo sandbox checkout must remain localhost-only");
 }
+if(!app.includes("function showCatalogUnavailable()")) {
+  fail("live catalogue failure must lock checkout instead of showing demo stock");
+}
+if(!app.includes('document.querySelector("#cart-close")?.focus()')) {
+  fail("cart drawer should move focus on open");
+}
 
 const start = app.indexOf("const inventory = [");
 const endMarker = "];\n\nlet activeFilter";
@@ -56,7 +62,9 @@ for(const marker of [
   'id="paypal-button-container"',
   'CATALOGUE PREVIEW',
   'name="robots" content="noindex,follow"',
-  'id="checkout-note" role="status" aria-live="polite"'
+  'id="checkout-note" role="status" aria-live="polite"',
+  'id="catalog-status" role="status" aria-live="polite"',
+  'role="dialog" aria-modal="true"'
 ]) {
   if(!shop.includes(marker)) fail(`shop missing marker: ${marker}`);
 }
