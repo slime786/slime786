@@ -197,7 +197,9 @@ const checkoutButton = document.querySelector("#checkout-button");
 const checkoutNote = document.querySelector("#checkout-note");
 const productDialog = document.querySelector("#product-dialog");
 const productDialogClose = document.querySelector("#product-dialog-close");
+const catalogStatus = document.querySelector("#catalog-status");
 let productDialogReturnFocus = null;
+let cartReturnFocus = null;
 
 function money(value){return new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP"}).format(value)}
 function displayCategory(item){return `${item.gameLabel} · ${item.typeLabel}`}
@@ -402,8 +404,27 @@ function renderCart(){
   updateCheckoutState(qty);
 }
 
-function openCart(){cartDrawer.classList.add("open");cartDrawer.setAttribute("aria-hidden","false");backdrop.hidden=false;document.querySelector("#cart-open").setAttribute("aria-expanded","true")}
-function closeCart(){cartDrawer.classList.remove("open");cartDrawer.setAttribute("aria-hidden","true");backdrop.hidden=true;document.querySelector("#cart-open").setAttribute("aria-expanded","false")}
+function openCart(){
+  const cartOpen=document.querySelector("#cart-open");
+  cartReturnFocus=document.activeElement || cartOpen;
+  cartDrawer.classList.add("open");
+  cartDrawer.setAttribute("aria-hidden","false");
+  backdrop.hidden=false;
+  cartOpen.setAttribute("aria-expanded","true");
+  document.body.classList.add("drawer-open");
+  setTimeout(()=>document.querySelector("#cart-close")?.focus(),0);
+}
+function closeCart(){
+  if(!cartDrawer.classList.contains("open"))return;
+  cartDrawer.classList.remove("open");
+  cartDrawer.setAttribute("aria-hidden","true");
+  backdrop.hidden=true;
+  document.querySelector("#cart-open").setAttribute("aria-expanded","false");
+  document.body.classList.remove("drawer-open");
+  const returnTarget=cartReturnFocus;
+  cartReturnFocus=null;
+  returnTarget?.focus?.();
+}
 
 document.querySelector("#cart-open").addEventListener("click",openCart);
 document.querySelector("#cart-close").addEventListener("click",closeCart);
@@ -516,12 +537,34 @@ function loadPayPal(){
   document.head.append(script);
 }
 
+function showCatalogStatus(message,{error=false}={}){
+  if(!catalogStatus)return;
+  catalogStatus.textContent=message;
+  catalogStatus.hidden=!message;
+  catalogStatus.classList.toggle("catalog-error",Boolean(error));
+}
+
+function showCatalogUnavailable(){
+  usingLiveCatalog=false;
+  cart.clear();
+  renderCart();
+  grid.innerHTML='<div class="no-products"><strong>Shop temporarily unavailable.</strong><br>The live catalogue could not be loaded safely. Please try again later.</div>';
+  showCatalogStatus("Live catalogue unavailable — checkout remains locked.",{error:true});
+}
+
 async function loadCatalog(){
   try{
     const res=await fetch(`${CHECKOUT_API_BASE}/collectables-catalog`,{cache:"no-store"});
     if(!res.ok) throw new Error("catalog_fetch_failed");
     const data=await res.json();
-    if(!Array.isArray(data.products) || !data.products.length) return;
+    if(!Array.isArray(data.products) || !data.products.length){
+      if(DEMO_MODE){
+        showCatalogStatus("Catalogue preview mode — live inventory has not been loaded yet.");
+        return;
+      }
+      showCatalogUnavailable();
+      return;
+    }
 
     const mapped=data.products.map((p,index)=>({
       id:p.id,
@@ -547,10 +590,17 @@ async function loadCatalog(){
 
     inventory.splice(0,inventory.length,...mapped);
     usingLiveCatalog=true;
+    showCatalogStatus("");
     renderProducts();
     renderCart();
   }catch(err){
-    console.warn("Using demo catalogue until live inventory is available.");
+    if(DEMO_MODE){
+      console.warn("Using demo catalogue until live inventory is available.");
+      showCatalogStatus("Catalogue preview mode — live inventory is currently unavailable.");
+      return;
+    }
+    console.error("Live catalogue unavailable.",err);
+    showCatalogUnavailable();
   }
 }
 
