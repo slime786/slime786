@@ -75,3 +75,26 @@ if(failures.length){
   process.exit(1);
 }
 console.log("Collectables demo safety, catalogue completeness and product-detail markers verified.");
+
+
+const edgeFunctionPaths = [
+  "collectables/supabase/functions/collectables-create-order/index.ts",
+  "collectables/supabase/functions/collectables-capture-order/index.ts",
+  "collectables/supabase/functions/collectables-catalog/index.ts"
+];
+
+for (const path of edgeFunctionPaths) {
+  const source = fs.readFileSync(path, "utf8");
+  if (!source.includes('const PROD_ORIGIN = "https://slime786.github.io";')) {
+    fail(`${path}: missing exact production origin`);
+  }
+  if (!source.includes('url.hostname === "localhost" || url.hostname === "127.0.0.1"')) {
+    fail(`${path}: missing localhost sandbox origin support`);
+  }
+  if (source.includes('startsWith("https://slime786.github.io")')) {
+    fail(`${path}: loose startsWith origin check must not return`);
+  }
+  if (!source.includes('"Cache-Control": "no-store"')) {
+    fail(`${path}: no-store response safeguard missing`);
+  }
+}
