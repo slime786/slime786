@@ -25,11 +25,11 @@ This is the canonical live storefront checklist. The live code is in `slime786/s
 - [ ] Move to live credentials only after sandbox QA is complete
 
 ## Fulfilment
-- [ ] Re-check UK shipping prices and thresholds
-- [ ] Re-check returns wording
-- [ ] Define packing process for singles vs sealed
-- [ ] Define refund/cancellation handling
-- [ ] Define what happens if physical stock cannot be located
+- [x] Re-check UK shipping prices and thresholds against current Royal Mail tracked pricing
+- [x] Re-check returns wording against current UK distance-selling guidance
+- [x] Define packing process for singles, graded and sealed products
+- [x] Define refund/cancellation handling
+- [x] Define what happens if physical stock cannot be located
 
 ## UX & accessibility
 - [ ] Desktop walkthrough
@@ -43,7 +43,7 @@ This is the canonical live storefront checklist. The live code is in `slime786/s
 - [x] Orders/reservations are server-side and protected
 - [x] Recovery guidance exists in `DATA-RECOVERY.md`
 - [ ] Rehearse a test restore before live payments
-- [ ] Define order/customer retention and deletion rules
+- [x] Define working order/customer retention and deletion rules (exact accounting period still requires seller-status confirmation)
 
 ## Cost gate
 Do not pay for extra commerce services, monitoring, premium hosting or other tooling while the store remains in demo mode. Real payment processing should only be enabled after real inventory, fulfilment and sandbox checkout are ready.
@@ -53,3 +53,8 @@ _Last reviewed: 25 September 2026._
 
 ## Launch procedure
 The exact sandbox, cutover and rollback sequence is documented in [LAUNCH-RUNBOOK.md](LAUNCH-RUNBOOK.md).
+
+
+## Operational guides
+- [Fulfilment guide](FULFILMENT.md)
+- [Data retention & deletion](DATA-RETENTION.md)
