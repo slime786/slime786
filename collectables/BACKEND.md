@@ -13,6 +13,8 @@ The storefront stays static on GitHub Pages, while secure checkout logic runs se
   - Singles / non-sealed: £3.99
   - Orders containing sealed products: £5.49
   - Free shipping at £100+
+
+Compensation note: these are customer-facing shipping charges. High-value orders should be upgraded operationally to a carrier/service with compensation appropriate to the order value; do not assume the default tracked service is sufficient for every order.
 - PayPal create-order function
 - PayPal capture-order function
 - Order number generation
