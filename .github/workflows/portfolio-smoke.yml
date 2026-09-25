@@ -14,3 +14,4 @@ jobs:
         with:
           node-version: 22
       - run: node tests/portfolio-smoke.mjs
+      - run: node tests/collectables-smoke.mjs
