@@ -17,6 +17,10 @@ if(/PAYPAL_CLIENT_SECRET\s*=|sb_secret_|sk_live_|sk_test_/i.test(app)) {
   fail("possible secret detected in browser source");
 }
 
+if(!app.includes('["localhost","127.0.0.1"].includes(window.location.hostname)')) {
+  fail("demo sandbox checkout must remain localhost-only");
+}
+
 const start = app.indexOf("const inventory = [");
 const endMarker = "];\n\nlet activeFilter";
 const end = app.indexOf(endMarker, start);
@@ -50,7 +54,9 @@ for(const marker of [
   'class="product-photo"',
   'id="product-dialog"',
   'id="paypal-button-container"',
-  'CATALOGUE PREVIEW'
+  'CATALOGUE PREVIEW',
+  'name="robots" content="noindex,follow"',
+  'id="checkout-note" role="status" aria-live="polite"'
 ]) {
   if(!shop.includes(marker)) fail(`shop missing marker: ${marker}`);
 }
