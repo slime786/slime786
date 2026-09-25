@@ -35,7 +35,8 @@ This is the canonical live storefront checklist. The live code is in `slime786/s
 - [ ] Desktop walkthrough
 - [ ] Small-screen/mobile walkthrough
 - [ ] Keyboard-only checkout walkthrough
-- [ ] Focus/contrast/touch-target review
+- [x] Focus and minimum touch-target safeguards implemented
+- [ ] Final visual contrast review
 - [x] Broken-image/no-stock/network-error states
 - [x] Reduced-motion safeguards present on the splash and shop
 
@@ -58,3 +59,7 @@ The exact sandbox, cutover and rollback sequence is documented in [LAUNCH-RUNBOO
 ## Operational guides
 - [Fulfilment guide](FULFILMENT.md)
 - [Data retention & deletion](DATA-RETENTION.md)
+
+
+## Final QA
+Use [QA-CHECKLIST.md](QA-CHECKLIST.md) for the final desktop, mobile, keyboard and checkout walkthrough.
