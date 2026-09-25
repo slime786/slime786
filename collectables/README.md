@@ -39,6 +39,7 @@ Do not put the PayPal Client Secret in GitHub or browser code.
 - [Launch runbook](LAUNCH-RUNBOOK.md)
 - [Fulfilment guide](FULFILMENT.md)
 - [Data retention & deletion](DATA-RETENTION.md)
+- [Final QA checklist](QA-CHECKLIST.md)
 - [Shipping & returns](shipping-returns.html)
 - [Condition guide](condition-guide.html)
 
