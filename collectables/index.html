@@ -114,10 +114,13 @@
       width:18.4%;
       height:8.1%;
       transform:translate(-50%,-50%);
+      border:0;
       border-radius:20px;
+      background:transparent;
       text-decoration:none;
       outline:none;
       cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
     }
     .enter-hotspot::before,
     .enter-hotspot::after{content:none}
@@ -171,17 +174,59 @@
     }
 
     @media(max-aspect-ratio:4/3){
-      .splash{overflow:auto;padding:1rem 0 5.25rem}
-      .stage{width:100vw;height:auto;max-height:none}
+      .splash{
+        overflow:hidden;
+        padding:0 0 max(.75rem,env(safe-area-inset-bottom));
+      }
+      .stage{
+        width:112vw;
+        max-width:none;
+        height:auto;
+        max-height:none;
+        margin-top:-3.5svh;
+      }
+      .artifact-mask{
+        z-index:7;
+        top:68.7%;
+        width:44%;
+        height:14.2%;
+        border-radius:999px;
+        background:
+          radial-gradient(ellipse at center,
+            rgba(4,10,14,.995) 0%,
+            rgba(4,10,14,.99) 44%,
+            rgba(4,10,14,.90) 66%,
+            rgba(4,10,14,.42) 82%,
+            rgba(4,10,14,0) 100%);
+        filter:blur(.55px);
+      }
       .enter-hotspot{
-        display:block;
+        display:flex;
         z-index:10;
-        width:31%;
-        height:9.4%;
+        align-items:center;
+        justify-content:center;
+        top:73.2%;
+        width:clamp(118px,31vw,152px);
+        height:clamp(34px,9vw,40px);
+        border:1px solid rgba(129,255,89,.72);
+        border-radius:999px;
+        background:linear-gradient(180deg,#8bff59,#58e63d);
+        color:#041405;
+        box-shadow:0 8px 24px rgba(0,0,0,.34),0 0 18px rgba(91,255,77,.18);
+        font-size:clamp(.7rem,2.55vw,.86rem);
+        font-weight:900;
+        letter-spacing:.08em;
+        line-height:1;
+        text-transform:uppercase;
+      }
+      .enter-hotspot::after{content:"Enter Site"}
+      .enter-hotspot:focus-visible{
+        outline:2px solid rgba(255,255,255,.82);
+        outline-offset:2px;
       }
       .energy{opacity:.10}
       .glint-zone{opacity:.34}
-      .particle{opacity:.34}
+      .particle{opacity:.28}
     }
 
     /* Auto-rotating splash presets. The approved artwork and navigation never change. */
