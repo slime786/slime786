@@ -85,7 +85,7 @@ The test uses synthetic products inside a transaction and ends with `rollback`, 
 
 ## Edge Function source control
 
-The current intended Edge Function source is now versioned in Git:
+The current intended Edge Function source is versioned in Git:
 
 - `supabase/functions/collectables-create-order/index.ts`
 - `supabase/functions/collectables-capture-order/index.ts`
@@ -93,9 +93,10 @@ The current intended Edge Function source is now versioned in Git:
 
 The source-controlled versions use exact production-origin matching, allow `localhost` / `127.0.0.1` for local sandbox testing, and send `Cache-Control: no-store`.
 
-Deployment status checked 25 September 2026:
-- `collectables-create-order`: hardened version deployed live (version 3).
-- `collectables-capture-order`: hardened Git copy exists; live redeploy is still pending because the current connector blocked the deployment action.
-- `collectables-catalog`: hardened Git copy exists; live redeploy is still pending because the current connector blocked the deployment action.
+Deployment status verified 25 September 2026:
+- `collectables-create-order`: live version 3 matches Git exactly.
+- `collectables-capture-order`: live version 2 matches Git exactly.
+- `collectables-catalog`: live version 2 matches Git exactly.
+- All three intentionally keep `verify_jwt=false` because they are browser-facing commerce endpoints with their own origin/server-side controls rather than user JWT authentication.
 
-Do not treat the pending two functions as aligned with Git until their live source has been rechecked after redeployment.
+Re-check live source against Git after any future Edge Function deployment before treating production as aligned.
