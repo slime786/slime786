@@ -223,8 +223,9 @@ const CONDITION_KEYS = {
 };
 function singleConditionKey(item){
   if(item.type!=="single") return "";
-  const label=String(item.condition||"").trim().toLowerCase().replace(/\\s+/g," ");
-  return CONDITION_KEYS[label]||"";
+  const label=String(item.condition||"").trim().toLowerCase().replace(/\s+/g," ");
+  const withoutAbbreviation=label.replace(/\s*\([a-z]+\)$/,"");
+  return CONDITION_KEYS[label]||CONDITION_KEYS[withoutAbbreviation]||"";
 }
 function updateConditionOptions(){
   if(!conditionSelect) return;
