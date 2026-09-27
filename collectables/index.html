@@ -124,25 +124,28 @@
     }
     .enter-hotspot::before,
     .enter-hotspot::after{content:none}
-    .enter-hotspot:focus,
-    .enter-hotspot:focus-visible,
-    .enter-hotspot:active{
+    .enter-hotspot:focus:not(:focus-visible),
+    .enter-hotspot:active:not(:focus-visible){
       outline:none;
       box-shadow:none;
+    }
+    .enter-hotspot:focus-visible{
+      outline:2px solid rgba(255,255,255,.9);
+      outline-offset:2px;
     }
 
     .artifact-mask{
       position:absolute;
       z-index:5;
       left:50%;
-      top:79.15%;
-      width:29.5%;
-      height:3.4%;
+      top:77.5%;
+      width:22%;
+      height:4.4%;
       transform:translateX(-50%);
       border-radius:999px;
       pointer-events:none;
       background:
-        radial-gradient(ellipse at center,rgba(6,14,18,.98) 0%,rgba(5,12,16,.97) 58%,rgba(4,10,14,.92) 78%,rgba(4,10,14,0) 100%);
+        radial-gradient(ellipse at center,rgba(5,12,16,1) 0%,rgba(5,12,16,.995) 70%,rgba(4,10,14,.92) 86%,rgba(4,10,14,0) 100%);
       filter:blur(.25px);
     }
 
