@@ -178,6 +178,7 @@ const inventory = [
 ];
 
 let activeFilter = "all";
+let activeCondition = "all";
 let sortMode = "featured";
 let searchTerm = "";
 const cart = new Map();
@@ -198,11 +199,52 @@ const checkoutNote = document.querySelector("#checkout-note");
 const productDialog = document.querySelector("#product-dialog");
 const productDialogClose = document.querySelector("#product-dialog-close");
 const catalogStatus = document.querySelector("#catalog-status");
+const conditionSelect = document.querySelector("#condition-select");
+const conditionFilterNote = document.querySelector("#condition-filter-note");
 let productDialogReturnFocus = null;
 let cartReturnFocus = null;
 
 function money(value){return new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP"}).format(value)}
 function displayCategory(item){return `${item.gameLabel} · ${item.typeLabel}`}
+
+const SINGLE_CONDITIONS = [
+  {value:"nm",label:"Near Mint (NM)"},
+  {value:"lp",label:"Lightly Played (LP)"},
+  {value:"mp",label:"Moderately Played (MP)"},
+  {value:"hp",label:"Heavily Played (HP)"},
+  {value:"damaged",label:"Damaged"}
+];
+const CONDITION_KEYS = {
+  "nm":"nm","near mint":"nm",
+  "lp":"lp","lightly played":"lp",
+  "mp":"mp","moderately played":"mp",
+  "hp":"hp","heavily played":"hp",
+  "dmg":"damaged","damaged":"damaged"
+};
+function singleConditionKey(item){
+  if(item.type!=="single") return "";
+  const label=String(item.condition||"").trim().toLowerCase().replace(/\\s+/g," ");
+  return CONDITION_KEYS[label]||"";
+}
+function updateConditionOptions(){
+  if(!conditionSelect) return;
+  const available=new Set(usingLiveCatalog?inventory.map(singleConditionKey).filter(Boolean):[]);
+  conditionSelect.replaceChildren(new Option("All conditions","all"));
+  SINGLE_CONDITIONS.forEach(({value,label})=>{
+    if(available.has(value)) conditionSelect.add(new Option(label,value));
+  });
+  const singleScope=!activeFilter.startsWith("type:") || activeFilter==="type:single";
+  if(!singleScope || !available.has(activeCondition)) activeCondition="all";
+  conditionSelect.value=activeCondition;
+  conditionSelect.disabled=!singleScope || !available.size;
+  if(conditionFilterNote){
+    conditionFilterNote.textContent=!usingLiveCatalog
+      ?"Condition filters become available with verified single-card stock."
+      : !singleScope ? "Card condition applies to ungraded singles only."
+      : !available.size ? "No single-card condition grades are available yet."
+      : "Condition grades are shown for verified single-card listings.";
+  }
+}
 
 function matchesFilter(item, filter){
   if(filter === "all") return true;
@@ -217,7 +259,7 @@ function renderProducts(){
   const filtered = inventory.filter(item=>{
     const match = matchesFilter(item, activeFilter);
     const haystack = `${item.gameLabel} ${item.typeLabel} ${item.name} ${item.set} ${item.condition} ${item.notes} ${item.tags.join(" ")}`.toLowerCase();
-    return match && haystack.includes(searchTerm);
+    return match && (activeCondition==="all" || singleConditionKey(item)===activeCondition) && haystack.includes(searchTerm);
   });
   const items=[...filtered].sort((a,b)=>{
     if(sortMode==="price-low") return a.price-b.price;
@@ -230,7 +272,9 @@ function renderProducts(){
 
   grid.innerHTML="";
   if(!items.length){
-    grid.innerHTML='<div class="no-products">Nothing matches that filter yet. More stock will appear here when your inventory is added.</div>';
+    grid.innerHTML=usingLiveCatalog
+      ? '<div class="no-products">No items match these filters. Try another condition or category.</div>'
+      : '<div class="no-products">Nothing matches that filter yet. More stock will appear here when your inventory is added.</div>';
     return;
   }
 
@@ -331,6 +375,7 @@ productDialog?.addEventListener("cancel",event=>{
 function setFilter(filter,{scroll=true}={}){
   activeFilter=filter;
   document.querySelectorAll("[data-filter]").forEach(button=>button.classList.toggle("active",button.dataset.filter===filter));
+  updateConditionOptions();
   renderProducts();
   if(scroll) document.querySelector("#shop")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
@@ -440,6 +485,7 @@ document.querySelectorAll("[data-filter-link]").forEach(link=>link.addEventListe
 }));
 
 document.querySelector("#sort-select").addEventListener("change",e=>{sortMode=e.target.value;renderProducts()});
+conditionSelect?.addEventListener("change",e=>{activeCondition=e.target.value;renderProducts()});
 
 function bindSearch(input){
   if(!input)return;
@@ -447,6 +493,7 @@ function bindSearch(input){
     searchTerm=e.target.value.trim().toLowerCase();
     activeFilter="all";
     document.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b.dataset.filter==="all"));
+    updateConditionOptions();
     renderProducts();
   });
 }
@@ -591,6 +638,7 @@ async function loadCatalog(){
     inventory.splice(0,inventory.length,...mapped);
     usingLiveCatalog=true;
     showCatalogStatus("");
+    updateConditionOptions();
     renderProducts();
     renderCart();
   }catch(err){
@@ -604,7 +652,7 @@ async function loadCatalog(){
   }
 }
 
-renderProducts();renderCart();loadCatalog();loadPayPal();
+updateConditionOptions();renderProducts();renderCart();loadCatalog();loadPayPal();
 
 
 function applyUrlFilter(){
@@ -622,6 +670,7 @@ function applyUrlFilter(){
   document.querySelectorAll("[data-filter]").forEach(button=>{
     button.classList.toggle("active",button.dataset.filter===filter);
   });
+  updateConditionOptions();
   renderProducts();
   if(window.location.hash==="#shop"){
     setTimeout(()=>document.querySelector("#shop")?.scrollIntoView({block:"start"}),80);
