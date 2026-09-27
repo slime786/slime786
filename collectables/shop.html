@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260925-7">
+  <link rel="stylesheet" href="styles.css?v=20260927-1">
 </head>
 <body>
   <a class="skip-link" href="#shop">Skip to shop</a>
@@ -164,15 +164,23 @@
           <button type="button" data-filter="tag:new">New arrivals</button>
           <button type="button" data-filter="tag:picks">Slime’s Picks</button>
         </div>
-        <label class="sort-control">Sort
-          <select id="sort-select">
-            <option value="featured">Featured</option>
-            <option value="newest">Newest first</option>
-            <option value="price-low">Price: low to high</option>
-            <option value="price-high">Price: high to low</option>
-          </select>
-        </label>
+        <div class="shop-options">
+          <label class="condition-control">Card condition
+            <select id="condition-select" aria-describedby="condition-filter-note" disabled>
+              <option value="all">All conditions</option>
+            </select>
+          </label>
+          <label class="sort-control">Sort
+            <select id="sort-select">
+              <option value="featured">Featured</option>
+              <option value="newest">Newest first</option>
+              <option value="price-low">Price: low to high</option>
+              <option value="price-high">Price: high to low</option>
+            </select>
+          </label>
+        </div>
       </div>
+      <p class="condition-filter-note" id="condition-filter-note">Condition filters become available with verified single-card stock.</p>
 
       <noscript><aside class="launch-note no-script-note"><strong>JavaScript is required for the catalogue.</strong><p>The shop is currently a preview. Enable JavaScript to browse products, or use the Contact page if you need help.</p></aside></noscript>
       <aside class="catalog-status" id="catalog-status" role="status" aria-live="polite" hidden></aside>
@@ -271,6 +279,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260925-7"></script>
+  <script src="app.js?v=20260927-1"></script>
 </body>
 </html>
