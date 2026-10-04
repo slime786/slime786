@@ -3,7 +3,10 @@
 -- and a short-lived checkout rate-limit store.
 
 alter table public.collectables_orders
-  add column if not exists capture_started_at timestamptz;
+  add column if not exists capture_started_at timestamptz,
+  add column if not exists confirmation_email_id text,
+  add column if not exists confirmation_email_sent_at timestamptz,
+  add column if not exists confirmation_email_error text;
 
 alter table public.collectables_orders
   drop constraint if exists collectables_orders_status_check;
