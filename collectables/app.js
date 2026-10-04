@@ -601,11 +601,13 @@ function loadPayPal(){
         });
         const result=await res.json();
         if(!res.ok){
-          const message=result?.error==="shipping_country_not_supported"
-            ?"This shop currently ships only to UK addresses. No payment was captured by this checkout attempt."
-            : result?.error==="capture_temporarily_disabled" || result?.error==="live_launch_configuration_incomplete"
-              ?"Payment confirmation is temporarily unavailable. Please do not retry repeatedly."
-              : "Payment needs checking. Please do not retry repeatedly — contact me if PayPal shows a charge.";
+          const message=result?.error==="checkout_rate_limited"
+            ?"Too many payment confirmation attempts were made from this connection. No capture was attempted by this request; please try again later."
+            : result?.error==="shipping_country_not_supported"
+              ?"This shop currently ships only to UK addresses. No payment was captured by this checkout attempt."
+              : result?.error==="capture_temporarily_disabled" || result?.error==="live_launch_configuration_incomplete"
+                ?"Payment confirmation is temporarily unavailable. Please do not retry repeatedly."
+                : "Payment needs checking. Please do not retry repeatedly — contact me if PayPal shows a charge.";
           checkoutNote.textContent=message;
           throw new Error(result?.error || "capture_failed");
         }
