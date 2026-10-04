@@ -75,6 +75,98 @@ function moneyToPence(value: unknown) {
   return Math.round(n * 100);
 }
 
+
+async function sendOrderConfirmation(
+  supabase: any,
+  orderId: string,
+  buyerEmail: string | null,
+  orderNumber: string
+) {
+  const apiKey = Deno.env.get("RESEND_API_KEY") || "";
+  const from = Deno.env.get("COLLECTABLES_FROM_EMAIL") || "";
+  const sellerName = Deno.env.get("COLLECTABLES_SELLER_NAME") || "Slime's Collectables";
+  const sellerAddress = Deno.env.get("COLLECTABLES_SELLER_ADDRESS") || "";
+  const contactEmail = Deno.env.get("COLLECTABLES_CONTACT_EMAIL") || "";
+
+  if (!buyerEmail || !apiKey || !from || !sellerAddress || !contactEmail) {
+    return { sent: false, error: "confirmation_email_not_configured" };
+  }
+
+  const { data: order, error: orderError } = await supabase
+    .from("collectables_orders")
+    .select("subtotal_pence,shipping_pence,total_pence,confirmation_email_sent_at")
+    .eq("id", orderId)
+    .single();
+  if (orderError || !order) return { sent: false, error: "confirmation_order_lookup_failed" };
+  if (order.confirmation_email_sent_at) return { sent: true, alreadySent: true };
+
+  const { data: items, error: itemsError } = await supabase
+    .from("collectables_order_items")
+    .select("product_name,unit_price_pence,quantity")
+    .eq("order_id", orderId)
+    .order("id");
+  if (itemsError) return { sent: false, error: "confirmation_items_lookup_failed" };
+
+  const money = (pence: number) => \`£\${(Number(pence || 0) / 100).toFixed(2)}\`;
+  const lines = [
+    \`Order confirmed — \${orderNumber}\`,
+    "",
+    \`Seller: \${sellerName}\`,
+    sellerAddress,
+    \`Contact: \${contactEmail}\`,
+    "",
+    "Order summary:",
+    ...(items || []).map((item: any) =>
+      \`- \${item.product_name} x \${item.quantity} — \${money(Number(item.unit_price_pence) * Number(item.quantity))}\`
+    ),
+    "",
+    \`Items: \${money(order.subtotal_pence)}\`,
+    \`Delivery: \${money(order.shipping_pence)}\`,
+    \`Total paid: \${money(order.total_pence)}\`,
+    "",
+    "Where UK distance-selling cancellation rights apply, you can tell us within 14 days of receiving the goods that you wish to cancel, then return them within the following 14 days.",
+    "This does not limit rights for faulty, damaged, incorrect or misdescribed goods.",
+    "",
+    "Shipping & Returns: https://slime786.github.io/slime786/collectables/shipping-returns.html",
+    "Terms: https://slime786.github.io/slime786/collectables/terms.html",
+    "Cancellation form: https://slime786.github.io/slime786/collectables/cancellation-form.html"
+  ];
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": \`Bearer \${apiKey}\`,
+      "Content-Type": "application/json",
+      "Idempotency-Key": \`collectables-order-confirmation/\${orderId}\`
+    },
+    body: JSON.stringify({
+      from,
+      to: [buyerEmail],
+      reply_to: contactEmail,
+      subject: \`Slime's Collectables order \${orderNumber}\`,
+      text: lines.join("\\n")
+    })
+  });
+
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || !result?.id) {
+    await supabase.from("collectables_orders").update({
+      confirmation_email_error: \`Resend HTTP \${response.status}\`,
+      updated_at: new Date().toISOString()
+    }).eq("id", orderId);
+    return { sent: false, error: "confirmation_email_failed" };
+  }
+
+  await supabase.from("collectables_orders").update({
+    confirmation_email_id: result.id,
+    confirmation_email_sent_at: new Date().toISOString(),
+    confirmation_email_error: null,
+    updated_at: new Date().toISOString()
+  }).eq("id", orderId);
+
+  return { sent: true };
+}
+
 function compactPaymentAudit(orderData: any, capture: any) {
   return {
     order_id: orderData?.id || null,
