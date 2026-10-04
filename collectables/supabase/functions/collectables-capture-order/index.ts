@@ -1,4 +1,4 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.95.0";
 
 const PROD_ORIGIN = "https://slime786.github.io";
 
@@ -18,7 +18,7 @@ function cors(req: Request, methods: string) {
   const allowOrigin = isAllowedOrigin(origin) ? origin : "";
   return {
     "Access-Control-Allow-Origin": allowOrigin,
-    "Access-Control-Allow-Headers": "content-type, apikey, authorization",
+    "Access-Control-Allow-Headers": "content-type, apikey, authorization, x-checkout-session",
     "Access-Control-Allow-Methods": methods,
     "Vary": "Origin",
     "Cache-Control": "no-store"
@@ -60,6 +60,76 @@ function moneyToPence(value: string) {
   return Math.round(n * 100);
 }
 
+function completedCapture(payload: any) {
+  const purchaseUnit = payload?.purchase_units?.[0];
+  const capture = purchaseUnit?.payments?.captures?.find((item: any) => item?.status === "COMPLETED");
+  if (payload?.status !== "COMPLETED" || !capture?.id) return null;
+  return { purchaseUnit, capture };
+}
+
+async function markReconciliation(supabase: any, localOrderId: string, reason: string) {
+  await supabase.rpc("collectables_mark_reconciliation_required", {
+    p_order_id: localOrderId,
+    p_reason: reason
+  });
+}
+
+async function persistAndFinalize(
+  supabase: any,
+  localOrderId: string,
+  paypalOrderId: string,
+  payload: any
+) {
+  const completed = completedCapture(payload);
+  if (!completed) {
+    await markReconciliation(supabase, localOrderId, "paypal_capture_not_completed");
+    return { ok: false, status: 409, body: { error: "paypal_capture_not_completed", reconciliation_required: true } };
+  }
+
+  const { purchaseUnit, capture } = completed;
+  const amountPence = moneyToPence(capture.amount?.value || "0");
+  const currency = capture.amount?.currency_code || "";
+  const buyerEmail = payload.payer?.email_address || null;
+  const buyerName = [payload.payer?.name?.given_name, payload.payer?.name?.surname].filter(Boolean).join(" ") || null;
+  const shippingAddress = purchaseUnit?.shipping || null;
+
+  const { error: recordError } = await supabase.rpc("collectables_record_capture", {
+    p_order_id: localOrderId,
+    p_paypal_order_id: paypalOrderId,
+    p_paypal_capture_id: capture.id,
+    p_capture_amount_pence: amountPence,
+    p_currency: currency,
+    p_buyer_email: buyerEmail,
+    p_buyer_name: buyerName,
+    p_shipping_address: shippingAddress,
+    p_paypal_response: payload
+  });
+
+  if (recordError) {
+    await markReconciliation(supabase, localOrderId, `capture_record_failed:${recordError.message}`);
+    return { ok: false, status: 500, body: { error: "capture_record_failed", reconciliation_required: true } };
+  }
+
+  const { data: orderNumber, error: finalizeError } = await supabase.rpc(
+    "collectables_finalize_captured_order",
+    { p_order_id: localOrderId }
+  );
+
+  if (finalizeError) {
+    return { ok: false, status: 500, body: { error: "order_reconciliation_required", reconciliation_required: true } };
+  }
+
+  return {
+    ok: true,
+    status: 200,
+    body: {
+      ok: true,
+      order_number: orderNumber,
+      paypal_capture_id: capture.id
+    }
+  };
+}
+
 Deno.serve(async (req) => {
   const headers = { ...cors(req, "POST, OPTIONS"), "Content-Type": "application/json" };
   if (req.method === "OPTIONS") return new Response("ok", { headers });
@@ -81,64 +151,114 @@ Deno.serve(async (req) => {
     const supabase = adminClient();
     const { data: existing, error: existingError } = await supabase
       .from("collectables_orders")
-      .select("id,order_number,status,paypal_order_id,total_pence,currency")
+      .select("id,order_number,status,paypal_order_id,paypal_capture_id,total_pence,currency")
       .eq("id", localOrderId)
       .single();
-    if (existingError || !existing) return new Response(JSON.stringify({ error: "order_not_found" }), { status: 404, headers });
-    if (existing.paypal_order_id !== paypalOrderId) return new Response(JSON.stringify({ error: "paypal_order_mismatch" }), { status: 400, headers });
-    if (existing.status === "paid") return new Response(JSON.stringify({ ok: true, order_number: existing.order_number, already_paid: true }), { status: 200, headers });
+
+    if (existingError || !existing) {
+      return new Response(JSON.stringify({ error: "order_not_found" }), { status: 404, headers });
+    }
+    if (existing.paypal_order_id !== paypalOrderId) {
+      return new Response(JSON.stringify({ error: "paypal_order_mismatch" }), { status: 400, headers });
+    }
+    if (existing.status === "paid") {
+      return new Response(JSON.stringify({
+        ok: true,
+        order_number: existing.order_number,
+        already_paid: true
+      }), { status: 200, headers });
+    }
+
+    if (existing.status === "captured_unfinalized" && existing.paypal_capture_id) {
+      const { data: orderNumber, error: finalizeError } = await supabase.rpc(
+        "collectables_finalize_captured_order",
+        { p_order_id: localOrderId }
+      );
+      if (!finalizeError) {
+        return new Response(JSON.stringify({
+          ok: true,
+          order_number: orderNumber,
+          paypal_capture_id: existing.paypal_capture_id,
+          reconciled: true
+        }), { status: 200, headers });
+      }
+      return new Response(JSON.stringify({
+        error: "order_reconciliation_required",
+        reconciliation_required: true
+      }), { status: 500, headers });
+    }
 
     const pp = await paypalAccessToken();
-    const captureRes = await fetch(`${pp.base}/v2/checkout/orders/${encodeURIComponent(paypalOrderId)}/capture`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${pp.token}`,
-        "Content-Type": "application/json",
-        "PayPal-Request-Id": `sc-capture-${localOrderId}`
+
+    if (existing.status === "capture_pending" || existing.status === "reconciliation_required") {
+      const probeRes = await fetch(`${pp.base}/v2/checkout/orders/${encodeURIComponent(paypalOrderId)}`, {
+        headers: { "Authorization": `Bearer ${pp.token}` }
+      });
+
+      if (!probeRes.ok) {
+        await markReconciliation(supabase, localOrderId, `paypal_probe_failed:${probeRes.status}`);
+        return new Response(JSON.stringify({
+          error: "payment_status_unknown",
+          reconciliation_required: true
+        }), { status: 502, headers });
       }
-    });
 
-    const captureData = await captureRes.json();
-    if (!captureRes.ok) {
-      return new Response(JSON.stringify({ error: "paypal_capture_failed" }), { status: 502, headers });
+      const probeData = await probeRes.json();
+      if (completedCapture(probeData)) {
+        const recovered = await persistAndFinalize(supabase, localOrderId, paypalOrderId, probeData);
+        return new Response(JSON.stringify(recovered.body), { status: recovered.status, headers });
+      }
+
+      if (probeData?.status !== "APPROVED") {
+        await markReconciliation(supabase, localOrderId, `paypal_status:${String(probeData?.status || "unknown")}`);
+        return new Response(JSON.stringify({
+          error: "payment_status_requires_review",
+          reconciliation_required: true
+        }), { status: 409, headers });
+      }
     }
 
-    const purchaseUnit = captureData.purchase_units?.[0];
-    const capture = purchaseUnit?.payments?.captures?.[0];
-    if (captureData.status !== "COMPLETED" || capture?.status !== "COMPLETED") {
-      return new Response(JSON.stringify({ error: "paypal_capture_not_completed" }), { status: 409, headers });
-    }
-
-    const amountPence = moneyToPence(capture.amount?.value || "0");
-    const currency = capture.amount?.currency_code || "";
-    const buyerEmail = captureData.payer?.email_address || null;
-    const buyerName = [captureData.payer?.name?.given_name, captureData.payer?.name?.surname].filter(Boolean).join(" ") || null;
-    const shippingAddress = purchaseUnit?.shipping || null;
-
-    const { data: orderNumber, error: finalizeError } = await supabase.rpc("collectables_finalize_order", {
+    const { error: prepareError } = await supabase.rpc("collectables_prepare_capture", {
       p_order_id: localOrderId,
-      p_paypal_order_id: paypalOrderId,
-      p_paypal_capture_id: capture.id,
-      p_capture_amount_pence: amountPence,
-      p_currency: currency,
-      p_buyer_email: buyerEmail,
-      p_buyer_name: buyerName,
-      p_shipping_address: shippingAddress,
-      p_paypal_response: captureData
+      p_paypal_order_id: paypalOrderId
     });
-    if (finalizeError) {
-      await supabase.from("collectables_orders").update({
-        last_error: finalizeError.message,
-        updated_at: new Date().toISOString()
-      }).eq("id", localOrderId);
-      return new Response(JSON.stringify({ error: "order_finalize_failed" }), { status: 500, headers });
+    if (prepareError) {
+      const expired = prepareError.message.includes("reservation_expired")
+        || prepareError.message.includes("reservation_missing_or_expired");
+      return new Response(JSON.stringify({
+        error: expired ? "reservation_expired" : "capture_not_ready"
+      }), { status: expired ? 409 : 400, headers });
     }
 
-    return new Response(JSON.stringify({
-      ok: true,
-      order_number: orderNumber,
-      paypal_capture_id: capture.id
-    }), { status: 200, headers });
+    let captureRes: Response;
+    try {
+      captureRes = await fetch(`${pp.base}/v2/checkout/orders/${encodeURIComponent(paypalOrderId)}/capture`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${pp.token}`,
+          "Content-Type": "application/json",
+          "PayPal-Request-Id": `sc-capture-${localOrderId}`
+        }
+      });
+    } catch {
+      await markReconciliation(supabase, localOrderId, "paypal_capture_network_error");
+      return new Response(JSON.stringify({
+        error: "payment_status_unknown",
+        reconciliation_required: true
+      }), { status: 502, headers });
+    }
+
+    const captureData = await captureRes.json().catch(() => ({}));
+    if (!captureRes.ok) {
+      await markReconciliation(supabase, localOrderId, `paypal_capture_failed:${captureRes.status}`);
+      return new Response(JSON.stringify({
+        error: "paypal_capture_failed",
+        reconciliation_required: true
+      }), { status: 502, headers });
+    }
+
+    const result = await persistAndFinalize(supabase, localOrderId, paypalOrderId, captureData);
+    return new Response(JSON.stringify(result.body), { status: result.status, headers });
   } catch (e) {
     const message = e instanceof Error ? e.message : "capture_error";
     const status = message === "paypal_not_configured" ? 503 : 400;
