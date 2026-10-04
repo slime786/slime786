@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const app = fs.readFileSync("collectables/app.js", "utf8");
 const shop = fs.readFileSync("collectables/shop.html", "utf8");
+const migration = fs.readFileSync("collectables/supabase/migrations/20261004_collectables_checkout_hardening.sql", "utf8");
 const failures = [];
 
 function fail(message){ failures.push(message); }
@@ -13,7 +14,7 @@ if(!demoMatch || demoMatch[1] !== "true") fail("DEMO_MODE must stay true before 
 const paypalMatch = app.match(/const PAYPAL_CLIENT_ID\s*=\s*"([^"]*)"/);
 if(!paypalMatch || paypalMatch[1] !== "") fail("PAYPAL_CLIENT_ID must stay empty in source before launch");
 
-if(/PAYPAL_CLIENT_SECRET\s*=|sb_secret_|sk_live_|sk_test_/i.test(app)) {
+if(/PAYPAL_CLIENT_SECRET\s*=|sb_secret_|sk_live_|sk_test_|re_[A-Za-z0-9]{20,}/i.test(app)) {
   fail("possible secret detected in browser source");
 }
 
@@ -25,6 +26,12 @@ if(!app.includes("function showCatalogUnavailable()")) {
 }
 if(!app.includes('document.querySelector("#cart-close")?.focus()')) {
   fail("cart drawer should move focus on open");
+}
+if(app.includes("row.innerHTML=")) {
+  fail("cart rows must not interpolate catalogue text through innerHTML");
+}
+if(!app.includes("function syncFilterState(filter)")) {
+  fail("filter aria state synchronisation missing");
 }
 
 const start = app.indexOf("const inventory = [");
@@ -64,26 +71,35 @@ for(const marker of [
   'name="robots" content="noindex,follow"',
   'id="checkout-note" role="status" aria-live="polite"',
   'id="catalog-status" role="status" aria-live="polite"',
-  'role="dialog" aria-modal="true"'
+  'role="dialog" aria-modal="true"',
+  'aria-controls="mobile-search-panel" aria-expanded="false"',
+  'data-filter="all" aria-pressed="true"'
 ]) {
   if(!shop.includes(marker)) fail(`shop missing marker: ${marker}`);
 }
 
-if(failures.length){
-  console.error("Collectables smoke check failed.");
-  failures.forEach(x=>console.error("-",x));
-  process.exit(1);
+if(shop.includes("slimes-collectables") && shop.includes("Shop repo")) {
+  fail("live shop must not link customers to the secondary history repository");
 }
-console.log("Collectables demo safety, catalogue completeness and product-detail markers verified.");
-
 
 const edgeFunctionPaths = [
   "collectables/supabase/functions/collectables-create-order/index.ts",
   "collectables/supabase/functions/collectables-capture-order/index.ts",
-  "collectables/supabase/functions/collectables-catalog/index.ts"
+  "collectables/supabase/functions/collectables-catalog/index.ts",
+  "collectables/supabase/functions/collectables-paypal-webhook/index.ts"
 ];
 
 for (const path of edgeFunctionPaths) {
+  const source = fs.readFileSync(path, "utf8");
+  if (!source.includes('npm:@supabase/supabase-js@2.117.2')) {
+    fail(`${path}: Supabase JS must be pinned to the reviewed version`);
+  }
+  if (!source.includes('"Cache-Control": "no-store"')) {
+    fail(`${path}: no-store response safeguard missing`);
+  }
+}
+
+for (const path of edgeFunctionPaths.slice(0,3)) {
   const source = fs.readFileSync(path, "utf8");
   if (!source.includes('const PROD_ORIGIN = "https://slime786.github.io";')) {
     fail(`${path}: missing exact production origin`);
@@ -94,7 +110,59 @@ for (const path of edgeFunctionPaths) {
   if (source.includes('startsWith("https://slime786.github.io")')) {
     fail(`${path}: loose startsWith origin check must not return`);
   }
-  if (!source.includes('"Cache-Control": "no-store"')) {
-    fail(`${path}: no-store response safeguard missing`);
-  }
 }
+
+const createOrder = fs.readFileSync(edgeFunctionPaths[0], "utf8");
+for (const marker of [
+  'COLLECTABLES_NEW_ORDERS_ENABLED',
+  'collectables_checkout_rate_limit',
+  'collectables_attach_paypal_order',
+  'checkout_rate_limited'
+]) {
+  if(!createOrder.includes(marker)) fail(`create-order missing safeguard: ${marker}`);
+}
+
+const captureOrder = fs.readFileSync(edgeFunctionPaths[1], "utf8");
+for (const marker of [
+  'COLLECTABLES_CAPTURES_ENABLED',
+  'collectables_begin_capture',
+  'collectables_mark_order_review',
+  'shippingCountry !== "GB"',
+  '/v2/checkout/orders/',
+  'orderData.status !== "APPROVED"'
+]) {
+  if(!captureOrder.includes(marker)) fail(`capture-order missing safeguard: ${marker}`);
+}
+
+const webhook = fs.readFileSync(edgeFunctionPaths[3], "utf8");
+for (const marker of [
+  'PAYPAL_WEBHOOK_ID',
+  '/v1/notifications/verify-webhook-signature',
+  'PAYMENT.CAPTURE.COMPLETED',
+  'PAYMENT.CAPTURE.PENDING',
+  'PAYMENT.CAPTURE.DENIED',
+  'collectables_paypal_webhook_events'
+]) {
+  if(!webhook.includes(marker)) fail(`PayPal webhook missing safeguard: ${marker}`);
+}
+
+for (const marker of [
+  "'capturing'",
+  "'review'",
+  "collectables_checkout_rate_limit",
+  "collectables_attach_paypal_order",
+  "collectables_begin_capture",
+  "collectables_mark_order_review",
+  "collectables_mark_capture_failed",
+  "collectables_paypal_webhook_events"
+]) {
+  if(!migration.includes(marker)) fail(`checkout hardening migration missing: ${marker}`);
+}
+
+if(failures.length){
+  console.error("Collectables smoke check failed.");
+  failures.forEach(x=>console.error("-",x));
+  process.exit(1);
+}
+
+console.log("Collectables safety, checkout hardening, catalogue and accessibility markers verified.");
