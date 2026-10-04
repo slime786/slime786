@@ -8,6 +8,26 @@ on:
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: collectables_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d collectables_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: collectables_ci
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,3 +46,20 @@ jobs:
           deno check collectables/supabase/functions/collectables-catalog/index.ts
           deno check collectables/supabase/functions/collectables-paypal-webhook/index.ts
           deno check collectables/supabase/functions/collectables-public-info/index.ts
+
+      - name: Run Collectables database regression tests
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          create role anon nologin;
+          create role authenticated nologin;
+          create role service_role nologin bypassrls;
+          SQL
+
+          for migration in collectables/supabase/migrations/*.sql; do
+            echo "Applying $migration"
+            psql -v ON_ERROR_STOP=1 -f "$migration"
+          done
+
+          psql -v ON_ERROR_STOP=1 -f collectables/supabase/tests/order-flow-regression.sql
+          psql -v ON_ERROR_STOP=1 -f collectables/supabase/tests/recovery-verification.sql
