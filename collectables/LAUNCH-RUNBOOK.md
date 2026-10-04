@@ -83,3 +83,34 @@ Do not go live while any of these remain:
 - recovery verification failing
 - critical mobile/keyboard issue
 - real-payment credentials present while the public store is unintentionally in preview
+
+## Hardened live-commerce controls
+
+The payment backend now fails closed. Before enabling real orders, configure and verify all of the following Supabase Edge Function secrets:
+
+- `COLLECTABLES_NEW_ORDERS_ENABLED=true` only when new orders should be accepted.
+- `COLLECTABLES_CAPTURES_ENABLED=true` only when capture is safe to complete.
+- `COLLECTABLES_PUBLIC_BUSINESS_INFO_ENABLED=true` only after the public seller name, postal address and contact email are correct.
+- `COLLECTABLES_SELLER_NAME`, `COLLECTABLES_SELLER_ADDRESS`, and `COLLECTABLES_CONTACT_EMAIL`.
+- `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_ENV=live`, and `PAYPAL_WEBHOOK_ID`.
+- `RESEND_API_KEY` and `COLLECTABLES_FROM_EMAIL` for durable order confirmations.
+
+Register the deployed `collectables-paypal-webhook` URL in PayPal and subscribe at minimum to `PAYMENT.CAPTURE.COMPLETED`, `PAYMENT.CAPTURE.PENDING`, and `PAYMENT.CAPTURE.DENIED`. The webhook verifies PayPal signatures before reconciliation.
+
+Recommended cutover order:
+1. Publish real catalogue rows and exact product images.
+2. Configure seller identity/address/contact and transactional email.
+3. Configure PayPal live credentials and webhook ID.
+4. Verify the public seller-info endpoint returns the intended details.
+5. Run `collectables/supabase/tests/recovery-verification.sql` and `order-flow-regression.sql`.
+6. Keep `COLLECTABLES_NEW_ORDERS_ENABLED=false` while testing capture in sandbox/local mode.
+7. At live cutover, set `COLLECTABLES_CAPTURES_ENABLED=true`, then `COLLECTABLES_NEW_ORDERS_ENABLED=true`, then switch the browser source out of demo mode only after end-to-end verification.
+
+### Emergency stop
+
+To stop new checkout sessions immediately, set `COLLECTABLES_NEW_ORDERS_ENABLED=false`. This is the primary kill switch and does not rely on browser JavaScript.
+
+If capture itself must be stopped, set `COLLECTABLES_CAPTURES_ENABLED=false`. Use this more cautiously because already-approved PayPal orders may then require reconciliation. Keep the webhook available so already-completed PayPal captures can still be identified.
+
+Setting browser `DEMO_MODE=true` is no longer considered an adequate backend rollback on its own.
+
