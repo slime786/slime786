@@ -89,6 +89,39 @@ for (const path of edgeFunctionPaths) {
   if (!source.includes('"Cache-Control": "no-store"')) {
     fail(`${path}: no-store response safeguard missing`);
   }
+  if (!source.includes('npm:@supabase/supabase-js@2.95.0')) {
+    fail(`${path}: Supabase client dependency must be pinned`);
+  }
+}
+
+const createOrderSource = fs.readFileSync(
+  "collectables/supabase/functions/collectables-create-order/index.ts",
+  "utf8"
+);
+const captureOrderSource = fs.readFileSync(
+  "collectables/supabase/functions/collectables-capture-order/index.ts",
+  "utf8"
+);
+if (!createOrderSource.includes("collectables_take_rate_limit")) {
+  fail("create-order: server-side rate limiting missing");
+}
+if (!createOrderSource.includes("checkout_session: checkoutSession")) {
+  fail("create-order: checkout session token missing");
+}
+if (!captureOrderSource.includes('"x-checkout-session"')) {
+  fail("capture-order: checkout session binding missing");
+}
+if (!captureOrderSource.includes("checkout_token_hash")) {
+  fail("capture-order: checkout token verification missing");
+}
+if (!captureOrderSource.includes("collectables_prepare_capture")) {
+  fail("capture-order: pre-capture database gate missing");
+}
+if (!captureOrderSource.includes("collectables_record_capture")) {
+  fail("capture-order: durable capture recording missing");
+}
+if (!captureOrderSource.includes("collectables_finalize_captured_order")) {
+  fail("capture-order: reconciliation finalizer missing");
 }
 
 if(failures.length){
