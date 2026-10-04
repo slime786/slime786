@@ -69,14 +69,6 @@ for(const marker of [
   if(!shop.includes(marker)) fail(`shop missing marker: ${marker}`);
 }
 
-if(failures.length){
-  console.error("Collectables smoke check failed.");
-  failures.forEach(x=>console.error("-",x));
-  process.exit(1);
-}
-console.log("Collectables demo safety, catalogue completeness and product-detail markers verified.");
-
-
 const edgeFunctionPaths = [
   "collectables/supabase/functions/collectables-create-order/index.ts",
   "collectables/supabase/functions/collectables-capture-order/index.ts",
@@ -98,3 +90,10 @@ for (const path of edgeFunctionPaths) {
     fail(`${path}: no-store response safeguard missing`);
   }
 }
+
+if(failures.length){
+  console.error("Collectables smoke check failed.");
+  failures.forEach(x=>console.error("-",x));
+  process.exit(1);
+}
+console.log("Collectables demo safety, catalogue completeness and Edge Function safeguards verified.");
