@@ -45,6 +45,7 @@ for (const [file, label] of [
   ["collectables/terms.html", "collectables terms"],
   ["collectables/privacy.html", "collectables privacy"],
   ["collectables/contact.html", "collectables contact"],
+  ["collectables/cancellation-form.html", "collectables cancellation form"],
 ]) {
   const html = fs.readFileSync(path.join(root, file), "utf8");
   checkLocalRefs(html, label, "collectables");

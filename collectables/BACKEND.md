@@ -100,3 +100,25 @@ Deployment status verified 25 September 2026:
 - All three intentionally keep `verify_jwt=false` because they are browser-facing commerce endpoints with their own origin/server-side controls rather than user JWT authentication.
 
 Re-check live source against Git after any future Edge Function deployment before treating production as aligned.
+
+## Checkout hardening additions
+
+The Collectables backend now uses an explicit state boundary around PayPal capture:
+
+`reserved -> paypal_created -> capturing -> paid`
+
+Ambiguous or externally pending payment outcomes move to `review`; confirmed capture denial moves to `failed`. Only `reserved` and `paypal_created` orders are eligible for automatic reservation expiry/release. A `capturing` order extends its active reservation before contacting PayPal so a completed capture cannot race the normal expiry job.
+
+New supporting objects:
+- `collectables_checkout_rate_limits` — short-lived hashed client-fingerprint counters;
+- `collectables_paypal_webhook_events` — verified PayPal webhook replay/outcome tracking;
+- `collectables_attach_paypal_order(...)` — atomic transition from local reservation to PayPal-created state;
+- `collectables_begin_capture(...)` — validates state/reservation consistency and extends the hold;
+- `collectables_mark_order_review(...)` and `collectables_mark_capture_failed(...)`.
+
+The browser is never authoritative for price, stock, delivery, payment state, or launch availability. New-order and capture availability are controlled by Edge Function environment switches. Direct table and RPC access remains revoked from `anon` and `authenticated`; the Edge Functions use the service role internally.
+
+PayPal webhook reconciliation is intentionally independent from the browser callback. A verified `PAYMENT.CAPTURE.COMPLETED` event can finalize an order that was charged at PayPal but interrupted before browser finalization. Pending/denied events are routed to safe states rather than being treated as successful.
+
+For live commerce, order creation/capture also requires configured public seller details and transactional email. Confirmation messages are idempotent and record only the provider email ID/status in the order row.
+

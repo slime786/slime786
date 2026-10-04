@@ -290,6 +290,8 @@ function renderProducts(){
     if(item.imageUrl && productImg){
       productImg.src=item.imageUrl;
       productImg.alt=item.name;
+      productImg.loading="lazy";
+      productImg.decoding="async";
       productImg.hidden=false;
       productImg.style.objectFit=item.imageFit||"contain";
       productImg.style.objectPosition=item.imagePosition||"center";
@@ -373,9 +375,16 @@ productDialog?.addEventListener("cancel",event=>{
   closeProductDetails();
 });
 
+function syncFilterState(filter){
+  document.querySelectorAll("[data-filter]").forEach(button=>button.classList.toggle("active",button.dataset.filter===filter));
+  document.querySelectorAll("#category-filters [data-filter]").forEach(button=>{
+    button.setAttribute("aria-pressed",String(button.dataset.filter===filter));
+  });
+}
+
 function setFilter(filter,{scroll=true}={}){
   activeFilter=filter;
-  document.querySelectorAll("[data-filter]").forEach(button=>button.classList.toggle("active",button.dataset.filter===filter));
+  syncFilterState(filter);
   updateConditionOptions();
   renderProducts();
   if(scroll) document.querySelector("#shop")?.scrollIntoView({behavior:"smooth",block:"start"});
@@ -434,9 +443,25 @@ function renderCart(){
   cart.forEach((count,id)=>{
     const item=inventory.find(x=>x.id===id); if(!item)return;
     qty+=count; total+=item.price*count;
-    const row=document.createElement("div"); row.className="cart-line";
-    row.innerHTML=`<div><strong>${item.name}</strong><small>${displayCategory(item)} · Qty ${count}</small></div><div><strong>${money(item.price*count)}</strong><br><button type="button">Remove</button></div>`;
-    row.querySelector("button").addEventListener("click",()=>removeFromCart(id));
+    const row=document.createElement("div");
+    row.className="cart-line";
+    const details=document.createElement("div");
+    const name=document.createElement("strong");
+    name.textContent=item.name;
+    const meta=document.createElement("small");
+    meta.textContent=`${displayCategory(item)} · Qty ${count}`;
+    details.append(name,meta);
+
+    const actions=document.createElement("div");
+    const lineTotal=document.createElement("strong");
+    lineTotal.textContent=money(item.price*count);
+    const remove=document.createElement("button");
+    remove.type="button";
+    remove.textContent="Remove";
+    remove.addEventListener("click",()=>removeFromCart(id));
+    actions.append(lineTotal,document.createElement("br"),remove);
+
+    row.append(details,actions);
     cartItems.append(row);
   });
   cartCount.textContent=qty;
@@ -475,7 +500,16 @@ function closeCart(){
 document.querySelector("#cart-open").addEventListener("click",openCart);
 document.querySelector("#cart-close").addEventListener("click",closeCart);
 backdrop.addEventListener("click",closeCart);
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeMobileMenu();closeProductDetails()}});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){closeCart();closeMobileMenu();closeProductDetails();return}
+  if(e.key!=="Tab" || !cartDrawer.classList.contains("open")) return;
+  const focusable=[...cartDrawer.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(el=>!el.hidden && el.getClientRects().length);
+  if(!focusable.length) return;
+  const first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus()}
+  else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus()}
+});
 
 document.querySelectorAll("[data-filter]").forEach(button=>button.addEventListener("click",()=>setFilter(button.dataset.filter)));
 
@@ -493,7 +527,7 @@ function bindSearch(input){
   input.addEventListener("input",e=>{
     searchTerm=e.target.value.trim().toLowerCase();
     activeFilter="all";
-    document.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b.dataset.filter==="all"));
+    syncFilterState("all");
     updateConditionOptions();
     renderProducts();
   });
@@ -515,6 +549,7 @@ const mobileSearchToggle=document.querySelector("#mobile-search-toggle");
 const mobileSearchPanel=document.querySelector("#mobile-search-panel");
 mobileSearchToggle.addEventListener("click",()=>{
   mobileSearchPanel.hidden=!mobileSearchPanel.hidden;
+  mobileSearchToggle.setAttribute("aria-expanded",String(!mobileSearchPanel.hidden));
   if(!mobileSearchPanel.hidden) setTimeout(()=>document.querySelector("#mobile-site-search")?.focus(),0);
 });
 
@@ -538,9 +573,12 @@ function loadPayPal(){
         });
         const data=await res.json();
         if(!res.ok){
-          const message=data?.error==="paypal_not_configured"
-            ?"PayPal sandbox credentials still need to be connected."
-            : "Checkout could not be started. Stock may have changed.";
+          const message={
+            paypal_not_configured:"PayPal sandbox credentials still need to be connected.",
+            store_not_accepting_orders:"Checkout is currently closed. Your basket has not been charged.",
+            live_launch_configuration_incomplete:"Checkout is not fully configured for live sales yet. Your basket has not been charged.",
+            checkout_rate_limited:"Too many checkout attempts were made from this connection. Please try again later."
+          }[data?.error] || "Checkout could not be started. Stock may have changed.";
           checkoutNote.textContent=message;
           throw new Error(message);
         }
@@ -563,20 +601,27 @@ function loadPayPal(){
         });
         const result=await res.json();
         if(!res.ok){
-          checkoutNote.textContent="Payment needs checking. Please do not retry repeatedly — contact me if PayPal shows a charge.";
+          const message=result?.error==="shipping_country_not_supported"
+            ?"This shop currently ships only to UK addresses. No payment was captured by this checkout attempt."
+            : result?.error==="capture_temporarily_disabled" || result?.error==="live_launch_configuration_incomplete"
+              ?"Payment confirmation is temporarily unavailable. Please do not retry repeatedly."
+              : "Payment needs checking. Please do not retry repeatedly — contact me if PayPal shows a charge.";
+          checkoutNote.textContent=message;
           throw new Error(result?.error || "capture_failed");
         }
         cart.clear();
         pendingLocalOrderId=null;
         window.__slimeLocalOrderId=null;
         renderCart();
-        checkoutNote.textContent=`Payment confirmed. Your order number is ${result.order_number}. Thank you! 💚`;
+        checkoutNote.textContent=result.confirmation_email_sent
+          ? `Payment confirmed. Your order number is ${result.order_number}. A confirmation email has been sent. Thank you! 💚`
+          : `Payment confirmed. Your order number is ${result.order_number}. Keep this reference; if the email is delayed, contact me before retrying payment. 💚`;
       },
       onCancel(){
         checkoutNote.textContent="Checkout cancelled. Your basket is still here.";
       },
       onError(){
-        checkoutNote.textContent="PayPal checkout hit an error. No order has been marked paid.";
+        checkoutNote.textContent="PayPal checkout hit an error. Please check the message above or contact me before retrying if PayPal shows a charge.";
       }
     });
     paypalButtons.render("#paypal-button-container");
@@ -653,7 +698,7 @@ async function loadCatalog(){
   }
 }
 
-updateConditionOptions();renderProducts();renderCart();loadCatalog();loadPayPal();
+syncFilterState(activeFilter);updateConditionOptions();renderProducts();renderCart();loadCatalog();loadPayPal();
 
 
 function applyUrlFilter(){
@@ -668,9 +713,7 @@ function applyUrlFilter(){
   ]);
   if(!allowed.has(filter)) return;
   activeFilter=filter;
-  document.querySelectorAll("[data-filter]").forEach(button=>{
-    button.classList.toggle("active",button.dataset.filter===filter);
-  });
+  syncFilterState(filter);
   updateConditionOptions();
   renderProducts();
   if(window.location.hash==="#shop"){

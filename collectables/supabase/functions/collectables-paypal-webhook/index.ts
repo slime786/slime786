@@ -1,30 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 
-const PROD_ORIGIN = "https://slime786.github.io";
-
-function isAllowedOrigin(origin: string) {
-  if (origin === PROD_ORIGIN) return true;
-  try {
-    const url = new URL(origin);
-    return url.protocol === "http:"
-      && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
-  } catch {
-    return false;
-  }
-}
-
-function cors(req: Request, methods: string) {
-  const origin = req.headers.get("origin") || "";
-  const allowOrigin = isAllowedOrigin(origin) ? origin : "";
-  return {
-    "Access-Control-Allow-Origin": allowOrigin,
-    "Access-Control-Allow-Headers": "content-type, apikey, authorization",
-    "Access-Control-Allow-Methods": methods,
-    "Vary": "Origin",
-    "Cache-Control": "no-store"
-  };
-}
-
 function adminClient() {
   const keys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") || "{}");
   const key = keys.default || Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -32,22 +7,6 @@ function adminClient() {
   return createClient(Deno.env.get("SUPABASE_URL")!, key, {
     auth: { persistSession: false, autoRefreshToken: false }
   });
-}
-
-function capturesEnabled() {
-  return Deno.env.get("COLLECTABLES_CAPTURES_ENABLED") === "true";
-}
-
-function liveCommerceReady() {
-  if ((Deno.env.get("PAYPAL_ENV") || "sandbox") !== "live") return true;
-  if (Deno.env.get("COLLECTABLES_PUBLIC_BUSINESS_INFO_ENABLED") !== "true") return false;
-  return [
-    "RESEND_API_KEY",
-    "COLLECTABLES_FROM_EMAIL",
-    "COLLECTABLES_SELLER_NAME",
-    "COLLECTABLES_SELLER_ADDRESS",
-    "COLLECTABLES_CONTACT_EMAIL"
-  ].every((key) => Boolean(Deno.env.get(key)?.trim()));
 }
 
 async function paypalAccessToken() {
@@ -68,6 +27,36 @@ async function paypalAccessToken() {
   if (!r.ok) throw new Error("paypal_auth_failed");
   const data = await r.json();
   return { token: data.access_token as string, base };
+}
+
+async function verifyWebhook(req: Request, event: unknown, pp: { token: string; base: string }) {
+  const webhookId = Deno.env.get("PAYPAL_WEBHOOK_ID");
+  if (!webhookId) throw new Error("paypal_webhook_not_configured");
+
+  const fields = {
+    transmission_id: req.headers.get("paypal-transmission-id"),
+    transmission_time: req.headers.get("paypal-transmission-time"),
+    cert_url: req.headers.get("paypal-cert-url"),
+    auth_algo: req.headers.get("paypal-auth-algo"),
+    transmission_sig: req.headers.get("paypal-transmission-sig")
+  };
+  if (Object.values(fields).some((value) => !value)) return false;
+
+  const r = await fetch(`${pp.base}/v1/notifications/verify-webhook-signature`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${pp.token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      ...fields,
+      webhook_id: webhookId,
+      webhook_event: event
+    })
+  });
+  if (!r.ok) throw new Error("paypal_webhook_verification_unavailable");
+  const result = await r.json();
+  return result?.verification_status === "SUCCESS";
 }
 
 function moneyToPence(value: unknown) {
@@ -180,65 +169,107 @@ function compactPaymentAudit(orderData: any, capture: any) {
       update_time: capture?.update_time || null
     },
     payer_id: orderData?.payer?.payer_id || null,
-    source: "browser_capture"
+    source: "paypal_webhook"
   };
 }
 
+async function setWebhookOutcome(supabase: any, eventId: string, eventType: string, paypalOrderId: string | null, outcome: string) {
+  await supabase.from("collectables_paypal_webhook_events").upsert({
+    event_id: eventId,
+    event_type: eventType,
+    paypal_order_id: paypalOrderId,
+    outcome,
+    processed_at: new Date().toISOString()
+  }, { onConflict: "event_id" });
+}
+
 Deno.serve(async (req) => {
-  const headers = { ...cors(req, "POST, OPTIONS"), "Content-Type": "application/json" };
-  if (req.method === "OPTIONS") return new Response("ok", { headers });
+  const headers = {
+    "Content-Type": "application/json",
+    "Cache-Control": "no-store"
+  };
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "method_not_allowed" }), { status: 405, headers });
   }
 
-  const origin = req.headers.get("origin") || "";
-  if (!isAllowedOrigin(origin)) {
-    return new Response(JSON.stringify({ error: "origin_not_allowed" }), { status: 403, headers });
-  }
-  if (!capturesEnabled()) {
-    return new Response(JSON.stringify({ error: "capture_temporarily_disabled" }), { status: 503, headers });
-  }
-  if (!liveCommerceReady()) {
-    return new Response(JSON.stringify({ error: "live_launch_configuration_incomplete" }), { status: 503, headers });
+  let event: any;
+  try {
+    event = await req.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "invalid_json" }), { status: 400, headers });
   }
 
   try {
-    const body = await req.json();
-    const paypalOrderId = String(body.paypal_order_id || "").trim();
-    const localOrderId = String(body.local_order_id || "").trim();
-    if (!paypalOrderId || !localOrderId) {
-      return new Response(JSON.stringify({ error: "missing_order_id" }), { status: 400, headers });
+    const pp = await paypalAccessToken();
+    if (!(await verifyWebhook(req, event, pp))) {
+      return new Response(JSON.stringify({ error: "invalid_signature" }), { status: 401, headers });
     }
 
+    const eventId = String(event?.id || "");
+    const eventType = String(event?.event_type || "");
+    if (!eventId || !eventType) {
+      return new Response(JSON.stringify({ error: "invalid_event" }), { status: 400, headers });
+    }
+
+    const paypalOrderId = String(
+      event?.resource?.supplementary_data?.related_ids?.order_id || ""
+    ) || null;
     const supabase = adminClient();
-    const { data: existing, error: existingError } = await supabase
+
+    const { data: previous } = await supabase
+      .from("collectables_paypal_webhook_events")
+      .select("outcome")
+      .eq("event_id", eventId)
+      .maybeSingle();
+    if (previous?.outcome?.startsWith("processed")) {
+      return new Response(JSON.stringify({ ok: true, duplicate: true }), { status: 200, headers });
+    }
+
+    await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processing");
+
+    if (!paypalOrderId) {
+      await setWebhookOutcome(supabase, eventId, eventType, null, "processed_ignored_no_order");
+      return new Response(JSON.stringify({ ok: true, ignored: true }), { status: 200, headers });
+    }
+
+    const { data: localOrder } = await supabase
       .from("collectables_orders")
       .select("id,order_number,status,paypal_order_id,total_pence,currency")
-      .eq("id", localOrderId)
-      .single();
+      .eq("paypal_order_id", paypalOrderId)
+      .maybeSingle();
 
-    if (existingError || !existing) {
-      return new Response(JSON.stringify({ error: "order_not_found" }), { status: 404, headers });
-    }
-    if (existing.paypal_order_id !== paypalOrderId) {
-      return new Response(JSON.stringify({ error: "paypal_order_mismatch" }), { status: 400, headers });
-    }
-    if (existing.status === "paid") {
-      return new Response(JSON.stringify({
-        ok: true,
-        order_number: existing.order_number,
-        already_paid: true
-      }), { status: 200, headers });
-    }
-    if (existing.status !== "paypal_created") {
-      return new Response(JSON.stringify({
-        error: ["capturing","review"].includes(existing.status)
-          ? "payment_review_required"
-          : "order_not_payable"
-      }), { status: 409, headers });
+    if (!localOrder) {
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_ignored_unknown_order");
+      return new Response(JSON.stringify({ ok: true, ignored: true }), { status: 200, headers });
     }
 
-    const pp = await paypalAccessToken();
+    if (eventType === "PAYMENT.CAPTURE.DENIED") {
+      await supabase.rpc("collectables_mark_capture_failed", {
+        p_order_id: localOrder.id,
+        p_reason: "PayPal reported PAYMENT.CAPTURE.DENIED"
+      });
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_capture_denied");
+      return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
+    }
+
+    if (eventType === "PAYMENT.CAPTURE.PENDING") {
+      await supabase.rpc("collectables_mark_order_review", {
+        p_order_id: localOrder.id,
+        p_reason: "PayPal reported PAYMENT.CAPTURE.PENDING"
+      });
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_capture_pending");
+      return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
+    }
+
+    if (eventType !== "PAYMENT.CAPTURE.COMPLETED") {
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_ignored_event_type");
+      return new Response(JSON.stringify({ ok: true, ignored: true }), { status: 200, headers });
+    }
+
+    if (localOrder.status === "paid") {
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_already_paid");
+      return new Response(JSON.stringify({ ok: true, already_paid: true }), { status: 200, headers });
+    }
 
     const detailsRes = await fetch(`${pp.base}/v2/checkout/orders/${encodeURIComponent(paypalOrderId)}`, {
       headers: {
@@ -248,122 +279,91 @@ Deno.serve(async (req) => {
     });
     const orderData = await detailsRes.json();
     if (!detailsRes.ok || orderData?.id !== paypalOrderId) {
-      return new Response(JSON.stringify({ error: "paypal_order_lookup_failed" }), { status: 502, headers });
+      throw new Error("paypal_order_lookup_failed");
     }
 
     const purchaseUnit = orderData.purchase_units?.[0];
-    if (purchaseUnit?.reference_id !== localOrderId || purchaseUnit?.custom_id !== localOrderId) {
-      await supabase.rpc("collectables_mark_order_review", {
-        p_order_id: localOrderId,
-        p_reason: "PayPal purchase-unit reference mismatch"
-      });
-      return new Response(JSON.stringify({ error: "paypal_reference_mismatch" }), { status: 409, headers });
-    }
+    const eventCaptureId = String(event?.resource?.id || "");
+    const capture = purchaseUnit?.payments?.captures?.find((x: any) => x?.id === eventCaptureId)
+      || purchaseUnit?.payments?.captures?.[0];
 
-    const paypalAmount = moneyToPence(purchaseUnit?.amount?.value || "0");
-    const paypalCurrency = purchaseUnit?.amount?.currency_code || "";
-    if (paypalAmount !== existing.total_pence || paypalCurrency !== existing.currency) {
-      await supabase.rpc("collectables_mark_order_review", {
-        p_order_id: localOrderId,
-        p_reason: "PayPal order total mismatch before capture"
-      });
-      return new Response(JSON.stringify({ error: "paypal_amount_mismatch" }), { status: 409, headers });
+    if (orderData.status !== "COMPLETED" || capture?.status !== "COMPLETED" || !capture?.id) {
+      throw new Error("paypal_completed_event_not_confirmed");
     }
 
     const shippingCountry = purchaseUnit?.shipping?.address?.country_code || "";
     if (shippingCountry !== "GB") {
-      await supabase.rpc("collectables_cancel_order", {
-        p_order_id: localOrderId,
-        p_reason: `Unsupported shipping country: ${shippingCountry || "missing"}`
-      });
-      return new Response(JSON.stringify({ error: "shipping_country_not_supported" }), { status: 400, headers });
-    }
-
-    if (orderData.status !== "APPROVED") {
-      return new Response(JSON.stringify({ error: "paypal_order_not_approved" }), { status: 409, headers });
-    }
-
-    const { error: beginError } = await supabase.rpc("collectables_begin_capture", {
-      p_order_id: localOrderId,
-      p_paypal_order_id: paypalOrderId
-    });
-    if (beginError) {
-      return new Response(JSON.stringify({ error: beginError.message }), { status: 409, headers });
-    }
-
-    const captureRes = await fetch(`${pp.base}/v2/checkout/orders/${encodeURIComponent(paypalOrderId)}/capture`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${pp.token}`,
-        "Content-Type": "application/json",
-        "PayPal-Request-Id": `sc-capture-${localOrderId}`
-      }
-    });
-
-    const captureData = await captureRes.json();
-    if (!captureRes.ok) {
       await supabase.rpc("collectables_mark_order_review", {
-        p_order_id: localOrderId,
-        p_reason: `PayPal capture returned HTTP ${captureRes.status}`
+        p_order_id: localOrder.id,
+        p_reason: `Captured PayPal order has unsupported shipping country: ${shippingCountry || "missing"}`
       });
-      return new Response(JSON.stringify({ error: "paypal_capture_needs_review" }), { status: 502, headers });
-    }
-
-    const completedPurchaseUnit = captureData.purchase_units?.[0];
-    const capture = completedPurchaseUnit?.payments?.captures?.[0];
-    if (captureData.status !== "COMPLETED" || capture?.status !== "COMPLETED" || !capture?.id) {
-      await supabase.rpc("collectables_mark_order_review", {
-        p_order_id: localOrderId,
-        p_reason: "PayPal capture response was not completed"
-      });
-      return new Response(JSON.stringify({ error: "paypal_capture_not_completed" }), { status: 409, headers });
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_review_non_gb");
+      return new Response(JSON.stringify({ ok: true, review_required: true }), { status: 200, headers });
     }
 
     const amountPence = moneyToPence(capture.amount?.value || "0");
     const currency = capture.amount?.currency_code || "";
-    const buyerEmail = captureData.payer?.email_address || null;
+    if (amountPence !== localOrder.total_pence || currency !== localOrder.currency) {
+      await supabase.rpc("collectables_mark_order_review", {
+        p_order_id: localOrder.id,
+        p_reason: "Captured PayPal amount does not match local order"
+      });
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_review_amount_mismatch");
+      return new Response(JSON.stringify({ ok: true, review_required: true }), { status: 200, headers });
+    }
+
+    await supabase.rpc("collectables_mark_order_review", {
+      p_order_id: localOrder.id,
+      p_reason: "Reconciling completed PayPal capture from verified webhook"
+    });
+
+    const buyerEmail = orderData.payer?.email_address || null;
     const buyerName = [
-      captureData.payer?.name?.given_name,
-      captureData.payer?.name?.surname
+      orderData.payer?.name?.given_name,
+      orderData.payer?.name?.surname
     ].filter(Boolean).join(" ") || null;
-    const shippingAddress = completedPurchaseUnit?.shipping || null;
 
     const { data: orderNumber, error: finalizeError } = await supabase.rpc("collectables_finalize_order", {
-      p_order_id: localOrderId,
+      p_order_id: localOrder.id,
       p_paypal_order_id: paypalOrderId,
       p_paypal_capture_id: capture.id,
       p_capture_amount_pence: amountPence,
       p_currency: currency,
       p_buyer_email: buyerEmail,
       p_buyer_name: buyerName,
-      p_shipping_address: shippingAddress,
-      p_paypal_response: compactPaymentAudit(captureData, capture)
+      p_shipping_address: purchaseUnit?.shipping || null,
+      p_paypal_response: compactPaymentAudit(orderData, capture)
     });
 
     if (finalizeError) {
       await supabase.rpc("collectables_mark_order_review", {
-        p_order_id: localOrderId,
-        p_reason: `Captured at PayPal; local finalisation failed: ${finalizeError.message}`
+        p_order_id: localOrder.id,
+        p_reason: `Verified PayPal capture needs manual reconciliation: ${finalizeError.message}`
       });
-      return new Response(JSON.stringify({ error: "order_finalize_needs_review" }), { status: 500, headers });
+      await setWebhookOutcome(supabase, eventId, eventType, paypalOrderId, "processed_review_finalize_failed");
+      return new Response(JSON.stringify({ ok: true, review_required: true }), { status: 200, headers });
     }
 
     const confirmation = await sendOrderConfirmation(
       supabase,
-      localOrderId,
+      localOrder.id,
       buyerEmail,
       String(orderNumber)
     );
-
+    await setWebhookOutcome(
+      supabase,
+      eventId,
+      eventType,
+      paypalOrderId,
+      confirmation.sent ? "processed_paid_confirmed" : "processed_paid_confirmation_pending"
+    );
     return new Response(JSON.stringify({
       ok: true,
       order_number: orderNumber,
-      paypal_capture_id: capture.id,
       confirmation_email_sent: Boolean(confirmation.sent)
     }), { status: 200, headers });
   } catch (e) {
-    const message = e instanceof Error ? e.message : "capture_error";
-    const status = message === "paypal_not_configured" ? 503 : 400;
-    return new Response(JSON.stringify({ error: message }), { status, headers });
+    const message = e instanceof Error ? e.message : "webhook_error";
+    return new Response(JSON.stringify({ error: message }), { status: 500, headers });
   }
 });

@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260927-1">
+  <link rel="stylesheet" href="styles.css?v=20261004-1">
 </head>
 <body>
   <a class="skip-link" href="#shop">Skip to shop</a>
@@ -36,8 +36,8 @@
         <span aria-hidden="true">⌕</span>
         <input id="site-search" type="search" placeholder="Search cards, sets, or anything…" aria-label="Search collection">
       </label>
-      <button class="icon-button mobile-search-toggle" id="mobile-search-toggle" type="button" aria-label="Search">⌕</button>
-      <button class="cart-button" id="cart-open" type="button" aria-controls="cart-drawer" aria-expanded="false" aria-label="Open basket">🛒<span id="cart-count">0</span></button>
+      <button class="icon-button mobile-search-toggle" id="mobile-search-toggle" type="button" aria-label="Search" aria-controls="mobile-search-panel" aria-expanded="false">⌕</button>
+      <button class="cart-button" id="cart-open" type="button" aria-controls="cart-drawer" aria-expanded="false" aria-haspopup="dialog" aria-label="Open basket">🛒<span id="cart-count">0</span></button>
       <button class="menu-button" id="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -112,34 +112,34 @@
       </div>
 
       <div class="category-grid">
-        <button class="category-tile ygo-category" type="button" data-filter="game:yugioh">
+        <button class="category-tile ygo-category" type="button" data-filter="game:yugioh" aria-pressed="false">
           <span class="category-icon">✦</span><strong>Yu-Gi-Oh!</strong><small>Singles · sealed · graded</small><b>Shop now →</b>
         </button>
-        <button class="category-tile pokemon-category" type="button" data-filter="game:pokemon">
+        <button class="category-tile pokemon-category" type="button" data-filter="game:pokemon" aria-pressed="false">
           <span class="category-icon">●</span><strong>Pokémon</strong><small>Singles · sealed · graded</small><b>Shop now →</b>
         </button>
-        <button class="category-tile sealed-category" type="button" data-filter="type:sealed">
+        <button class="category-tile sealed-category" type="button" data-filter="type:sealed" aria-pressed="false">
           <span class="category-icon">◇</span><strong>Sealed</strong><small>Boxes · tins · packs · decks</small><b>Browse sealed →</b>
         </button>
-        <button class="category-tile singles-category" type="button" data-filter="type:single">
+        <button class="category-tile singles-category" type="button" data-filter="type:single" aria-pressed="false">
           <span class="category-icon">▱</span><strong>Singles</strong><small>Exact-card listings</small><b>Find a card →</b>
         </button>
-        <button class="category-tile graded-category" type="button" data-filter="type:graded">
+        <button class="category-tile graded-category" type="button" data-filter="type:graded" aria-pressed="false">
           <span class="category-icon">▤</span><strong>Graded Cards</strong><small>PSA · CGC · BGS slabs</small><b>Browse slabs →</b>
         </button>
-        <button class="category-tile bundle-category" type="button" data-filter="type:bundle">
+        <button class="category-tile bundle-category" type="button" data-filter="type:bundle" aria-pressed="false">
           <span class="category-icon">✚</span><strong>Bundles & Lots</strong><small>Playsets · bundles · job lots</small><b>See bundles →</b>
         </button>
       </div>
     </section>
 
     <section class="promo-row">
-      <button class="promo-card arrivals" type="button" data-filter="tag:new">
+      <button class="promo-card arrivals" type="button" data-filter="tag:new" aria-pressed="false">
         <span class="promo-icon">◆</span>
         <div><p class="eyebrow">FRESH ON THE SHELF</p><h3>New Arrivals</h3><p>The latest cards and sealed pieces added to the collection.</p></div>
         <b>Shop new →</b>
       </button>
-      <button class="promo-card picks" type="button" data-filter="tag:picks">
+      <button class="promo-card picks" type="button" data-filter="tag:picks" aria-pressed="false">
         <span class="promo-icon">♛</span>
         <div><p class="eyebrow">HAND PICKED</p><h3>Slime’s Picks</h3><p>Cards and products I personally like most from the current shelf.</p></div>
         <b>See my picks →</b>
@@ -154,7 +154,7 @@
 
       <div class="shop-toolbar" aria-label="Product filters">
         <div class="filter-pills" id="category-filters">
-          <button class="active" type="button" data-filter="all">Everything</button>
+          <button class="active" type="button" data-filter="all" aria-pressed="true">Everything</button>
           <button type="button" data-filter="game:yugioh">Yu-Gi-Oh!</button>
           <button type="button" data-filter="game:pokemon">Pokémon</button>
           <button type="button" data-filter="type:single">Singles</button>
@@ -223,8 +223,9 @@
       <a href="/slime786/collectables/condition-guide.html">Condition Guide</a>
       <a href="/slime786/collectables/terms.html">Terms</a>
       <a href="/slime786/collectables/privacy.html">Privacy</a>
+      <a href="/slime786/collectables/cancellation-form.html">Cancellation Form</a>
       <a href="/slime786/collectables/contact.html">Contact</a>
-      <a href="https://github.com/slime786/slimes-collectables" target="_blank" rel="noopener">Shop repo ↗</a>
+      <a href="/slime786/portfolio.html">SLIME786 portfolio</a>
     </div>
     <small>© 2026 Slime's Collectables. Yu-Gi-Oh! and Pokémon are trademarks of their respective owners. Independent personal resale site.</small>
   </footer>
@@ -247,7 +248,7 @@
   <template id="product-template">
     <article class="product-card">
       <div class="product-image-wrap">
-        <div class="product-image"><img class="product-photo" alt="" hidden><span></span></div>
+        <div class="product-image"><img class="product-photo" alt="" loading="lazy" decoding="async" hidden><span></span></div>
         <span class="condition-badge"></span>
         <span class="demo-badge">PREVIEW</span>
         <span class="new-badge" hidden>NEW</span>
@@ -279,6 +280,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260927-1"></script>
+  <script src="app.js?v=20261004-1"></script>
 </body>
 </html>
