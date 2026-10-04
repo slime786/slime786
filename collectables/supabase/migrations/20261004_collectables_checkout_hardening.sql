@@ -86,6 +86,46 @@ begin
 end;
 $$;
 
+create or replace function public.collectables_attach_paypal_order(
+  p_order_id uuid,
+  p_paypal_order_id text
+)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $
+declare
+  v_order public.collectables_orders%rowtype;
+begin
+  select * into v_order
+    from public.collectables_orders
+    where id = p_order_id
+    for update;
+
+  if not found then
+    raise exception 'order_not_found';
+  end if;
+
+  if v_order.status = 'paypal_created'
+     and v_order.paypal_order_id = p_paypal_order_id then
+    return v_order.order_number;
+  end if;
+
+  if v_order.status <> 'reserved' or v_order.expires_at <= now() then
+    raise exception 'order_not_attachable:%', v_order.status;
+  end if;
+
+  update public.collectables_orders
+    set paypal_order_id = p_paypal_order_id,
+        status = 'paypal_created',
+        updated_at = now()
+    where id = p_order_id;
+
+  return v_order.order_number;
+end;
+$;
+
 create or replace function public.collectables_begin_capture(
   p_order_id uuid,
   p_paypal_order_id text
@@ -385,6 +425,7 @@ end;
 $$;
 
 revoke all on function public.collectables_checkout_rate_limit(text,integer,integer) from public, anon, authenticated;
+revoke all on function public.collectables_attach_paypal_order(uuid,text) from public, anon, authenticated;
 revoke all on function public.collectables_begin_capture(uuid,text) from public, anon, authenticated;
 revoke all on function public.collectables_mark_order_review(uuid,text) from public, anon, authenticated;
 revoke all on function public.collectables_mark_capture_failed(uuid,text) from public, anon, authenticated;
@@ -393,6 +434,7 @@ revoke all on function public.collectables_expire_reservations() from public, an
 revoke all on function public.collectables_finalize_order(uuid,text,text,integer,text,text,text,jsonb,jsonb) from public, anon, authenticated;
 
 grant execute on function public.collectables_checkout_rate_limit(text,integer,integer) to service_role;
+grant execute on function public.collectables_attach_paypal_order(uuid,text) to service_role;
 grant execute on function public.collectables_begin_capture(uuid,text) to service_role;
 grant execute on function public.collectables_mark_order_review(uuid,text) to service_role;
 grant execute on function public.collectables_mark_capture_failed(uuid,text) to service_role;
