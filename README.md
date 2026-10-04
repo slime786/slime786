@@ -13,6 +13,11 @@ This repository is the public home for the SLIME786 portfolio and the live Slime
 
 | Project | Status | Repository |
 | --- | --- | --- |
+| Context Lease | Local MCP MVP | `slime786/context-lease-mcp` |
+| Claim Window | Local MCP MVP | `slime786/Claim-Window` |
+| Multi-Agent Vertical Agent OS | Initial scaffold | `slime786/Multi-Agent-Vertical-Agent-OS` |
+| LocalLaunch Studio | Private pre-launch preview | `slime786/website-business` |
+| WRECKSTORM | Godot vertical slice | `slime786/WRECKSTORM` |
 | GUARD | Active MVP | `slime786/guard-mvp` |
 | Handoff | Private beta / Android alpha | `slime786/handoff` |
 | WHY? | Active mobile MVP | `slime786/why-app` |
@@ -24,7 +29,9 @@ This repository is the public home for the SLIME786 portfolio and the live Slime
 | Slime's Collectables | Active storefront | this repo: `collectables/` |
 | Decision Coin | Paused experiment | `slime786/decision-coin` |
 
-See [REPOSITORIES.md](REPOSITORIES.md) for a one-page map of every repository and [RELEASE-PLAN.md](RELEASE-PLAN.md) for the free-first release standard.
+The account currently contains **16 repositories** in total. The standalone `slimes-collectables` repository is retained as secondary/history; the live shop is maintained here.
+
+See [REPOSITORIES.md](REPOSITORIES.md) for the complete repository map, including visibility and purpose, and [RELEASE-PLAN.md](RELEASE-PLAN.md) for the free-first release standard.
 
 ## Repository map
 
@@ -46,6 +53,7 @@ Older public URLs are intentionally retained where removing them could break exi
 
 - Keep the root focused on files that serve the public portfolio.
 - Keep active product code in its dedicated repository.
+- Keep private/local-only MCP projects private until authentication, per-user isolation and production hardening are ready.
 - Do not commit credentials, private keys, customer data, or production secrets.
 - Preserve existing public URLs unless there is a deliberate redirect plan.
 - Prefer clear README navigation over adding more top-level notes.
@@ -53,7 +61,7 @@ Older public URLs are intentionally retained where removing them could break exi
 
 Brand and attribution guidance lives in [BRAND.md](BRAND.md). Repository usage terms are in [LICENSE.md](LICENSE.md). For maintenance, see [RELEASE-READINESS.md](RELEASE-READINESS.md) and [CHANGELOG.md](CHANGELOG.md).
 
-_Last housekeeping review: 24 September 2026._
+_Last housekeeping review: 4 October 2026._
 
 ---
 
