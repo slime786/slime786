@@ -347,10 +347,18 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "order_finalize_needs_review" }), { status: 500, headers });
     }
 
+    const confirmation = await sendOrderConfirmation(
+      supabase,
+      localOrderId,
+      buyerEmail,
+      String(orderNumber)
+    );
+
     return new Response(JSON.stringify({
       ok: true,
       order_number: orderNumber,
-      paypal_capture_id: capture.id
+      paypal_capture_id: capture.id,
+      confirmation_email_sent: Boolean(confirmation.sent)
     }), { status: 200, headers });
   } catch (e) {
     const message = e instanceof Error ? e.message : "capture_error";
