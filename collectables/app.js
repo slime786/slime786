@@ -576,6 +576,7 @@ function loadPayPal(){
           const message={
             paypal_not_configured:"PayPal sandbox credentials still need to be connected.",
             store_not_accepting_orders:"Checkout is currently closed. Your basket has not been charged.",
+            live_launch_configuration_incomplete:"Checkout is not fully configured for live sales yet. Your basket has not been charged.",
             checkout_rate_limited:"Too many checkout attempts were made from this connection. Please try again later."
           }[data?.error] || "Checkout could not be started. Stock may have changed.";
           checkoutNote.textContent=message;
@@ -602,7 +603,7 @@ function loadPayPal(){
         if(!res.ok){
           const message=result?.error==="shipping_country_not_supported"
             ?"This shop currently ships only to UK addresses. No payment was captured by this checkout attempt."
-            : result?.error==="capture_temporarily_disabled"
+            : result?.error==="capture_temporarily_disabled" || result?.error==="live_launch_configuration_incomplete"
               ?"Payment confirmation is temporarily unavailable. Please do not retry repeatedly."
               : "Payment needs checking. Please do not retry repeatedly — contact me if PayPal shows a charge.";
           checkoutNote.textContent=message;
@@ -612,7 +613,9 @@ function loadPayPal(){
         pendingLocalOrderId=null;
         window.__slimeLocalOrderId=null;
         renderCart();
-        checkoutNote.textContent=`Payment confirmed. Your order number is ${result.order_number}. Thank you! 💚`;
+        checkoutNote.textContent=result.confirmation_email_sent
+          ? `Payment confirmed. Your order number is ${result.order_number}. A confirmation email has been sent. Thank you! 💚`
+          : `Payment confirmed. Your order number is ${result.order_number}. Keep this reference; if the email is delayed, contact me before retrying payment. 💚`;
       },
       onCancel(){
         checkoutNote.textContent="Checkout cancelled. Your basket is still here.";
