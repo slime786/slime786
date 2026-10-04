@@ -65,3 +65,24 @@ The exact sandbox, cutover and rollback sequence is documented in [LAUNCH-RUNBOO
 
 ## Final QA
 Use [QA-CHECKLIST.md](QA-CHECKLIST.md) for the final desktop, mobile, keyboard and checkout walkthrough.
+
+## 2026-10-04 hardening status
+
+Implemented in source and deployed backend:
+- server-side new-order and capture kill switches;
+- checkout fingerprint rate limiting;
+- atomic PayPal-order attachment and pre-capture state transition;
+- `capturing` / `review` order states that prevent reservation expiry during capture;
+- UK shipping-country validation before browser-driven capture;
+- verified PayPal webhook reconciliation with replay tracking;
+- reduced PayPal-response retention instead of storing the full response body;
+- idempotent transactional order-confirmation support;
+- seller identity/address/contact launch gate;
+- public seller-info endpoint that keeps the postal address out of Git;
+- cart DOM-XSS sink removed;
+- improved keyboard/focus and filter/search accessibility state;
+- CI enforcement for Edge Function safeguards and Deno type checks;
+- expanded SQL regression/recovery tests.
+
+Remaining launch blockers are operational rather than hidden code toggles: real catalogue/stock, exact seller postal details, verified mail sender, PayPal live credentials/webhook registration, and final end-to-end sandbox/live rehearsal. Keep `DEMO_MODE=true`, `COLLECTABLES_NEW_ORDERS_ENABLED=false`, and public indexing disabled until those are complete.
+
