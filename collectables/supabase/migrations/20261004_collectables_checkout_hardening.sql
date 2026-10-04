@@ -26,6 +26,18 @@ alter table public.collectables_checkout_rate_limits enable row level security;
 revoke all on public.collectables_checkout_rate_limits from public, anon, authenticated;
 grant all on public.collectables_checkout_rate_limits to service_role;
 
+create table if not exists public.collectables_paypal_webhook_events (
+  event_id text primary key,
+  event_type text not null,
+  paypal_order_id text,
+  outcome text not null default 'received',
+  processed_at timestamptz not null default now()
+);
+
+alter table public.collectables_paypal_webhook_events enable row level security;
+revoke all on public.collectables_paypal_webhook_events from public, anon, authenticated;
+grant all on public.collectables_paypal_webhook_events to service_role;
+
 create or replace function public.collectables_checkout_rate_limit(
   p_client_key text,
   p_limit integer default 6,
@@ -111,6 +123,16 @@ begin
     raise exception 'reservation_expired';
   end if;
 
+  if not exists (
+    select 1
+    from public.collectables_stock_reservations
+    where order_id = p_order_id
+      and status = 'active'
+      and expires_at > now()
+  ) then
+    raise exception 'reservation_missing';
+  end if;
+
   if exists (
     select 1
     from (
@@ -165,6 +187,32 @@ begin
     where id = p_order_id;
 end;
 $$;
+
+create or replace function public.collectables_mark_capture_failed(
+  p_order_id uuid,
+  p_reason text
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $
+begin
+  update public.collectables_orders
+    set status = case when status = 'paid' then status else 'failed' end,
+        last_error = left(coalesce(p_reason, 'capture_failed'), 1000),
+        updated_at = now()
+    where id = p_order_id;
+
+  update public.collectables_stock_reservations r
+    set status = 'released'
+    from public.collectables_orders o
+    where o.id = p_order_id
+      and r.order_id = o.id
+      and o.status = 'failed'
+      and r.status = 'active';
+end;
+$;
 
 create or replace function public.collectables_cancel_order(
   p_order_id uuid,
@@ -339,6 +387,7 @@ $$;
 revoke all on function public.collectables_checkout_rate_limit(text,integer,integer) from public, anon, authenticated;
 revoke all on function public.collectables_begin_capture(uuid,text) from public, anon, authenticated;
 revoke all on function public.collectables_mark_order_review(uuid,text) from public, anon, authenticated;
+revoke all on function public.collectables_mark_capture_failed(uuid,text) from public, anon, authenticated;
 revoke all on function public.collectables_cancel_order(uuid,text) from public, anon, authenticated;
 revoke all on function public.collectables_expire_reservations() from public, anon, authenticated;
 revoke all on function public.collectables_finalize_order(uuid,text,text,integer,text,text,text,jsonb,jsonb) from public, anon, authenticated;
@@ -346,6 +395,7 @@ revoke all on function public.collectables_finalize_order(uuid,text,text,integer
 grant execute on function public.collectables_checkout_rate_limit(text,integer,integer) to service_role;
 grant execute on function public.collectables_begin_capture(uuid,text) to service_role;
 grant execute on function public.collectables_mark_order_review(uuid,text) to service_role;
+grant execute on function public.collectables_mark_capture_failed(uuid,text) to service_role;
 grant execute on function public.collectables_cancel_order(uuid,text) to service_role;
 grant execute on function public.collectables_expire_reservations() to service_role;
 grant execute on function public.collectables_finalize_order(uuid,text,text,integer,text,text,text,jsonb,jsonb) to service_role;
