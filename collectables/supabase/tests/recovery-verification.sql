@@ -13,7 +13,8 @@ begin
     'collectables_products',
     'collectables_orders',
     'collectables_order_items',
-    'collectables_stock_reservations'
+    'collectables_stock_reservations',
+    'collectables_checkout_rate_limits'
   ]
   loop
     if to_regclass('public.' || v_name) is null then
@@ -26,7 +27,11 @@ begin
     'collectables_reserve_order',
     'collectables_cancel_order',
     'collectables_expire_reservations',
-    'collectables_finalize_order'
+    'collectables_prepare_capture',
+    'collectables_record_capture',
+    'collectables_finalize_captured_order',
+    'collectables_mark_reconciliation_required',
+    'collectables_take_rate_limit'
   ]
   loop
     if not exists (
@@ -48,7 +53,8 @@ begin
       'collectables_products',
       'collectables_orders',
       'collectables_order_items',
-      'collectables_stock_reservations'
+      'collectables_stock_reservations',
+      'collectables_checkout_rate_limits'
     )
     and c.relrowsecurity=false;
 
