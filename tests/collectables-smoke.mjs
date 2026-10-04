@@ -81,6 +81,15 @@ for(const marker of [
 if(shop.includes("slimes-collectables") && shop.includes("Shop repo")) {
   fail("live shop must not link customers to the secondary history repository");
 }
+if(!shop.includes('cancellation-form.html')) {
+  fail("shop footer must link the cancellation form");
+}
+if(!fs.existsSync("collectables/business-info.js")) {
+  fail("seller business-info loader is missing");
+}
+if(!fs.existsSync("collectables/cancellation-form.html")) {
+  fail("model cancellation form is missing");
+}
 
 const edgeFunctionPaths = [
   "collectables/supabase/functions/collectables-create-order/index.ts",
@@ -88,6 +97,8 @@ const edgeFunctionPaths = [
   "collectables/supabase/functions/collectables-catalog/index.ts",
   "collectables/supabase/functions/collectables-paypal-webhook/index.ts"
 ];
+
+const publicInfoPath = "collectables/supabase/functions/collectables-public-info/index.ts";
 
 for (const path of edgeFunctionPaths) {
   const source = fs.readFileSync(path, "utf8");
@@ -117,7 +128,9 @@ for (const marker of [
   'COLLECTABLES_NEW_ORDERS_ENABLED',
   'collectables_checkout_rate_limit',
   'collectables_attach_paypal_order',
-  'checkout_rate_limited'
+  'checkout_rate_limited',
+  'liveCommerceReady',
+  'COLLECTABLES_PUBLIC_BUSINESS_INFO_ENABLED'
 ]) {
   if(!createOrder.includes(marker)) fail(`create-order missing safeguard: ${marker}`);
 }
@@ -129,7 +142,10 @@ for (const marker of [
   'collectables_mark_order_review',
   'shippingCountry !== "GB"',
   '/v2/checkout/orders/',
-  'orderData.status !== "APPROVED"'
+  'orderData.status !== "APPROVED"',
+  'liveCommerceReady',
+  'sendOrderConfirmation',
+  'Idempotency-Key'
 ]) {
   if(!captureOrder.includes(marker)) fail(`capture-order missing safeguard: ${marker}`);
 }
@@ -141,7 +157,8 @@ for (const marker of [
   'PAYMENT.CAPTURE.COMPLETED',
   'PAYMENT.CAPTURE.PENDING',
   'PAYMENT.CAPTURE.DENIED',
-  'collectables_paypal_webhook_events'
+  'collectables_paypal_webhook_events',
+  'confirmation_email_sent_at'
 ]) {
   if(!webhook.includes(marker)) fail(`PayPal webhook missing safeguard: ${marker}`);
 }
