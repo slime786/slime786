@@ -41,6 +41,7 @@ function newOrdersEnabled() {
 
 function liveCommerceReady() {
   if ((Deno.env.get("PAYPAL_ENV") || "sandbox") !== "live") return true;
+  if (Deno.env.get("COLLECTABLES_PUBLIC_BUSINESS_INFO_ENABLED") !== "true") return false;
   return [
     "RESEND_API_KEY",
     "COLLECTABLES_FROM_EMAIL",
