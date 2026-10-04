@@ -1,6 +1,6 @@
 -- Slime's Collectables checkout regression test
 -- Safe to run against an empty/test-capable database: all synthetic rows are rolled back.
--- Covers reservation safety, shipping rules, cancellation, expiry and finalize idempotency.
+-- Covers reservation safety, payment-state locking, reconciliation, rate limiting and finalize idempotency.
 
 begin;
 
@@ -9,6 +9,7 @@ declare
   v_order uuid;
   v_order2 uuid;
   v_order3 uuid;
+  v_order4 uuid;
   v_number text;
   v_sub integer;
   v_ship integer;
@@ -17,6 +18,8 @@ declare
   v_stock integer;
   v_status text;
   v_res_status text;
+  v_allowed boolean;
+  v_retry integer;
   v_failed boolean := false;
 begin
   insert into public.collectables_products(
@@ -59,27 +62,51 @@ begin
     into v_order2,v_number,v_sub,v_ship,v_total,v_currency
     from public.collectables_reserve_order('[{"id":"__sc_test_single","quantity":1}]'::jsonb);
 
+  update public.collectables_orders
+    set paypal_order_id='PAYPAL-TEST-OK', checkout_token_hash=repeat('a',64), status='paypal_created'
+    where id=v_order2;
+
+  perform * from public.collectables_prepare_capture(v_order2,'PAYPAL-TEST-OK');
+  select status into v_status from public.collectables_orders where id=v_order2;
+  if v_status <> 'capture_pending' then raise exception 'test_failed: prepare capture state'; end if;
+
   v_failed := false;
   begin
-    perform public.collectables_finalize_order(
-      v_order2,'PAYPAL-TEST-WRONG','CAP-WRONG',1398,'GBP',null,null,null,'{}'::jsonb
+    perform public.collectables_record_capture(
+      v_order2,'PAYPAL-TEST-OK','CAP-WRONG',1398,'GBP',null,null,null,'{}'::jsonb
     );
   exception when others then
     if sqlerrm like '%capture_amount_mismatch%' then v_failed := true; else raise; end if;
   end;
   if not v_failed then raise exception 'test_failed: wrong capture amount accepted'; end if;
-  select stock into v_stock from public.collectables_products where id='__sc_test_single';
-  if v_stock <> 1 then raise exception 'test_failed: stock changed on failed capture'; end if;
 
-  perform public.collectables_finalize_order(
-    v_order2,'PAYPAL-TEST-OK','CAP-OK',1399,'GBP','buyer@example.invalid','Synthetic Buyer','{}'::jsonb,'{}'::jsonb
+  perform public.collectables_record_capture(
+    v_order2,'PAYPAL-TEST-OK','CAP-OK',1399,'GBP',
+    'buyer@example.invalid','Synthetic Buyer','{}'::jsonb,'{}'::jsonb
   );
-  select stock into v_stock from public.collectables_products where id='__sc_test_single';
-  if v_stock <> 0 then raise exception 'test_failed: stock not decremented'; end if;
+  select status into v_status from public.collectables_orders where id=v_order2;
+  if v_status <> 'captured_unfinalized' then raise exception 'test_failed: capture not durably recorded'; end if;
 
-  perform public.collectables_finalize_order(
-    v_order2,'PAYPAL-TEST-OK','CAP-OK',1399,'GBP','buyer@example.invalid','Synthetic Buyer','{}'::jsonb,'{}'::jsonb
-  );
+  v_failed := false;
+  begin
+    perform public.collectables_cancel_order(v_order2,'must not cancel captured payment');
+  exception when others then
+    if sqlerrm like '%order_payment_state_locked%' then v_failed := true; else raise; end if;
+  end;
+  if not v_failed then raise exception 'test_failed: captured order was cancellable'; end if;
+
+  update public.collectables_stock_reservations
+    set expires_at=now()-interval '1 minute'
+    where order_id=v_order2;
+
+  perform public.collectables_finalize_captured_order(v_order2);
+  select stock into v_stock from public.collectables_products where id='__sc_test_single';
+  select status into v_status from public.collectables_orders where id=v_order2;
+  if v_stock <> 0 or v_status <> 'paid' then
+    raise exception 'test_failed: captured order not finalized';
+  end if;
+
+  perform public.collectables_finalize_captured_order(v_order2);
   select stock into v_stock from public.collectables_products where id='__sc_test_single';
   if v_stock <> 0 then raise exception 'test_failed: idempotent finalize decremented twice'; end if;
 
@@ -88,19 +115,60 @@ begin
     from public.collectables_reserve_order('[{"id":"__sc_test_sealed","quantity":1}]'::jsonb);
   if v_ship <> 549 or v_total <> 1549 then raise exception 'test_failed: sealed shipping totals'; end if;
 
-  update public.collectables_stock_reservations set expires_at=now()-interval '1 minute' where order_id=v_order3;
-  update public.collectables_orders set expires_at=now()-interval '1 minute' where id=v_order3;
+  update public.collectables_orders
+    set paypal_order_id='PAYPAL-RECON', checkout_token_hash=repeat('b',64), status='paypal_created'
+    where id=v_order3;
+  perform * from public.collectables_prepare_capture(v_order3,'PAYPAL-RECON');
+  perform public.collectables_mark_reconciliation_required(v_order3,'synthetic unknown payment state');
+  update public.collectables_stock_reservations
+    set expires_at=now()-interval '1 minute'
+    where order_id=v_order3;
+  update public.collectables_orders
+    set expires_at=now()-interval '1 minute'
+    where id=v_order3;
+
   perform public.collectables_expire_reservations();
   select status into v_status from public.collectables_orders where id=v_order3;
   select status into v_res_status from public.collectables_stock_reservations where order_id=v_order3;
+  if v_status <> 'reconciliation_required' or v_res_status <> 'active' then
+    raise exception 'test_failed: uncertain payment state released stock';
+  end if;
+
+  update public.collectables_stock_reservations
+    set status='released'
+    where order_id=v_order3;
+  update public.collectables_orders
+    set status='cancelled'
+    where id=v_order3;
+
+  select order_id,order_number,subtotal_pence,shipping_pence,total_pence,currency
+    into v_order4,v_number,v_sub,v_ship,v_total,v_currency
+    from public.collectables_reserve_order('[{"id":"__sc_test_sealed","quantity":1}]'::jsonb);
+  update public.collectables_stock_reservations set expires_at=now()-interval '1 minute' where order_id=v_order4;
+  update public.collectables_orders set expires_at=now()-interval '1 minute' where id=v_order4;
+  perform public.collectables_expire_reservations();
+  select status into v_status from public.collectables_orders where id=v_order4;
+  select status into v_res_status from public.collectables_stock_reservations where order_id=v_order4;
   if v_status <> 'expired' or v_res_status <> 'released' then
-    raise exception 'test_failed: expiry cleanup';
+    raise exception 'test_failed: normal expiry cleanup';
   end if;
 
   select order_id,order_number,subtotal_pence,shipping_pence,total_pence,currency
-    into v_order3,v_number,v_sub,v_ship,v_total,v_currency
+    into v_order4,v_number,v_sub,v_ship,v_total,v_currency
     from public.collectables_reserve_order('[{"id":"__sc_test_high","quantity":1}]'::jsonb);
   if v_ship <> 0 or v_total <> 10000 then raise exception 'test_failed: free shipping threshold'; end if;
+
+  select allowed,retry_after_seconds into v_allowed,v_retry
+    from public.collectables_take_rate_limit(repeat('c',64),'create_10m',2,600);
+  if not v_allowed then raise exception 'test_failed: first rate-limit hit blocked'; end if;
+
+  select allowed,retry_after_seconds into v_allowed,v_retry
+    from public.collectables_take_rate_limit(repeat('c',64),'create_10m',2,600);
+  if not v_allowed then raise exception 'test_failed: second rate-limit hit blocked'; end if;
+
+  select allowed,retry_after_seconds into v_allowed,v_retry
+    from public.collectables_take_rate_limit(repeat('c',64),'create_10m',2,600);
+  if v_allowed or v_retry < 1 then raise exception 'test_failed: rate limit did not block'; end if;
 end $$;
 
 rollback;
