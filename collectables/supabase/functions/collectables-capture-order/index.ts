@@ -38,6 +38,17 @@ function capturesEnabled() {
   return Deno.env.get("COLLECTABLES_CAPTURES_ENABLED") === "true";
 }
 
+function liveCommerceReady() {
+  if ((Deno.env.get("PAYPAL_ENV") || "sandbox") !== "live") return true;
+  return [
+    "RESEND_API_KEY",
+    "COLLECTABLES_FROM_EMAIL",
+    "COLLECTABLES_SELLER_NAME",
+    "COLLECTABLES_SELLER_ADDRESS",
+    "COLLECTABLES_CONTACT_EMAIL"
+  ].every((key) => Boolean(Deno.env.get(key)?.trim()));
+}
+
 async function paypalAccessToken() {
   const clientId = Deno.env.get("PAYPAL_CLIENT_ID");
   const secret = Deno.env.get("PAYPAL_CLIENT_SECRET");
@@ -93,6 +104,9 @@ Deno.serve(async (req) => {
   }
   if (!capturesEnabled()) {
     return new Response(JSON.stringify({ error: "capture_temporarily_disabled" }), { status: 503, headers });
+  }
+  if (!liveCommerceReady()) {
+    return new Response(JSON.stringify({ error: "live_launch_configuration_incomplete" }), { status: 503, headers });
   }
 
   try {
