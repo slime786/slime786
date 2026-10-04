@@ -34,6 +34,43 @@ function adminClient() {
   });
 }
 
+function clientAddress(req: Request) {
+  const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded
+    || req.headers.get("cf-connecting-ip")
+    || req.headers.get("x-real-ip")
+    || "unknown";
+}
+
+async function sha256Hex(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function enforceRateLimit(supabase: any, req: Request) {
+  const keyHash = await sha256Hex(`checkout-capture:${clientAddress(req)}`);
+  const policies = [
+    { action: "capture_10m", limit: 12, window: 600 },
+    { action: "capture_day", limit: 100, window: 86400 }
+  ];
+
+  for (const policy of policies) {
+    const { data, error } = await supabase.rpc("collectables_take_rate_limit", {
+      p_key_hash: keyHash,
+      p_action: policy.action,
+      p_limit: policy.limit,
+      p_window_seconds: policy.window
+    });
+    if (error) throw new Error("rate_limit_unavailable");
+    const row = Array.isArray(data) ? data[0] : data;
+    if (row && row.allowed === false) {
+      return Math.max(1, Number(row.retry_after_seconds || 60));
+    }
+  }
+  return 0;
+}
+
 async function paypalAccessToken() {
   const clientId = Deno.env.get("PAYPAL_CLIENT_ID");
   const secret = Deno.env.get("PAYPAL_CLIENT_SECRET");
@@ -83,7 +120,7 @@ async function persistAndFinalize(
   const completed = completedCapture(payload);
   if (!completed) {
     await markReconciliation(supabase, localOrderId, "paypal_capture_not_completed");
-    return { ok: false, status: 409, body: { error: "paypal_capture_not_completed", reconciliation_required: true } };
+    return { status: 409, body: { error: "paypal_capture_not_completed", reconciliation_required: true } };
   }
 
   const { purchaseUnit, capture } = completed;
@@ -107,7 +144,7 @@ async function persistAndFinalize(
 
   if (recordError) {
     await markReconciliation(supabase, localOrderId, `capture_record_failed:${recordError.message}`);
-    return { ok: false, status: 500, body: { error: "capture_record_failed", reconciliation_required: true } };
+    return { status: 500, body: { error: "capture_record_failed", reconciliation_required: true } };
   }
 
   const { data: orderNumber, error: finalizeError } = await supabase.rpc(
@@ -116,11 +153,11 @@ async function persistAndFinalize(
   );
 
   if (finalizeError) {
-    return { ok: false, status: 500, body: { error: "order_reconciliation_required", reconciliation_required: true } };
+    await markReconciliation(supabase, localOrderId, `finalize_failed:${finalizeError.message}`);
+    return { status: 500, body: { error: "order_reconciliation_required", reconciliation_required: true } };
   }
 
   return {
-    ok: true,
     status: 200,
     body: {
       ok: true,
@@ -144,14 +181,27 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const paypalOrderId = String(body.paypal_order_id || "");
     const localOrderId = String(body.local_order_id || "");
+    const checkoutSession = String(req.headers.get("x-checkout-session") || body.checkout_session || "");
+
     if (!paypalOrderId || !localOrderId) {
       return new Response(JSON.stringify({ error: "missing_order_id" }), { status: 400, headers });
     }
+    if (!checkoutSession || checkoutSession.length > 256) {
+      return new Response(JSON.stringify({ error: "checkout_session_required" }), { status: 401, headers });
+    }
 
     const supabase = adminClient();
+    const retryAfter = await enforceRateLimit(supabase, req);
+    if (retryAfter) {
+      return new Response(JSON.stringify({ error: "checkout_rate_limited" }), {
+        status: 429,
+        headers: { ...headers, "Retry-After": String(retryAfter) }
+      });
+    }
+
     const { data: existing, error: existingError } = await supabase
       .from("collectables_orders")
-      .select("id,order_number,status,paypal_order_id,paypal_capture_id,total_pence,currency")
+      .select("id,order_number,status,paypal_order_id,paypal_capture_id,total_pence,currency,checkout_token_hash")
       .eq("id", localOrderId)
       .single();
 
@@ -161,6 +211,12 @@ Deno.serve(async (req) => {
     if (existing.paypal_order_id !== paypalOrderId) {
       return new Response(JSON.stringify({ error: "paypal_order_mismatch" }), { status: 400, headers });
     }
+
+    const presentedHash = await sha256Hex(checkoutSession);
+    if (!existing.checkout_token_hash || presentedHash !== existing.checkout_token_hash) {
+      return new Response(JSON.stringify({ error: "checkout_session_invalid" }), { status: 401, headers });
+    }
+
     if (existing.status === "paid") {
       return new Response(JSON.stringify({
         ok: true,
@@ -182,6 +238,7 @@ Deno.serve(async (req) => {
           reconciled: true
         }), { status: 200, headers });
       }
+      await markReconciliation(supabase, localOrderId, `retry_finalize_failed:${finalizeError.message}`);
       return new Response(JSON.stringify({
         error: "order_reconciliation_required",
         reconciliation_required: true
@@ -261,7 +318,7 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify(result.body), { status: result.status, headers });
   } catch (e) {
     const message = e instanceof Error ? e.message : "capture_error";
-    const status = message === "paypal_not_configured" ? 503 : 400;
+    const status = message === "paypal_not_configured" || message === "rate_limit_unavailable" ? 503 : 400;
     return new Response(JSON.stringify({ error: message }), { status, headers });
   }
 });
