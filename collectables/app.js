@@ -3,6 +3,7 @@ const PAYPAL_MODE = "sandbox";
 const DEMO_MODE = true;
 const CHECKOUT_API_BASE = "https://cbqtqcnudwnlfxtlrioz.supabase.co/functions/v1";
 let pendingLocalOrderId = null;
+let pendingCheckoutSession = null;
 let usingLiveCatalog = false;
 
 const inventory = [
@@ -548,6 +549,7 @@ function loadPayPal(){
         // The backend returns the PayPal order id as id. Store the local order id separately below.
         pendingLocalOrderId=data.local_order_id || pendingLocalOrderId;
         window.__slimeLocalOrderId=data.local_order_id || null;
+        pendingCheckoutSession=data.checkout_session || null;
         return data.id;
       },
       async onApprove(data){
@@ -555,7 +557,10 @@ function loadPayPal(){
         checkoutNote.textContent="Confirming your payment…";
         const res=await fetch(`${CHECKOUT_API_BASE}/collectables-capture-order`,{
           method:"POST",
-          headers:{"Content-Type":"application/json"},
+          headers:{
+            "Content-Type":"application/json",
+            "X-Checkout-Session":pendingCheckoutSession || ""
+          },
           body:JSON.stringify({
             paypal_order_id:data.orderID,
             local_order_id:localOrderId
@@ -568,6 +573,7 @@ function loadPayPal(){
         }
         cart.clear();
         pendingLocalOrderId=null;
+        pendingCheckoutSession=null;
         window.__slimeLocalOrderId=null;
         renderCart();
         checkoutNote.textContent=`Payment confirmed. Your order number is ${result.order_number}. Thank you! 💚`;
