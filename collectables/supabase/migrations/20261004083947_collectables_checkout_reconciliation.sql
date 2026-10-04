@@ -20,10 +20,92 @@ alter table public.collectables_orders
 
 alter table public.collectables_orders
   add column if not exists capture_started_at timestamptz,
-  add column if not exists capture_recorded_at timestamptz;
+  add column if not exists capture_recorded_at timestamptz,
+  add column if not exists checkout_token_hash text;
 
 create index if not exists collectables_orders_status_idx
   on public.collectables_orders(status, updated_at);
+
+
+create table if not exists public.collectables_checkout_rate_limits (
+  key_hash text not null,
+  action text not null,
+  window_started_at timestamptz not null default now(),
+  hit_count integer not null default 1 check (hit_count > 0),
+  updated_at timestamptz not null default now(),
+  primary key (key_hash, action),
+  check (char_length(key_hash) between 32 and 128),
+  check (action in ('create_10m','create_day','capture_10m','capture_day'))
+);
+
+alter table public.collectables_checkout_rate_limits enable row level security;
+revoke all on public.collectables_checkout_rate_limits from anon, authenticated;
+
+create or replace function public.collectables_take_rate_limit(
+  p_key_hash text,
+  p_action text,
+  p_limit integer,
+  p_window_seconds integer
+)
+returns table(
+  allowed boolean,
+  retry_after_seconds integer
+)
+language plpgsql
+security invoker
+set search_path = public
+as $$
+declare
+  v_row public.collectables_checkout_rate_limits%rowtype;
+  v_now timestamptz := now();
+  v_window interval;
+begin
+  if p_key_hash is null or char_length(p_key_hash) < 32 or char_length(p_key_hash) > 128 then
+    raise exception 'invalid_rate_limit_key';
+  end if;
+  if p_action not in ('create_10m','create_day','capture_10m','capture_day') then
+    raise exception 'invalid_rate_limit_action';
+  end if;
+  if p_limit < 1 or p_limit > 1000 or p_window_seconds < 10 or p_window_seconds > 86400 then
+    raise exception 'invalid_rate_limit_policy';
+  end if;
+
+  v_window := make_interval(secs => p_window_seconds);
+
+  insert into public.collectables_checkout_rate_limits(
+    key_hash, action, window_started_at, hit_count, updated_at
+  )
+  values (p_key_hash, p_action, v_now, 1, v_now)
+  on conflict (key_hash, action) do update
+    set window_started_at = case
+          when public.collectables_checkout_rate_limits.window_started_at + v_window <= v_now
+            then v_now
+          else public.collectables_checkout_rate_limits.window_started_at
+        end,
+        hit_count = case
+          when public.collectables_checkout_rate_limits.window_started_at + v_window <= v_now
+            then 1
+          else public.collectables_checkout_rate_limits.hit_count + 1
+        end,
+        updated_at = v_now
+  returning * into v_row;
+
+  allowed := v_row.hit_count <= p_limit;
+  retry_after_seconds := case
+    when allowed then 0
+    else greatest(
+      1,
+      ceil(extract(epoch from ((v_row.window_started_at + v_window) - v_now)))::integer
+    )
+  end;
+  return next;
+end;
+$$;
+
+revoke all on function public.collectables_take_rate_limit(text,text,integer,integer)
+  from public, anon, authenticated;
+grant execute on function public.collectables_take_rate_limit(text,text,integer,integer)
+  to service_role;
 
 -- All checkout RPCs are service-role only. Use invoker rights so the functions
 -- do not add privilege beyond the already-authorized server caller.
