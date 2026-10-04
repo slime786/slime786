@@ -145,7 +145,11 @@ for (const marker of [
   'orderData.status !== "APPROVED"',
   'liveCommerceReady',
   'sendOrderConfirmation',
-  'Idempotency-Key'
+  'Idempotency-Key',
+  'collectables_checkout_rate_limit',
+  'captureClientKey',
+  'MAX_BODY_BYTES',
+  'checkout_rate_limited'
 ]) {
   if(!captureOrder.includes(marker)) fail(`capture-order missing safeguard: ${marker}`);
 }
