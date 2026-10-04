@@ -1,4 +1,4 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.95.0";
 
 const PROD_ORIGIN = "https://slime786.github.io";
 
