@@ -97,7 +97,7 @@ returns text
 language plpgsql
 security definer
 set search_path = public
-as $
+as $$
 declare
   v_order public.collectables_orders%rowtype;
 begin
@@ -127,7 +127,7 @@ begin
 
   return v_order.order_number;
 end;
-$;
+$$;
 
 create or replace function public.collectables_begin_capture(
   p_order_id uuid,
@@ -239,7 +239,7 @@ returns void
 language plpgsql
 security definer
 set search_path = public
-as $
+as $$
 begin
   update public.collectables_orders
     set status = case when status = 'paid' then status else 'failed' end,
@@ -255,7 +255,7 @@ begin
       and o.status = 'failed'
       and r.status = 'active';
 end;
-$;
+$$;
 
 create or replace function public.collectables_cancel_order(
   p_order_id uuid,
