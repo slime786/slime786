@@ -97,22 +97,22 @@ async function sendOrderConfirmation(
     .order("id");
   if (itemsError) return { sent: false, error: "confirmation_items_lookup_failed" };
 
-  const money = (pence: number) => \`£\${(Number(pence || 0) / 100).toFixed(2)}\`;
+  const money = (pence: number) => `£${(Number(pence || 0) / 100).toFixed(2)}`;
   const lines = [
-    \`Order confirmed — \${orderNumber}\`,
+    `Order confirmed — ${orderNumber}`,
     "",
-    \`Seller: \${sellerName}\`,
+    `Seller: ${sellerName}`,
     sellerAddress,
-    \`Contact: \${contactEmail}\`,
+    `Contact: ${contactEmail}`,
     "",
     "Order summary:",
     ...(items || []).map((item: any) =>
-      \`- \${item.product_name} x \${item.quantity} — \${money(Number(item.unit_price_pence) * Number(item.quantity))}\`
+      `- ${item.product_name} x ${item.quantity} — ${money(Number(item.unit_price_pence) * Number(item.quantity))}`
     ),
     "",
-    \`Items: \${money(order.subtotal_pence)}\`,
-    \`Delivery: \${money(order.shipping_pence)}\`,
-    \`Total paid: \${money(order.total_pence)}\`,
+    `Items: ${money(order.subtotal_pence)}`,
+    `Delivery: ${money(order.shipping_pence)}`,
+    `Total paid: ${money(order.total_pence)}`,
     "",
     "Where UK distance-selling cancellation rights apply, you can tell us within 14 days of receiving the goods that you wish to cancel, then return them within the following 14 days.",
     "This does not limit rights for faulty, damaged, incorrect or misdescribed goods.",
@@ -125,15 +125,15 @@ async function sendOrderConfirmation(
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      "Authorization": \`Bearer \${apiKey}\`,
+      "Authorization": `Bearer ${apiKey}`,
       "Content-Type": "application/json",
-      "Idempotency-Key": \`collectables-order-confirmation/\${orderId}\`
+      "Idempotency-Key": `collectables-order-confirmation/${orderId}`
     },
     body: JSON.stringify({
       from,
       to: [buyerEmail],
       reply_to: contactEmail,
-      subject: \`Slime's Collectables order \${orderNumber}\`,
+      subject: `Slime's Collectables order ${orderNumber}`,
       text: lines.join("\\n")
     })
   });
@@ -141,7 +141,7 @@ async function sendOrderConfirmation(
   const result = await response.json().catch(() => ({}));
   if (!response.ok || !result?.id) {
     await supabase.from("collectables_orders").update({
-      confirmation_email_error: \`Resend HTTP \${response.status}\`,
+      confirmation_email_error: `Resend HTTP ${response.status}`,
       updated_at: new Date().toISOString()
     }).eq("id", orderId);
     return { sent: false, error: "confirmation_email_failed" };
