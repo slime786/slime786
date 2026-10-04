@@ -13,5 +13,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
       - run: node tests/portfolio-smoke.mjs
       - run: node tests/collectables-smoke.mjs
+
+      - name: Type-check Collectables Edge Functions
+        run: |
+          deno check collectables/supabase/functions/collectables-create-order/index.ts
+          deno check collectables/supabase/functions/collectables-capture-order/index.ts
+          deno check collectables/supabase/functions/collectables-catalog/index.ts
+          deno check collectables/supabase/functions/collectables-paypal-webhook/index.ts
+          deno check collectables/supabase/functions/collectables-public-info/index.ts
