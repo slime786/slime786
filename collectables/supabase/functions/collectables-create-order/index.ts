@@ -1,4 +1,4 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.95.0";
 
 const PROD_ORIGIN = "https://slime786.github.io";
 
@@ -18,7 +18,7 @@ function cors(req: Request, methods: string) {
   const allowOrigin = isAllowedOrigin(origin) ? origin : "";
   return {
     "Access-Control-Allow-Origin": allowOrigin,
-    "Access-Control-Allow-Headers": "content-type, apikey, authorization",
+    "Access-Control-Allow-Headers": "content-type, apikey, authorization, x-checkout-session",
     "Access-Control-Allow-Methods": methods,
     "Vary": "Origin",
     "Cache-Control": "no-store"
@@ -32,6 +32,50 @@ function adminClient() {
   return createClient(Deno.env.get("SUPABASE_URL")!, key, {
     auth: { persistSession: false, autoRefreshToken: false }
   });
+}
+
+function clientAddress(req: Request) {
+  const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded
+    || req.headers.get("cf-connecting-ip")
+    || req.headers.get("x-real-ip")
+    || "unknown";
+}
+
+async function sha256Hex(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function randomToken() {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  let raw = "";
+  for (const byte of bytes) raw += String.fromCharCode(byte);
+  return btoa(raw).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/g, "");
+}
+
+async function enforceRateLimit(supabase: any, req: Request) {
+  const keyHash = await sha256Hex(`checkout-create:${clientAddress(req)}`);
+  const policies = [
+    { action: "create_10m", limit: 6, window: 600 },
+    { action: "create_day", limit: 30, window: 86400 }
+  ];
+
+  for (const policy of policies) {
+    const { data, error } = await supabase.rpc("collectables_take_rate_limit", {
+      p_key_hash: keyHash,
+      p_action: policy.action,
+      p_limit: policy.limit,
+      p_window_seconds: policy.window
+    });
+    if (error) throw new Error("rate_limit_unavailable");
+    const row = Array.isArray(data) ? data[0] : data;
+    if (row && row.allowed === false) {
+      return Math.max(1, Number(row.retry_after_seconds || 60));
+    }
+  }
+  return 0;
 }
 
 async function paypalAccessToken() {
@@ -76,6 +120,14 @@ Deno.serve(async (req) => {
     }
 
     const supabase = adminClient();
+    const retryAfter = await enforceRateLimit(supabase, req);
+    if (retryAfter) {
+      return new Response(JSON.stringify({ error: "checkout_rate_limited" }), {
+        status: 429,
+        headers: { ...headers, "Retry-After": String(retryAfter) }
+      });
+    }
+
     const cleanCart = cart.map((x: any) => ({
       id: String(x.id || "").slice(0, 120),
       quantity: Number(x.quantity)
@@ -134,7 +186,7 @@ Deno.serve(async (req) => {
       })
     });
 
-    const paypalData = await paypalRes.json();
+    const paypalData = await paypalRes.json().catch(() => ({}));
     if (!paypalRes.ok || !paypalData.id) {
       await supabase.rpc("collectables_cancel_order", {
         p_order_id: localOrderId,
@@ -143,24 +195,37 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "paypal_create_failed" }), { status: 502, headers });
     }
 
+    const checkoutSession = randomToken();
+    const checkoutTokenHash = await sha256Hex(checkoutSession);
     const { error: updateError } = await supabase
       .from("collectables_orders")
       .update({
         paypal_order_id: paypalData.id,
+        checkout_token_hash: checkoutTokenHash,
         status: "paypal_created",
         updated_at: new Date().toISOString()
       })
       .eq("id", localOrderId);
-    if (updateError) throw new Error(updateError.message);
+
+    if (updateError) {
+      await supabase.rpc("collectables_cancel_order", {
+        p_order_id: localOrderId,
+        p_reason: "Local order setup failed after PayPal order creation"
+      });
+      throw new Error("local_order_setup_failed");
+    }
 
     return new Response(JSON.stringify({
       id: paypalData.id,
       local_order_id: localOrderId,
-      order_number: order.order_number
+      order_number: order.order_number,
+      checkout_session: checkoutSession
     }), { status: 200, headers });
   } catch (e) {
     const message = e instanceof Error ? e.message : "checkout_error";
-    const status = message === "paypal_not_configured" ? 503 : 400;
+    const status = message === "paypal_not_configured" ? 503
+      : message === "rate_limit_unavailable" ? 503
+      : 400;
     return new Response(JSON.stringify({ error: message }), { status, headers });
   }
 });
