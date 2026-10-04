@@ -7,7 +7,8 @@ do $$
 declare
   v_missing text[] := '{}';
   v_rls_off text[] := '{}';
-  v_exposed text[] := '{}';
+  v_exposed_functions text[] := '{}';
+  v_exposed_tables text[] := '{}';
   v_name text;
   v_signature text;
   v_oid regprocedure;
@@ -45,7 +46,7 @@ begin
     else
       if has_function_privilege('anon', v_oid, 'EXECUTE')
          or has_function_privilege('authenticated', v_oid, 'EXECUTE') then
-        v_exposed := array_append(v_exposed, v_signature);
+        v_exposed_functions := array_append(v_exposed_functions, v_signature);
       end if;
       if not has_function_privilege('service_role', v_oid, 'EXECUTE') then
         v_missing := array_append(v_missing, v_signature || ' service_role grant');
@@ -63,7 +64,7 @@ begin
     and c.relrowsecurity=false;
 
   select coalesce(array_agg(distinct g.table_name order by g.table_name),'{}')
-    into v_exposed
+    into v_exposed_tables
   from information_schema.role_table_grants g
   where g.table_schema='public'
     and g.table_name like 'collectables_%'
@@ -78,8 +79,12 @@ begin
     raise exception 'collectables recovery verification failed; RLS off: %', array_to_string(v_rls_off, ', ');
   end if;
 
-  if array_length(v_exposed,1) is not null then
-    raise exception 'collectables recovery verification failed; browser role exposure: %', array_to_string(v_exposed, ', ');
+  if array_length(v_exposed_functions,1) is not null then
+    raise exception 'collectables recovery verification failed; browser function exposure: %', array_to_string(v_exposed_functions, ', ');
+  end if;
+
+  if array_length(v_exposed_tables,1) is not null then
+    raise exception 'collectables recovery verification failed; browser table exposure: %', array_to_string(v_exposed_tables, ', ');
   end if;
 end $$;
 
