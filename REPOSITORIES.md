@@ -9,7 +9,6 @@ A compact map of the repositories connected to this account. Use this page to de
 | [slime786/handoff](https://github.com/slime786/handoff) | Device-to-device file transfer | Active beta |
 | [slime786/why-app](https://github.com/slime786/why-app) | Intent-first capture app | Active MVP |
 | [slime786/rewind-app](https://github.com/slime786/rewind-app) | Reversible-decision tracker | Prototype |
-| [slime786/Called-It](https://github.com/slime786/Called-It) | Prediction community + AI referee | Prototype |
 | [slime786/life-admin-autopilot](https://github.com/slime786/life-admin-autopilot) | Personal admin command centre | Maintained prototype |
 | [slime786/Iron-Vultures](https://github.com/slime786/Iron-Vultures) | Godot arcade game | Pre-release prototype |
 | [slime786/mofries-business](https://github.com/slime786/mofries-business) | Mo'Fries business, brand and storefront | Private venture |
