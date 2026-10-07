@@ -19,10 +19,23 @@ jobs:
       - run: node tests/portfolio-smoke.mjs
       - run: node tests/collectables-smoke.mjs
 
-      - name: Type-check Collectables Edge Functions
+      - name: Verify Supabase source layout
+        run: |
+          test -f collectables/supabase/config.toml
+          test -f collectables/supabase/migrations/20261004091955_collectables_checkout_hardening.sql
+          test -f collectables/supabase/tests/order-flow-regression.sql
+          test ! -e supabase/functions/collectables-create-order/index.ts
+          test ! -e supabase/functions/collectables-capture-order/index.ts
+          test ! -e supabase/functions/collectables-catalog/index.ts
+          test ! -e supabase/functions/collectables-paypal-webhook/index.ts
+          test ! -e supabase/functions/collectables-public-info/index.ts
+
+      - name: Type-check Edge Functions
         run: |
           deno check collectables/supabase/functions/collectables-create-order/index.ts
           deno check collectables/supabase/functions/collectables-capture-order/index.ts
           deno check collectables/supabase/functions/collectables-catalog/index.ts
           deno check collectables/supabase/functions/collectables-paypal-webhook/index.ts
           deno check collectables/supabase/functions/collectables-public-info/index.ts
+          deno check supabase/functions/slime-admin/index.ts
+          deno check supabase/functions/slime-admin-mobile/index.ts
