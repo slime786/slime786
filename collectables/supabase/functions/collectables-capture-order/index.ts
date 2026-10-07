@@ -1,6 +1,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 
 const PROD_ORIGIN = "https://slime786.github.io";
+const MAX_BODY_BYTES = 8_192;
 
 function isAllowedOrigin(origin: string) {
   if (origin === PROD_ORIGIN) return true;
@@ -36,6 +37,18 @@ function adminClient() {
 
 function capturesEnabled() {
   return Deno.env.get("COLLECTABLES_CAPTURES_ENABLED") === "true";
+}
+
+async function captureClientKey(req: Request) {
+  const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const ip = forwarded
+    || req.headers.get("cf-connecting-ip")
+    || req.headers.get("x-real-ip")
+    || "unknown";
+  const ua = (req.headers.get("user-agent") || "unknown").slice(0, 300);
+  const bytes = new TextEncoder().encode(`capture|${ip}|${ua}`);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 function liveCommerceReady() {
@@ -202,7 +215,23 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: "live_launch_configuration_incomplete" }), { status: 503, headers });
   }
 
+  const contentLength = Number(req.headers.get("content-length") || "0");
+  if (contentLength > MAX_BODY_BYTES) {
+    return new Response(JSON.stringify({ error: "request_too_large" }), { status: 413, headers });
+  }
+
   try {
+    const supabase = adminClient();
+    const fingerprint = await captureClientKey(req);
+    const { data: allowed, error: limitError } = await supabase.rpc(
+      "collectables_checkout_rate_limit",
+      { p_client_key: fingerprint, p_limit: 20, p_window_seconds: 600 }
+    );
+    if (limitError) throw new Error("rate_limit_unavailable");
+    if (!allowed) {
+      return new Response(JSON.stringify({ error: "checkout_rate_limited" }), { status: 429, headers });
+    }
+
     const body = await req.json();
     const paypalOrderId = String(body.paypal_order_id || "").trim();
     const localOrderId = String(body.local_order_id || "").trim();
@@ -210,7 +239,6 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "missing_order_id" }), { status: 400, headers });
     }
 
-    const supabase = adminClient();
     const { data: existing, error: existingError } = await supabase
       .from("collectables_orders")
       .select("id,order_number,status,paypal_order_id,total_pence,currency")
@@ -363,7 +391,7 @@ Deno.serve(async (req) => {
     }), { status: 200, headers });
   } catch (e) {
     const message = e instanceof Error ? e.message : "capture_error";
-    const status = message === "paypal_not_configured" ? 503 : 400;
+    const status = message === "paypal_not_configured" || message === "rate_limit_unavailable" ? 503 : 400;
     return new Response(JSON.stringify({ error: message }), { status, headers });
   }
 });
