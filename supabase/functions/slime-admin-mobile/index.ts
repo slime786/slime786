@@ -23,15 +23,24 @@ function adminClient() {
   });
 }
 
-async function requireAdmin(req: Request, db: ReturnType<typeof adminClient>) {
+type AdminAuthorization =
+  | { ok: true; actor: string }
+  | { ok: false; response: Response };
+
+async function requireAdmin(
+  req: Request,
+  db: ReturnType<typeof adminClient>
+): Promise<AdminAuthorization> {
   const authHeader = req.headers.get("Authorization") || "";
   const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
-  if (!token) return { error: response({ error: "Sign in again to continue." }, 401) };
+  if (!token) {
+    return { ok: false, response: response({ error: "Sign in again to continue." }, 401) };
+  }
 
   const { data: identity, error: authError } = await db.auth.getUser(token);
   const user = identity?.user;
   if (authError || !user || !user.email_confirmed_at) {
-    return { error: response({ error: "Sign in again to continue." }, 401) };
+    return { ok: false, response: response({ error: "Sign in again to continue." }, 401) };
   }
 
   const { data: permission, error: permissionError } = await db
@@ -43,25 +52,26 @@ async function requireAdmin(req: Request, db: ReturnType<typeof adminClient>) {
   if (permissionError) throw permissionError;
   if (!permission) {
     return {
-      error: response(
+      ok: false,
+      response: response(
         { error: "This account is not authorized for portfolio administration." },
         403
       )
     };
   }
 
-  return { actor: user.id };
+  return { ok: true, actor: user.id };
 }
 
-Deno.serve(async (req: Request) => {
+Deno.serve(async (req: Request): Promise<Response> => {
   if (req.method !== "POST") return response({ error: "Method not allowed" }, 405);
 
   const db = adminClient();
 
   try {
     const authorization = await requireAdmin(req, db);
-    if ("error" in authorization) return authorization.error;
-    const actor = authorization.actor!;
+    if (!authorization.ok) return authorization.response;
+    const actor = authorization.actor;
 
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== "object") return response({ error: "Invalid request" }, 400);
