@@ -14,8 +14,8 @@ This is the canonical live storefront checklist. The live code is in `slime786/s
 
 ## Checkout
 - [x] Secure backend scaffold exists
-- [x] Edge Functions are source-controlled for recovery
-- [x] Hardened create/capture/catalog Edge Functions are deployed and verified byte-for-byte against Git
+- [x] All deployed Collectables Edge Functions are source-controlled for recovery
+- [x] Create/capture/catalog/webhook/public-info Edge Functions are deployed and verified byte-for-byte against Git
 - [x] Browser-side real payments remain disabled
 - [ ] Add PayPal sandbox credentials to Supabase secrets
 - [ ] Test server-side create/capture flow
