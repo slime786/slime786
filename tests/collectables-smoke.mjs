@@ -3,7 +3,8 @@ import vm from "node:vm";
 
 const app = fs.readFileSync("collectables/app.js", "utf8");
 const shop = fs.readFileSync("collectables/shop.html", "utf8");
-const migration = fs.readFileSync("collectables/supabase/migrations/20261004091955_collectables_checkout_hardening.sql", "utf8");\nconst regression = fs.readFileSync("collectables/supabase/tests/order-flow-regression.sql", "utf8");
+const migration = fs.readFileSync("collectables/supabase/migrations/20261004091955_collectables_checkout_hardening.sql", "utf8");
+const regression = fs.readFileSync("collectables/supabase/tests/order-flow-regression.sql", "utf8");
 const failures = [];
 
 function fail(message){ failures.push(message); }
