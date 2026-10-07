@@ -1,16 +1,7 @@
-project_id = "slime786"
+project_id = "slime786-admin"
 
-[functions.collectables-create-order]
-verify_jwt = false
+[functions.slime-admin]
+verify_jwt = true
 
-[functions.collectables-capture-order]
-verify_jwt = false
-
-[functions.collectables-catalog]
-verify_jwt = false
-
-[functions.collectables-paypal-webhook]
-verify_jwt = false
-
-[functions.collectables-public-info]
-verify_jwt = false
+[functions.slime-admin-mobile]
+verify_jwt = true
