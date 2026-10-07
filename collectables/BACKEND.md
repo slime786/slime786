@@ -75,9 +75,13 @@ See [DATA-RECOVERY.md](DATA-RECOVERY.md) and [RELEASE-READINESS.md](RELEASE-READ
 
 ## Checkout regression test
 
-The documentation previously referenced `supabase/tests/order-flow-regression.sql`, but that file is not currently present in the repository.
+A rollback-safe database regression is stored at:
 
-Until it is restored and re-run against the current hardening migration, treat SQL regression coverage as a recovery gap rather than a source-controlled guarantee. The intended coverage remains: empty-cart rejection, single/sealed/free-shipping totals, one-copy oversell protection, cancellation release, capture amount mismatch safety, successful stock deduction, idempotent finalisation and reservation expiry.
+`supabase/tests/order-flow-regression.sql`
+
+It covers empty-cart rejection, single/sealed/free-shipping totals, one-copy oversell protection, cancellation release, reservation expiry, capture amount mismatch safety, hardened capture-state transitions, successful stock deduction, catalog available-stock calculation, idempotent finalisation and mismatched replay rejection.
+
+The test uses synthetic products inside a transaction and ends with `rollback`, so no test inventory/orders remain behind. It passed against the live hardened schema on 7 October 2026.
 
 
 ## Edge Function source control
