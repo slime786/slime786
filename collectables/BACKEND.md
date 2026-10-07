@@ -122,3 +122,22 @@ PayPal webhook reconciliation is intentionally independent from the browser call
 
 For live commerce, order creation/capture also requires configured public seller details and transactional email. Confirmation messages are idempotent and record only the provider email ID/status in the order row.
 
+## Administration hardening — 7 October 2026
+
+The privileged portfolio administration functions now use Supabase Auth end to end:
+
+- `slime-admin` and `slime-admin-mobile` require platform JWT verification.
+- Each request revalidates the caller with `auth.getUser()`.
+- Authorization comes from the backend-only `admin_users` allow-list, not editable user metadata or a static bearer-token digest.
+- `admin_users` and `slime_admin_audit_log` have no `anon` or `authenticated` table privileges.
+- Suspension and restore actions record the authenticated administrator in `slime_admin_audit_log.actor_id`.
+
+Source:
+- `supabase/functions/slime-admin/index.ts`
+- `supabase/functions/slime-admin-mobile/index.ts`
+- `supabase/migrations/20261007214800_harden_slime_admin_authorization.sql`
+
+### Recovery alignment note
+
+During the 7 October 2026 security review, the Collectables Supabase paths documented above were not present on the repository's `main` branch even though this document described them as source-controlled. Treat live Supabase as ahead of Git for those missing artifacts until the deployed Collectables functions and migrations are reconciled back into source control and re-verified.
+
