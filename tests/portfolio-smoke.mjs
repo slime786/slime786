@@ -5,6 +5,8 @@ const root = process.cwd();
 const splash = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const portfolio = fs.readFileSync(path.join(root, "portfolio.html"), "utf8");
 const metrics = fs.readFileSync(path.join(root, "portfolio-metrics.js"), "utf8");
+const baseCss = fs.readFileSync(path.join(root, "style.css"), "utf8");
+const v11Css = fs.readFileSync(path.join(root, "style-v11.css"), "utf8");
 const missing = [];
 
 function checkA11yBasics(html, label) {
@@ -82,6 +84,18 @@ if (!portfolio.includes('<link rel="canonical" href="https://slime786.github.io/
 }
 if (!splash.includes('<link rel="canonical" href="https://slime786.github.io/slime786/">')) {
   missing.push("splash self-canonical");
+}
+if (!splash.includes('/slime786/style-v11.css?v=1') || !portfolio.includes('/slime786/style-v11.css?v=1')) {
+  missing.push("V11 theme stylesheet wiring");
+}
+if (baseCss.includes("CURRENT THEME BOUNDARY — V11")) {
+  missing.push("V11 theme leaked back into base stylesheet");
+}
+if (!v11Css.includes("CURRENT THEME BOUNDARY — V11")) {
+  missing.push("V11 theme boundary missing");
+}
+if (/var\(--v11-/.test(baseCss)) {
+  missing.push("base stylesheet depends on V11-scoped variables");
 }
 
 if (missing.length) {
