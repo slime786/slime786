@@ -8,454 +8,100 @@
 <meta http-equiv="Expires" content="0">
 <meta name="x-build" content="splash-command-center-v17">
 <meta name="description" content="Moheen Mahmood — London-based product builder creating practical software, AI tools and focused digital products.">
-<title>Moheen Mahmood — Product Builder</title>
-<meta name="theme-color" content="#03070d">
+<title>SLIME786 — Useful software. Built to ship.</title>
+<meta name="theme-color" content="#02060b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/slime786/style.css?v=23">
 <link rel="icon" href="/slime786/favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="/slime786/splash-command-center.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/slime786/portfolio-hero-v4.jpg?v=19" fetchpriority="high">
 <style>
-:root{
-  --bg:#03070d;
-  --panel:#07111c;
-  --line:#153550;
-  --text:#f4f8ff;
-  --muted:#8fa8be;
-  --blue:#108cff;
-  --green:#1df28a;
-  --mx:0px;
-  --my:0px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,sans-serif}
-body{min-height:100svh;overflow:hidden}
-a{color:inherit;text-decoration:none}
-.splash{
-  position:relative;
-  min-height:100svh;
-  overflow:hidden;
-  isolation:isolate;
-  display:grid;
-  grid-template-rows:auto 1fr auto;
-  padding:0 3.5vw;
-  background:#02060b;
-}
-.hero-bg{
-  position:absolute;
-  inset:-4%;
-  z-index:-5;
-  background:url('/slime786/splash-command-center.webp') center 48%/cover no-repeat;
-  transform:translate3d(calc(var(--mx) * -.28),calc(var(--my) * -.20),0) scale(1.07);
-  animation:cinematicDrift 16s ease-in-out infinite alternate;
-  will-change:transform;
-}
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  z-index:-4;
-  background:
-    linear-gradient(90deg,rgba(1,5,10,.97) 0%,rgba(2,7,13,.85) 36%,rgba(1,7,15,.28) 66%,rgba(1,5,10,.50) 100%),
-    linear-gradient(180deg,rgba(3,8,15,.25),rgba(2,6,11,.35));
-}
-.vignette{
-  position:absolute;
-  inset:0;
-  z-index:-3;
-  pointer-events:none;
-  box-shadow:inset 0 0 180px rgba(0,0,0,.72);
-}
-.grid{
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  opacity:.12;
-  pointer-events:none;
-  background-image:
-    linear-gradient(rgba(92,164,215,.11) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(92,164,215,.11) 1px,transparent 1px);
-  background-size:72px 72px;
-  mask-image:linear-gradient(to bottom,transparent 0%,#000 14%,#000 82%,transparent 100%);
-}
-.scan{
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  overflow:hidden;
-}
-.scan::after{
-  content:"";
-  position:absolute;
-  left:-20%;
-  top:0;
-  width:16%;
-  height:100%;
-  background:linear-gradient(90deg,transparent,rgba(16,140,255,.15),rgba(145,211,255,.20),transparent);
-  filter:blur(10px);
-  transform:skewX(-10deg);
-  animation:scanPass 7s cubic-bezier(.55,.06,.43,.97) infinite;
-}
-.topbar{
-  height:74px;
-  position:relative;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid rgba(21,53,80,.72);
-  font-size:12px;
-  letter-spacing:.11em;
-  text-transform:uppercase;
-}
-.identity{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.identity strong{
-  font-size:20px;
-  letter-spacing:-.04em;
-  text-transform:none;
-}
-.handle{color:#6e8da5}
-.status{display:flex;align-items:center;gap:9px;color:#91aabd}
-.status i{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 14px var(--green);
-}
-.hero{
-  position:relative;
-  z-index:3;
-  display:grid;
-  grid-template-columns:minmax(0,720px) 1fr;
-  align-items:center;
-  gap:5vw;
-  max-width:1500px;
-  width:100%;
-  margin:auto;
-  padding:5vh 0 7vh;
-}
-.copy{position:relative}
-.eyebrow{
-  margin:0 0 22px;
-  color:#d7e9f7;
-  font-size:13px;
-  letter-spacing:.35em;
-  animation:rise .8s .06s both;
-}
-h1{
-  margin:0;
-  font:800 clamp(68px,8.2vw,132px)/.83 Space Grotesk,sans-serif;
-  letter-spacing:-.07em;
-  max-width:760px;
-}
-h1 span{display:block;animation:rise .9s both}
-h1 span:first-child{animation-delay:.13s}
-h1 span:last-child{animation-delay:.20s;color:#d8ecff}
-.intro{
-  max-width:590px;
-  margin-top:26px;
-  color:#c9d8e5;
-  font-size:clamp(17px,1.5vw,21px);
-  line-height:1.6;
-  animation:rise .9s .28s both;
-}
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:14px;
-  margin-top:30px;
-  animation:rise .9s .36s both;
-}
-.btn{
-  min-height:52px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:0 22px;
-  border:1px solid #2a78ad;
-  border-radius:10px;
-  background:rgba(4,16,27,.62);
-  backdrop-filter:blur(14px);
-  font-size:14px;
-  font-weight:600;
-  transition:.24s ease;
-}
-.btn.primary{
-  background:#0e8cff;
-  border-color:#0e8cff;
-  color:#fff;
-  box-shadow:0 0 0 rgba(14,140,255,0);
-}
-.btn:hover{
-  transform:translateY(-2px);
-  border-color:#43adff;
-}
-.btn.primary:hover{
-  box-shadow:0 14px 42px rgba(14,140,255,.25);
-}
-.visual{
-  position:relative;
-  min-height:520px;
-  display:grid;
-  place-items:center;
-  transform:translate3d(calc(var(--mx) * .18),calc(var(--my) * .14),0);
-  transition:transform .16s linear;
-}
-.orbit{
-  position:absolute;
-  width:min(37vw,500px);
-  aspect-ratio:1;
-  border:1px solid rgba(91,178,239,.32);
-  border-radius:50%;
-  transform:rotate(-12deg);
-  animation:orbitSpin 24s linear infinite;
-  box-shadow:0 0 80px rgba(16,140,255,.08);
-}
-.orbit::before,.orbit::after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  background:#bfe5ff;
-  box-shadow:0 0 16px #108cff;
-}
-.orbit::before{width:8px;height:8px;left:-4px;top:52%}
-.orbit::after{width:5px;height:5px;right:7%;top:12%}
-.orbit.small{
-  width:min(27vw,360px);
-  border-style:dashed;
-  border-color:rgba(191,225,255,.20);
-  animation-duration:34s;
-  animation-direction:reverse;
-}
-.target{
-  position:absolute;
-  width:min(31vw,420px);
-  aspect-ratio:1;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at center,rgba(16,140,255,.15),transparent 44%),
-    conic-gradient(from 30deg,transparent 0 18%,rgba(16,140,255,.11) 18% 18.6%,transparent 18.6% 48%,rgba(16,140,255,.09) 48% 48.6%,transparent 48.6%);
-  mask-image:radial-gradient(circle,#000 0 57%,transparent 58%);
-  opacity:.82;
-  animation:targetPulse 5s ease-in-out infinite;
-}
-.signal-card{
-  position:absolute;
-  right:3%;
-  bottom:11%;
-  width:min(330px,28vw);
-  padding:18px 19px;
-  border:1px solid #1d5a84;
-  border-radius:12px;
-  background:rgba(4,16,27,.86);
-  backdrop-filter:blur(16px);
-  box-shadow:0 18px 55px rgba(0,0,0,.28);
-  animation:cardFloat 5.4s ease-in-out infinite;
-}
-.signal-card small{
-  display:block;
-  margin-bottom:8px;
-  color:#6f91aa;
-  font-size:9px;
-  letter-spacing:.13em;
-}
-.signal-card strong{
-  display:block;
-  font:600 20px/1.1 Space Grotesk,sans-serif;
-}
-.signal-card span{
-  display:block;
-  margin-top:8px;
-  color:#8fa8be;
-  font-size:11px;
-}
-.coordinates{
-  position:absolute;
-  left:7%;
-  top:17%;
-  font:500 10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
-  letter-spacing:.12em;
-  color:#6d8ba2;
-  text-transform:uppercase;
-}
-.coordinates b{color:#3eaeff;font-weight:600}
-.footer{
-  position:relative;
-  z-index:10;
-  min-height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-top:1px solid rgba(21,53,80,.72);
-  color:#688196;
-  font-size:11px;
-  letter-spacing:.07em;
-  text-transform:uppercase;
-}
-.footer a{color:#a9c5da}
-.footer a:hover{color:#41afff}
-.progress{
-  position:absolute;
-  left:0;
-  bottom:-1px;
-  height:2px;
-  width:32%;
-  background:linear-gradient(90deg,#108cff,#67c8ff,transparent);
-  animation:progressMove 4.8s ease-in-out infinite;
-}
-body.is-leaving .splash{animation:pageOut .55s cubic-bezier(.6,.02,.3,1) forwards}
-body.is-leaving .hero-bg{animation:zoomOut .55s cubic-bezier(.6,.02,.3,1) forwards}
-body.is-leaving .visual{animation:visualOut .55s cubic-bezier(.6,.02,.3,1) forwards}
-@keyframes rise{
-  from{opacity:0;transform:translateY(20px);filter:blur(7px)}
-  to{opacity:1;transform:none;filter:none}
-}
-@keyframes cinematicDrift{
-  0%{transform:translate3d(calc(var(--mx) * -.28),calc(var(--my) * -.20),0) scale(1.07)}
-  100%{transform:translate3d(calc(var(--mx) * -.28 + 10px),calc(var(--my) * -.20 - 8px),0) scale(1.11)}
-}
-@keyframes scanPass{
-  0%,13%{transform:translateX(0) skewX(-10deg);opacity:0}
-  20%{opacity:1}
-  72%{opacity:.85}
-  86%,100%{transform:translateX(780%) skewX(-10deg);opacity:0}
-}
-@keyframes orbitSpin{to{transform:rotate(348deg)}}
-@keyframes targetPulse{50%{transform:scale(1.04);opacity:.58}}
-@keyframes cardFloat{50%{transform:translateY(-8px)}}
-@keyframes progressMove{
-  0%{transform:translateX(-105%)}
-  65%,100%{transform:translateX(420%)}
-}
-@keyframes pageOut{to{opacity:0;filter:blur(9px)}}
-@keyframes zoomOut{to{transform:scale(1.16);filter:brightness(.6) blur(3px)}}
-@keyframes visualOut{to{transform:scale(.82);opacity:0}}
-@media(max-width:900px){
-  body{overflow:auto}
-  .splash{min-height:100svh;padding:0 5vw}
-  .topbar{height:68px}
-  .hero{
-    grid-template-columns:1fr;
-    padding:7vh 0 6vh;
-    align-items:start;
-  }
-  h1{font-size:clamp(62px,16vw,94px);max-width:620px}
-  .intro{font-size:17px;max-width:520px}
-  .visual{
-    min-height:300px;
-    order:-1;
-    margin-bottom:-10px;
-  }
-  .orbit{width:min(76vw,410px)}
-  .orbit.small{width:min(56vw,300px)}
-  .target{width:min(66vw,355px)}
-  .signal-card{width:min(280px,72vw);right:0;bottom:2%}
-  .coordinates{left:0;top:8%}
-  .hero-bg{background-position:62% 20%}
-  .footer{gap:18px;align-items:flex-end;flex-direction:column;padding:18px 0;text-align:right}
-}
-@media(max-width:600px){
-  .identity strong{font-size:18px}
-  .handle{display:none}
-  .status{font-size:10px}
-  .visual{min-height:260px}
-  .signal-card{font-size:10px;padding:14px 15px}
-  .signal-card strong{font-size:17px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-  .hero-bg,.visual{transform:none!important}
+body{min-height:100svh}
+.gateway{min-height:calc(100svh - 70px);position:relative}
+.gateway .hero{min-height:calc(100svh - 70px)}
+.gateway .hero-copy{padding-bottom:150px}
+.gateway .hero-stats{padding-right:clamp(20px,4vw,58px)}
+.gateway .gateway-links{display:flex;gap:10px;flex-wrap:wrap}
+.gateway .gateway-links a{color:#90a7b9;font:600 9px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.07em;text-transform:uppercase}
+.gateway .gateway-links a:hover{color:#fff}
+.gateway-note{position:absolute;z-index:6;right:clamp(24px,4vw,58px);top:34px;color:#738ba0;font:600 9px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-align:right}
+@media(max-width:700px){
+  .gateway .hero{min-height:calc(100svh - 64px)}
+  .gateway .hero-copy{padding-bottom:225px}
+  .gateway-note{display:none}
 }
 </style>
 </head>
-<body>
+<body class="facelift-v11">
 <!-- splash-theme-v15-refresh -->
-<main class="splash">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="nav" id="top">
+  <a class="brand" href="/slime786/" aria-label="SLIME786 home">SLIME786<span class="brand-cursor">_</span></a>
+  <nav id="nav-links">
+    <a href="/slime786/portfolio.html#work">Products</a>
+    <a href="/slime786/journal.html">Journal</a>
+    <a href="/slime786/market-radar.html">Lab</a>
+    <a href="/slime786/arcade.html">Arcade</a>
+    <a href="/slime786/portfolio.html#about">About</a>
+    <a href="/slime786/portfolio.html#contact">Contact</a>
+  </nav>
+  <button type="button" id="mobile-nav-toggle" class="mobile-nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span><span></span></button>
+  <div class="nav-status"><i></i><span>ONLINE</span></div>
+</header>
+
+<main id="main-content" class="gateway">
+<section class="hero" aria-labelledby="gateway-title">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
-  <div class="vignette"></div>
-  <div class="grid"></div>
-  <div class="scan"></div>
-
-  <header class="topbar">
-    <div class="identity">
-      <strong>Moheen Mahmood</strong>
-      <span class="handle">@slime786</span>
+  <div class="hero-grid"></div>
+  <div class="gateway-note">BUILDING USEFUL THINGS<br>FOR A MORE INTERESTING FUTURE.</div>
+  <div class="hero-copy">
+    <p class="eyebrow">PRODUCTS / EXPERIMENTS / IDEAS</p>
+    <h1 id="gateway-title">Useful software.<br>Built to ship.<span class="terminal-caret" aria-hidden="true"></span></h1>
+    <p class="hero-text">Products, experiments and ideas at the intersection of technology, markets and human potential. Real tools. Real experiments. A more interesting future.</p>
+    <div class="hero-actions">
+      <a class="btn primary" data-enter href="/slime786/portfolio.html">Explore Projects <span>→</span></a>
+      <a class="btn" href="/slime786/journal.html">View Journal <span>→</span></a>
     </div>
-    <div class="status"><i></i> Product builder · London</div>
-  </header>
-
-  <section class="hero" aria-labelledby="splash-title">
-    <div class="copy">
-      <p class="eyebrow">PRODUCTS · EXPERIMENTS · IDEAS</p>
-      <h1 id="splash-title">
-        <span>BUILD.</span>
-        <span>SHIP.</span>
-      </h1>
-      <p class="intro">Software, AI experiments and practical products built around real problems worth solving.</p>
-      <div class="actions">
-        <a class="btn primary" data-enter href="/slime786/portfolio.html">Enter portfolio →</a>
-        <a class="btn" href="/slime786/portfolio.html#work">View products</a>
-      </div>
-    </div>
-
-    <div class="visual" aria-hidden="true">
-      <div class="orbit"></div>
-      <div class="orbit small"></div>
-      <div class="target"></div>
-      <div class="coordinates">
-        SYS / PORTFOLIO<br>
-        STATUS / <b>ONLINE</b><br>
-        MODE / BUILD
-      </div>
-      <div class="signal-card">
-        <small>01 / CURRENT FOCUS</small>
-        <strong>Useful software.<br>Built to ship.</strong>
-        <span>Products first. Experiments in public.</span>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <span>© 2026 Moheen Mahmood</span>
-    <span>London, UK · Digital product portfolio</span>
-    <div class="progress"></div>
-  </footer>
+  </div>
+  <aside class="hero-quote" aria-label="Portfolio point of view">
+    <blockquote>“Exploring<br>what’s next.”</blockquote>
+    <span>— SLIME786</span>
+  </aside>
+  <div class="hero-stats" aria-label="Portfolio summary">
+    <div><strong>16</strong><span>Repositories</span></div>
+    <div><strong>5</strong><span>New builds</span></div>
+    <div><strong>∞</strong><span>Ideas</span></div>
+    <div class="hero-live"><span class="live-dot"></span><strong>LIVE</strong><small id="gateway-clock">--:--:--</small><em id="gateway-date">London / Online</em></div>
+    <div class="gateway-links"><a href="https://github.com/slime786" target="_blank" rel="noopener">GitHub ↗</a><a href="/slime786/collectables/">Collectables ↗</a></div>
+  </div>
+</section>
 </main>
 
 <script>
 (() => {
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav=document.querySelector('#nav-links');
+  const toggle=document.querySelector('#mobile-nav-toggle');
+  toggle?.addEventListener('click',()=>{
+    const open=toggle.getAttribute('aria-expanded')==='true';
+    toggle.setAttribute('aria-expanded',String(!open));
+    nav?.classList.toggle('open',!open);
+  });
 
-  if (!reduced && matchMedia('(pointer:fine)').matches) {
-    let tx=0,ty=0,x=0,y=0,raf=0;
-    const tick=()=>{
-      x+=(tx-x)*.055;
-      y+=(ty-y)*.055;
-      document.documentElement.style.setProperty('--mx',x.toFixed(2)+'px');
-      document.documentElement.style.setProperty('--my',y.toFixed(2)+'px');
-      raf=requestAnimationFrame(tick);
-    };
-    addEventListener('pointermove',(e)=>{
-      tx=((e.clientX/innerWidth)-.5)*28;
-      ty=((e.clientY/innerHeight)-.5)*20;
-    },{passive:true});
-    tick();
-    addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
-  }
+  const tick=()=>{
+    const now=new Date();
+    document.querySelector('#gateway-clock').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now);
+    document.querySelector('#gateway-date').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',day:'2-digit',month:'short',year:'numeric'}).format(now).toUpperCase()+' / LONDON';
+  };
+  tick();setInterval(tick,1000);
 
-  const enter=document.querySelector('[data-enter]');
-  if(enter){
-    enter.addEventListener('click',(e)=>{
-      if(reduced || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      e.preventDefault();
-      document.body.classList.add('is-leaving');
-      const href=enter.href;
-      setTimeout(()=>{location.href=href},500);
-    });
+  if(!reduced && matchMedia('(pointer:fine)').matches){
+    const hero=document.querySelector('.hero');let tx=0,ty=0,x=0,y=0,raf=0;
+    const frame=()=>{x+=(tx-x)*.055;y+=(ty-y)*.055;hero.style.setProperty('--hero-x',x.toFixed(2)+'px');hero.style.setProperty('--hero-y',y.toFixed(2)+'px');raf=requestAnimationFrame(frame)};
+    hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5)*10;ty=((e.clientY-r.top)/r.height-.5)*7},{passive:true});
+    hero.addEventListener('pointerleave',()=>{tx=0;ty=0},{passive:true});frame();addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
   }
 })();
 </script>
