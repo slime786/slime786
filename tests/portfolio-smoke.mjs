@@ -4,6 +4,7 @@ import path from "node:path";
 const root = process.cwd();
 const splash = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const portfolio = fs.readFileSync(path.join(root, "portfolio.html"), "utf8");
+const metrics = fs.readFileSync(path.join(root, "portfolio-metrics.js"), "utf8");
 const missing = [];
 
 function checkA11yBasics(html, label) {
@@ -66,6 +67,21 @@ if (!splash.includes('href="/slime786/portfolio.html"')) {
 }
 if (!splash.includes('splash-command-center-v17')) {
   missing.push("splash build marker");
+}
+if (!splash.includes('data-portfolio-metric="repositories"')) {
+  missing.push("splash canonical repository metric hook");
+}
+if (!portfolio.includes('data-portfolio-metric="repositories"')) {
+  missing.push("portfolio canonical repository metric hook");
+}
+if (!metrics.includes("repositories: 17")) {
+  missing.push("canonical repository metric value");
+}
+if (!portfolio.includes('<link rel="canonical" href="https://slime786.github.io/slime786/portfolio.html">')) {
+  missing.push("portfolio self-canonical");
+}
+if (!splash.includes('<link rel="canonical" href="https://slime786.github.io/slime786/">')) {
+  missing.push("splash self-canonical");
 }
 
 if (missing.length) {
