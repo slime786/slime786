@@ -98,6 +98,14 @@ if (/var\(--v11-/.test(baseCss)) {
   missing.push("base stylesheet depends on V11-scoped variables");
 }
 
+if (!portfolio.includes('aria-controls="command-palette" aria-expanded="false"')) {
+  missing.push("portfolio command trigger dialog state");
+}
+const scriptSource = fs.readFileSync(path.join(root, "script.js"), "utf8");
+for (const marker of ["previousFocus", "getFocusable", "e.key==='Tab'", "target.focus()", "close(true)"]) {
+  if (!scriptSource.includes(marker)) missing.push(`keyboard interaction safeguard: ${marker}`);
+}
+
 if (missing.length) {
   console.error("Portfolio smoke check failed.");
   [...new Set(missing)].forEach(item => console.error("Missing:", item));
