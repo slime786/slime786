@@ -98,6 +98,49 @@ if (/var\(--v11-/.test(baseCss)) {
   missing.push("base stylesheet depends on V11-scoped variables");
 }
 
+
+const editorialPages = [
+  "journal.html",
+  "market-radar.html",
+  "weekly-notes.html",
+  "article-ai-interface.html",
+  "article-good-businesses.html",
+  "article-infrastructure.html",
+  "article-living-portfolio.html",
+  "article-weekly-notes.html",
+  "article-ai-infrastructure.html",
+  "article-market-noise.html",
+  "article-agents-interface.html",
+];
+
+for (const file of editorialPages) {
+  const html = fs.readFileSync(path.join(root, file), "utf8");
+  const canonical = `https://slime786.github.io/slime786/${file}`;
+  if (!html.includes(`rel="canonical" href="${canonical}"`)) missing.push(`${file}: self-canonical`);
+  if (!html.includes(`property="og:url" content="${canonical}"`)) missing.push(`${file}: Open Graph URL`);
+}
+
+for (const file of [
+  "collectables/shipping-returns.html",
+  "collectables/condition-guide.html",
+  "collectables/terms.html",
+  "collectables/privacy.html",
+  "collectables/contact.html",
+  "collectables/cancellation-form.html",
+]) {
+  const html = fs.readFileSync(path.join(root, file), "utf8");
+  if (!/<meta\b[^>]*name=["']description["'][^>]*content=["'][^"']+["']/i.test(html)) {
+    missing.push(`${file}: meta description`);
+  }
+}
+
+const arcade = fs.readFileSync(path.join(root, "arcade.html"), "utf8");
+if (!arcade.includes('<h1 class="visually-hidden">Moheen Arcade</h1>')) missing.push("arcade semantic h1");
+
+const collectablesSplash = fs.readFileSync(path.join(root, "collectables/index.html"), "utf8");
+if (!collectablesSplash.includes('<h1 class="visually-hidden">Slime\'s Collectables</h1>')) missing.push("collectables splash semantic h1");
+if (!collectablesSplash.includes('fetchpriority="high"')) missing.push("collectables splash image priority");
+
 if (missing.length) {
   console.error("Portfolio smoke check failed.");
   [...new Set(missing)].forEach(item => console.error("Missing:", item));
