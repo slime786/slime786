@@ -140,6 +140,17 @@ if (!arcade.includes('<h1 class="visually-hidden">Moheen Arcade</h1>')) missing.
 const collectablesSplash = fs.readFileSync(path.join(root, "collectables/index.html"), "utf8");
 if (!collectablesSplash.includes('<h1 class="visually-hidden">Slime\'s Collectables</h1>')) missing.push("collectables splash semantic h1");
 if (!collectablesSplash.includes('fetchpriority="high"')) missing.push("collectables splash image priority");
+if (!collectablesSplash.includes('width="1672"') || !collectablesSplash.includes('height="941"')) {
+  missing.push("collectables splash intrinsic dimensions");
+}
+if (!collectablesSplash.includes('rel="preconnect" href="https://cdn.openart.ai"')) {
+  missing.push("collectables splash CDN preconnect");
+}
+
+const caseStudy = fs.readFileSync(path.join(root, "project-personal-command-centre.html"), "utf8");
+if (!caseStudy.includes('loading="lazy" decoding="async"')) {
+  missing.push("case-study below-fold image loading hint");
+}
 
 if (!portfolio.includes('aria-controls="command-palette" aria-expanded="false"')) {
   missing.push("portfolio command trigger dialog state");
