@@ -62,42 +62,42 @@ When real inventory is added to collectables_products, it can automatically repl
 
 ## Source-controlled database recovery
 
-The currently applied Collectables database foundation is recorded under:
+The currently applied Collectables database migrations are recorded under:
 
 - `supabase/migrations/20260922150418_collectables_secure_checkout_foundation.sql`
 - `supabase/migrations/20260922152210_collectables_catalog_and_cleanup.sql`
+- `supabase/migrations/20261004091955_collectables_checkout_hardening.sql`
 
-These files are the schema/RPC recovery reference for the checkout foundation. Real order and inventory data still lives in Supabase and must never be committed to Git.
+These files were restored directly from the live Supabase migration ledger and are the schema/RPC recovery reference for the current checkout foundation. Real order and inventory data still lives in Supabase and must never be committed to Git.
 
 See [DATA-RECOVERY.md](DATA-RECOVERY.md) and [RELEASE-READINESS.md](RELEASE-READINESS.md) before enabling real payments.
 
 
 ## Checkout regression test
 
-A rollback-safe database regression is stored at:
+The documentation previously referenced `supabase/tests/order-flow-regression.sql`, but that file is not currently present in the repository.
 
-`supabase/tests/order-flow-regression.sql`
-
-It covers empty-cart rejection, single/sealed/free shipping totals, one-copy oversell protection, cancellation release, capture amount mismatch safety, successful stock deduction, idempotent finalisation and reservation expiry.
-
-The test uses synthetic products inside a transaction and ends with `rollback`, so no test inventory/orders remain behind.
+Until it is restored and re-run against the current hardening migration, treat SQL regression coverage as a recovery gap rather than a source-controlled guarantee. The intended coverage remains: empty-cart rejection, single/sealed/free-shipping totals, one-copy oversell protection, cancellation release, capture amount mismatch safety, successful stock deduction, idempotent finalisation and reservation expiry.
 
 
 ## Edge Function source control
 
-The current intended Edge Function source is versioned in Git:
+The deployed Collectables Edge Function source is versioned in Git:
 
 - `supabase/functions/collectables-create-order/index.ts`
 - `supabase/functions/collectables-capture-order/index.ts`
 - `supabase/functions/collectables-catalog/index.ts`
+- `supabase/functions/collectables-paypal-webhook/index.ts`
+- `supabase/functions/collectables-public-info/index.ts`
 
-The source-controlled versions use exact production-origin matching, allow `localhost` / `127.0.0.1` for local sandbox testing, and send `Cache-Control: no-store`.
+Per-function authentication settings are recorded in `supabase/config.toml`. These five endpoints intentionally use `verify_jwt=false` because they are public browser/webhook endpoints with their own origin, signature, launch-gate and server-side authorization controls.
 
-Deployment status verified 25 September 2026:
-- `collectables-create-order`: live version 3 matches Git exactly.
-- `collectables-capture-order`: live version 2 matches Git exactly.
-- `collectables-catalog`: live version 2 matches Git exactly.
-- All three intentionally keep `verify_jwt=false` because they are browser-facing commerce endpoints with their own origin/server-side controls rather than user JWT authentication.
+Deployment status verified 7 October 2026:
+- `collectables-create-order`: live version 4 matches Git exactly.
+- `collectables-capture-order`: live version 3 matches Git exactly.
+- `collectables-catalog`: live version 3 matches Git exactly.
+- `collectables-paypal-webhook`: live version 1 matches Git exactly.
+- `collectables-public-info`: live version 1 matches Git exactly.
 
 Re-check live source against Git after any future Edge Function deployment before treating production as aligned.
 
