@@ -9,13 +9,13 @@ This checklist covers the public portfolio shell. Product-specific readiness liv
 - [x] Core portfolio smoke tests exist
 - [x] Repository index and release plan are published
 - [ ] Final mobile pass across the main portfolio, Journal, Arcade and Market Radar
-- [ ] Keyboard-only pass across primary navigation and command palette
+- [x] Keyboard focus trapping/restoration and Escape handling implemented for primary navigation and command palette\n- [ ] Final manual keyboard-only walkthrough across primary navigation and command palette
 - [ ] Check contrast/focus/reduced-motion on retained legacy pages
 - [ ] Confirm all public contact/social links are current
 
 ## Content
 - [ ] Review project statuses against the individual repositories before major public updates
-- [ ] Review article metadata/canonical links
+- [x] Review article metadata/canonical links
 - [ ] Remove or redirect a public page only when there is a deliberate URL plan
 
 ## Slime's Collectables
@@ -27,8 +27,8 @@ This checklist covers the public portfolio shell. Product-specific readiness liv
 ## Release hygiene
 - [x] Proprietary repository notice exists
 - [x] Account-wide free-first release plan exists
-- [x] Basic accessibility markers are checked in CI for the portfolio and Collectables
+- [x] Accessibility, canonical metadata, Supabase source layout and keyboard interaction safeguards are checked in CI
 - [ ] Capture final portfolio screenshots only after the design settles
 - [ ] Keep a tested rollback path for meaningful visual/site changes
 
-_Last reviewed: 24 September 2026._
+_Last reviewed: 7 October 2026._
