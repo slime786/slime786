@@ -10,9 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/slime786/style.css?v=22">
+<link rel="stylesheet" href="/slime786/style.css?v=23">
 <link rel="icon" href="/slime786/favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="https://cdn.openart.ai/openart-uploads/production/attachment-transfers/2514bced1eddbbcfd0a22b59487bd0e58248f8d9f7d94e5535ac58d1c44c00f9.png" fetchpriority="high">
+<link rel="preload" as="image" href="/slime786/portfolio-hero-v4.jpg?v=19" fetchpriority="high">
 
 <link rel="canonical" href="https://slime786.github.io/slime786/">
 <meta property="og:site_name" content="Moheen Mahmood">
@@ -54,83 +54,111 @@
 <!-- Analytics hook: set window.MM_ANALYTICS_ENDPOINT only after connecting a real provider. No analytics are transmitted by default. -->
 <link rel="manifest" href="site.webmanifest">
 </head>
-<body>
+<body class="facelift-v11">
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="cursor-dot"></div><div class="cursor-ring"></div>
 
 <header class="nav" id="top">
-  <a class="brand" href="#top">Moheen Mahmood</a>
+  <a class="brand" href="#top" aria-label="SLIME786 home">SLIME786<span class="brand-cursor">_</span></a>
   <nav id="nav-links">
     <a href="#work">Products</a>
+    <a href="/slime786/journal.html">Journal</a>
+    <a href="#markets">Lab</a>
+    <a href="/slime786/arcade.html">Arcade</a>
     <a href="#about">About</a>
-    <a href="#ideas">Notes</a>
-    <a href="#game">Arcade</a>
     <a href="#contact">Contact</a>
     <button class="command-trigger" id="command-trigger" aria-label="Open command search"><span>⌘</span> K</button>
-  </nav><button type="button" id="mobile-nav-toggle" class="mobile-nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span><span></span></button>
-  <a class="connect" href="#contact">Let's Connect</a>
+  </nav>
+  <button type="button" id="mobile-nav-toggle" class="mobile-nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span><span></span></button>
+  <div class="nav-status" aria-label="Portfolio status online"><i></i><span>ONLINE</span></div>
 </header>
 
 <main id="main-content">
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
   <div class="hero-copy">
-    <p class="eyebrow">PRODUCT BUILDER · LONDON</p>
-    <h1>Useful software.<br>Built to ship.</h1>
-    <p class="hero-text">I'm Moheen Mahmood. I build focused products around overlooked money, private file transfer, better decisions and everyday problems worth solving.</p>
+    <p class="eyebrow">PRODUCTS / EXPERIMENTS / IDEAS</p>
+    <h1>Useful software.<br>Built to ship.<span class="terminal-caret" aria-hidden="true"></span></h1>
+    <p class="hero-text">Products, experiments and ideas at the intersection of technology, markets and human potential. Real tools. Real experiments. A more interesting future.</p>
     <div class="hero-actions">
-      <a class="btn primary" href="#work">View products →</a>
-      <a class="btn" href="#contact">Work with me</a>
+      <a class="btn primary" href="#work">Explore Projects <span>→</span></a>
+      <a class="btn" href="/slime786/journal.html">View Journal <span>→</span></a>
     </div>
   </div>
-
-  <aside class="live-panel" id="markets">
-    <div class="market-item">
-      <span class="coin btc">₿</span>
-      <div><small>Bitcoin (BTC)</small><strong id="btc">Loading…</strong><em id="btc-change">—</em></div>
-    </div>
-    <div class="market-item">
-      <span class="coin eth">◆</span>
-      <div><small>Ethereum (ETH)</small><strong id="eth">Loading…</strong><em id="eth-change">—</em></div>
-    </div>
-    <div class="market-item london">
-      <span class="flag">🇬🇧</span>
-      <div><small>London, UK</small><strong id="clock">--:--:--</strong><em id="date">Loading…</em></div>
-    </div>
+  <aside class="hero-quote" aria-label="Portfolio point of view">
+    <blockquote>“Exploring<br>what’s next.”</blockquote>
+    <span>— SLIME786</span>
   </aside>
+  <div class="hero-stats" aria-label="Portfolio summary">
+    <div><strong>16</strong><span>Repositories</span></div>
+    <div><strong>5</strong><span>New builds</span></div>
+    <div><strong>∞</strong><span>Ideas</span></div>
+    <div class="hero-live"><span class="live-dot"></span><strong>LIVE</strong><small id="clock">--:--:--</small><em id="date">Loading…</em></div>
+  </div>
 </section>
 
 <section class="product-first" id="work" aria-labelledby="work-title">
   <div class="product-first-head">
-    <div><p class="eyebrow">SELECTED PRODUCTS</p><h2 id="work-title">Building things people can actually use.</h2></div>
-    <p>Current products span financial opportunity discovery, private device-to-device transfer, intent-first capture, prediction communities and consumer-brand experiments.</p>
+    <div>
+      <p class="eyebrow">FEATURED PRODUCTS <span class="slash">/</span></p>
+      <h2 id="work-title">Things worth building.</h2>
+    </div>
+    <a class="section-link" href="#repositories">View all repositories →</a>
   </div>
   <div class="product-first-grid">
-    <article class="product-card product-primary"><span>VALIDATION</span><h3>GUARD</h3><p>Surfaces overlooked financial opportunities and helps turn findings into clear next actions.</p><a href="#case-guard">See the work →</a></article>
-    <article class="product-card"><span>PRIVATE BETA</span><h3>Handoff</h3><p>Private device-to-device file transfer with explicit approval, integrity checks and a native Android track.</p><a href="#case-handoff">See the work →</a></article>
-    <article class="product-card"><span>IN DEVELOPMENT</span><h3>WHY</h3><p>A calmer way to capture the reasons behind choices, ideas and decisions.</p><a href="#case-why">See the work →</a></article>
-    <article class="product-card"><span>EXPERIMENT</span><h3>Called-It</h3><p>A prediction community built around transparent calls, history and an advisory AI referee.</p><a href="#case-called-it">See the work →</a></article>
-    <article class="product-card product-food"><span>CONSUMER BRAND</span><h3>Mo’Fries</h3><p>A loaded-fries concept combining brand, menu design and a mobile-first storefront.</p><a href="#case-mofries">See the work →</a></article>
-    <article class="product-card product-shop"><span>PERSONAL SHOP</span><h3>Slime's Collectables</h3><p>My personal Yu-Gi-Oh! and Pokémon TCG collection — singles and sealed items, with PayPal-ready checkout.</p><a href="/slime786/collectables/">Visit the shop →</a></article>
-    <article class="product-card"><span>LOCAL MCP MVP</span><h3>Context Lease</h3><p>Temporary, purpose-bound context for ChatGPT with explicit expiry, recall receipts and revocation instead of indefinite memory.</p><a href="#repositories">Private build</a></article>
-    <article class="product-card"><span>LOCAL MCP MVP</span><h3>Claim Window</h3><p>A purchase-deadline tracker for returns, trials, warranties, rebates and price-match windows with source-backed dates.</p><a href="#repositories">Private build</a></article>
-    <article class="product-card"><span>GODOT / VERTICAL SLICE</span><h3>WRECKSTORM</h3><p>A top-down armored-vehicle action roguelite built around short runs, absurd rig upgrades, scrap and boss encounters.</p><a href="#repositories">Private build</a></article>
-    <article class="product-card"><span>PRE-LAUNCH SERVICE</span><h3>LocalLaunch Studio</h3><p>A UK-focused website-service prototype for independent local businesses, with local-only planners and interactive demos.</p><a href="#repositories">Private build</a></article>
-    <article class="product-card"><span>AI SYSTEMS / EARLY</span><h3>Vertical Agent OS</h3><p>An early orchestration layer for routing, coordinating and governing specialized AI agents across multiple verticals.</p><a href="#repositories">Private build</a></article>
-    <article class="product-card"><span>ANDROID GAME / IN DEVELOPMENT</span><h3>Iron Vultures</h3><p>An original arcade run-and-gun game for Android with scrolling missions, weapon pickups, rescues, vehicles and oversized boss encounters.</p><a href="#repositories">Private build</a></article>
+    <article class="product-card product-primary">
+      <div class="product-card-top"><span class="status-chip active">ACTIVE</span><span class="product-code">01</span></div>
+      <div class="product-art art-guard" aria-hidden="true"><i></i></div>
+      <h3>GUARD</h3><p>Consumer financial admin that surfaces overlooked opportunities and turns findings into clear next actions.</p><a href="#case-guard">Explore <span>→</span></a>
+    </article>
+    <article class="product-card">
+      <div class="product-card-top"><span class="status-chip active">ACTIVE</span><span class="product-code">02</span></div>
+      <div class="product-art art-handoff" aria-hidden="true"><i></i></div>
+      <h3>Handoff</h3><p>Private device-to-device transfer with explicit approval, integrity checks and a native Android track.</p><a href="#case-handoff">Explore <span>→</span></a>
+    </article>
+    <article class="product-card">
+      <div class="product-card-top"><span class="status-chip active">ACTIVE</span><span class="product-code">03</span></div>
+      <div class="product-art art-context" aria-hidden="true"><i></i></div>
+      <h3>Context Lease</h3><p>Purpose-bound context for ChatGPT that expires, can be revoked, and leaves recall receipts instead of becoming indefinite memory.</p><a href="#repositories">Private build <span>→</span></a>
+    </article>
+    <article class="product-card">
+      <div class="product-card-top"><span class="status-chip mvp">MVP</span><span class="product-code">04</span></div>
+      <div class="product-art art-claim" aria-hidden="true"><i></i></div>
+      <h3>Claim Window</h3><p>Tracks returns, trials, warranties, rebates and price-match deadlines while keeping confirmed dates separate from inference.</p><a href="#repositories">Private build <span>→</span></a>
+    </article>
+    <article class="product-card">
+      <div class="product-card-top"><span class="status-chip private">PRIVATE BUILD</span><span class="product-code">05</span></div>
+      <div class="product-art art-wreck" aria-hidden="true"><i></i></div>
+      <h3>WRECKSTORM</h3><p>A Godot armored-vehicle action roguelite built around short runs, scrap, escalating rig upgrades and boss encounters.</p><a href="#repositories">Private build <span>→</span></a>
+    </article>
+    <article class="product-card product-shop">
+      <div class="product-card-top"><span class="status-chip beta">BETA</span><span class="product-code">06</span></div>
+      <div class="product-art art-shop" aria-hidden="true"><i></i></div>
+      <h3>Slime's Collectables</h3><p>Personal Pokémon and Yu-Gi-Oh! collection storefront with a hardened PayPal-ready checkout path.</p><a href="/slime786/collectables/">Visit shop <span>→</span></a>
+    </article>
   </div>
-  <div class="portfolio-links"><a href="/slime786/collectables/">Slime's Collectables →</a><a href="https://github.com/slime786" target="_blank" rel="noopener">GitHub ↗</a><a href="#ideas">Notes & experiments →</a><a href="#game">Arcade →</a></div>
 </section>
 
-<section class="section" id="repositories" aria-labelledby="repositories-title">
+<section class="section repositories-section" id="repositories" aria-labelledby="repositories-title">
   <div class="section-title split-title">
-    <div><p class="eyebrow">REPOSITORY MAP</p><h2 id="repositories-title">16 repositories.<br>One working portfolio.</h2></div>
+    <div><p class="eyebrow">REPOSITORY MAP <span class="slash">/</span></p><h2 id="repositories-title">16 repositories.<br>One working portfolio.</h2></div>
     <p class="section-intro">The public hub stays here. Product code lives in dedicated repositories, with local-only and pre-launch work kept private until it is ready to ship.</p>
+  </div>
+  <div class="repo-grid">
+    <article class="repo-card public"><div class="repo-icon">S7</div><div><span>PUBLIC HUB</span><h3>slime786</h3><p>Portfolio + live Collectables storefront</p></div><i class="repo-state"></i></article>
+    <article class="repo-card"><div class="repo-icon">G</div><div><span>ACTIVE MVP</span><h3>guard-mvp</h3><p>Consumer financial admin</p></div><i class="repo-state"></i></article>
+    <article class="repo-card"><div class="repo-icon">H</div><div><span>PRIVATE BETA</span><h3>handoff</h3><p>Device-to-device transfer</p></div><i class="repo-state"></i></article>
+    <article class="repo-card"><div class="repo-icon">CL</div><div><span>LOCAL MVP</span><h3>context-lease-mcp</h3><p>Purpose-bound context for AI</p></div><i class="repo-state"></i></article>
+    <article class="repo-card"><div class="repo-icon">CW</div><div><span>LOCAL MVP</span><h3>Claim-Window</h3><p>Purchase deadline tracking</p></div><i class="repo-state mvp"></i></article>
+    <article class="repo-card"><div class="repo-icon">W</div><div><span>VERTICAL SLICE</span><h3>WRECKSTORM</h3><p>Armored roguelite</p></div><i class="repo-state private"></i></article>
+    <article class="repo-card"><div class="repo-icon">AI</div><div><span>EARLY</span><h3>Multi-Agent OS</h3><p>Vertical agent orchestration</p></div><i class="repo-state private"></i></article>
+    <article class="repo-card"><div class="repo-icon">LL</div><div><span>PRE-LAUNCH</span><h3>website-business</h3><p>LocalLaunch Studio</p></div><i class="repo-state mvp"></i></article>
   </div>
   <div class="portfolio-links">
     <a href="https://github.com/slime786" target="_blank" rel="noopener">Public GitHub ↗</a>
-    <a href="https://github.com/slime786/slime786/blob/main/REPOSITORIES.md" target="_blank" rel="noopener">Repository index ↗</a>
+    <a href="https://github.com/slime786/slime786/blob/main/REPOSITORIES.md" target="_blank" rel="noopener">All 16 repositories ↗</a>
   </div>
 </section>
 
@@ -244,14 +272,14 @@
 </section>
 
 
-<section id="about" class="section about">
-  <div>
-    <p class="eyebrow">ABOUT</p>
-    <h2>Building, learning<br>and shipping.</h2>
-  </div>
-  <div class="about-copy">
-    <p>I'm Moheen Mahmood, a London-based builder working across software, AI and entrepreneurship.</p>
-    <p>I like turning messy everyday problems into clear products, testing them with real users and improving what proves useful. Markets, technology and experiments still live here — but the products come first.</p>
+<section id="about" class="section about mission-section">
+  <div class="mission-visual" aria-hidden="true"><span>SAME PLANET.<br>MORE POSSIBILITIES.</span></div>
+  <div class="mission-copy">
+    <p class="eyebrow">THE MISSION <span class="slash">/</span></p>
+    <h2>Build useful things<br>for a more interesting future.</h2>
+    <p>I'm Moheen Mahmood, a London-based builder working across software, AI and entrepreneurship. SLIME786 is where practical tools, playful experiments and small ventures become real products.</p>
+    <p>I care about clear problems, usable interfaces and shipping something people can actually try.</p>
+    <a class="btn" href="#contact">Work with me <span>→</span></a>
   </div>
 </section>
 
@@ -287,42 +315,31 @@
   </div>
 </section>
 
-<section class="section data-section">
-  <div class="section-title">
-    <p class="eyebrow">LIVE INFORMATION</p>
-    <h2>Markets & Technology</h2>
+<section class="section data-section" id="markets">
+  <div class="section-title split-title">
+    <div><p class="eyebrow terminal-kicker">LIVE SIGNALS <span class="slash">/</span></p><h2>Real activity.<br>Useful context.</h2></div>
+    <p class="section-intro"><span class="live-dot"></span> Live market context and a small technology feed. Informational only; external data can be delayed.</p>
   </div>
-  <div class="data-grid">
+  <div class="live-signal-layout">
     <div class="market-box">
-      <h3>Market Watch</h3>
-      <div class="row"><span>Bitcoin</span><strong id="btc2">—</strong></div>
-      <div class="row"><span>Ethereum</span><strong id="eth2">—</strong></div>
-      <div class="row"><span>US Market</span><strong id="us-status">Checking…</strong></div>
-      <p class="fine">Informational only. External market data can be delayed.</p>
+      <div class="market-box-head"><span>MARKET SNAPSHOT</span><em>LIVE / INDICATIVE</em></div>
+      <div class="signal-cards">
+        <article><small>BTC / GBP</small><strong id="btc">Loading…</strong><span id="btc-change">—</span></article>
+        <article><small>ETH / GBP</small><strong id="eth">Loading…</strong><span id="eth-change">—</span></article>
+        <article><small>US SESSION</small><strong id="us-status">Checking…</strong><span>NYSE / NASDAQ</span></article>
+      </div>
+      <div class="signal-mirrors" aria-label="Secondary market snapshot">
+        <span>BTC <b id="btc2">—</b></span>
+        <span>ETH <b id="eth2">—</b></span>
+      </div>
+      <a class="radar-launch" href="/slime786/market-radar.html">Open Market Radar →</a>
     </div>
     <div class="news-box" id="tech-feed">
-      <h3>Technology Pulse</h3>
+      <div class="market-box-head"><span>TECHNOLOGY PULSE</span><em>PUBLIC FEED</em></div>
       <div id="news">Loading the latest technology stories…</div>
     </div>
   </div>
-
-<div class="watchlist-box">
-  <div class="watchlist-head">
-    <div><p class="eyebrow">PERSONAL WATCHLIST</p><h3>Signals I like to watch.</h3></div>
-    <span class="live-badge"><i></i> LIVE / INDICATIVE</span>
-  </div>
-  <div class="watchlist-grid">
-    <div><small>BTC / GBP</small><strong id="watch-btc">—</strong><span id="watch-btc-change">—</span></div>
-    <div><small>ETH / GBP</small><strong id="watch-eth">—</strong><span id="watch-eth-change">—</span></div>
-    <div><small>US SESSION</small><strong id="watch-us">—</strong><span>NEW YORK</span></div>
-    <div><small>LONDON</small><strong id="watch-time">—</strong><span>LOCAL TIME</span></div>
-  </div>
-  <p class="fine">A lightweight personal dashboard for context, not financial advice. External data can be delayed or unavailable.</p>
-<a class="radar-launch" href="/slime786/market-radar.html">LAUNCH MARKET RADAR ↗</a>
-</div>
-
 </section>
-
 
 <section class="signal-alert-panel">
   <div class="signal-alert-kicker"><span class="ticker-live-dot"></span> IMPORTANT / HIGH SIGNAL</div>
@@ -358,7 +375,7 @@
   </div>
   <p class="weekly-disclaimer">The live reading list is automatically assembled from public technology stories and is not written or endorsed by Moheen. My authored notes remain separate below.</p>
 </section>
-<section id="ideas" class="section ideas-section">
+<section id="ideas" class="section ideas-section cinematic-section">
   <div class="section-title split-title">
     <div><p class="eyebrow">IDEAS / JOURNAL</p><h2>Notes on what<br>I’m thinking about.</h2></div>
     <p class="section-intro">Short-form thinking rather than formal essays — ideas, questions and themes worth revisiting.</p>
@@ -407,7 +424,7 @@
 </section>
 
 
-<section id="projects" class="section projects-section">
+<section id="projects" class="section projects-section cinematic-section">
   <div class="section-title split-title">
     <div><p class="eyebrow">PROJECTS / BUILT HERE</p><h2>Real experiments,<br>running on this site.</h2></div>
     <p class="section-intro">These are not placeholder client projects. They are working modules I have built into this portfolio and can keep developing in public.</p>
@@ -444,7 +461,7 @@
   </div>
 </section>
 
-<section id="game" class="section game-section arcade-section" aria-label="Moheen Arcade">
+<section id="game" class="section game-section arcade-section cinematic-section" aria-label="Moheen Arcade">
   <div class="section-head">
     <div class="section-title"><span class="eyebrow">MOHEEN // ARCADE</span><h2>SELECT<br>MISSION.</h2></div>
     <p>Short browser games built into the Command Centre. Progress and high scores stay on this device.</p>
@@ -557,7 +574,7 @@
   </div>
 </section>
 
-<section id="contact" class="section contact">
+<section id="contact" class="section contact cinematic-section">
   <div><p class="eyebrow">CONTACT</p><h2>Let's connect and build the future.</h2></div>
   <div class="contact-side">
     <a class="email" href="mailto:moheenmahmood@hotmail.co.uk">moheenmahmood@hotmail.co.uk</a>
