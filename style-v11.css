@@ -233,6 +233,19 @@ body.facelift-v11{
 .facelift-v11 .hero-live small{grid-column:2;margin-top:7px;color:#c9d4dd;font-size:11px}
 .facelift-v11 .hero-live em{grid-column:2;margin-top:4px;color:#668096;font:400 9px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;max-width:170px}
 
+/* Rendering performance
+   Defer below-the-fold layout/paint while reserving stable space. */
+.facelift-v11 .product-first,
+.facelift-v11 .repositories-section,
+.facelift-v11 .mission-section,
+.facelift-v11 .data-section,
+.facelift-v11 .cinematic-section,
+.facelift-v11 .game-section,
+.facelift-v11 .contact{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 720px;
+}
+
 /* Featured products */
 .facelift-v11 .product-first{
   padding:52px clamp(22px,4vw,58px) 64px;
