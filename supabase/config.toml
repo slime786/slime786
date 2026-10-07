@@ -1,0 +1,16 @@
+project_id = "slime786"
+
+[functions.collectables-create-order]
+verify_jwt = false
+
+[functions.collectables-capture-order]
+verify_jwt = false
+
+[functions.collectables-catalog]
+verify_jwt = false
+
+[functions.collectables-paypal-webhook]
+verify_jwt = false
+
+[functions.collectables-public-info]
+verify_jwt = false
