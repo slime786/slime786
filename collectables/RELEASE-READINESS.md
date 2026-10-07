@@ -51,7 +51,7 @@ This is the canonical live storefront checklist. The live code is in `slime786/s
 ## Cost gate
 Do not pay for extra commerce services, monitoring, premium hosting or other tooling while the store remains in demo mode. Real payment processing should only be enabled after real inventory, fulfilment and sandbox checkout are ready.
 
-_Last reviewed: 25 September 2026._
+_Last reviewed: 7 October 2026._
 
 
 ## Launch procedure
@@ -65,6 +65,23 @@ The exact sandbox, cutover and rollback sequence is documented in [LAUNCH-RUNBOO
 
 ## Final QA
 Use [QA-CHECKLIST.md](QA-CHECKLIST.md) for the final desktop, mobile, keyboard and checkout walkthrough.
+
+## 2026-10-07 live readiness snapshot
+
+Current production database state:
+- 0 catalogue products;
+- 0 active products;
+- 0 active stock units;
+- 0 orders;
+- 0 active reservations;
+- 0 PayPal webhook events.
+
+Public launch controls remain correctly closed in source:
+- `DEMO_MODE=true`;
+- browser `PAYPAL_CLIENT_ID` is empty;
+- storefront remains `noindex,follow`.
+
+Do not begin payment rehearsal or enable order/capture switches until verified real inventory is loaded and PayPal sandbox credentials are configured. The current blocker is operational readiness, not checkout architecture.
 
 ## 2026-10-04 hardening status
 
