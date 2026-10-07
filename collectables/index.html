@@ -6,8 +6,11 @@
   <meta name="description" content="Welcome to Slime's Collectables — a personal UK Yu-Gi-Oh! and Pokémon TCG collection shop.">
   <meta name="theme-color" content="#05090a">
   <title>Welcome — Slime's Collectables</title>
+  <link rel="canonical" href="https://slime786.github.io/slime786/collectables/">
+  <meta property="og:url" content="https://slime786.github.io/slime786/collectables/">
   <style>
     *{box-sizing:border-box}
+    .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
     html,body{margin:0;min-height:100%;background:#030608}
     body{min-height:100svh;overflow:hidden;font-family:Arial,Helvetica,sans-serif}
     .splash{
@@ -259,11 +262,15 @@
 </head>
 <body>
   <main class="splash" aria-label="Slime's Collectables welcome page">
+    <h1 class="visually-hidden">Slime's Collectables</h1>
     <div class="stage">
       <img
         class="hero"
         src="https://cdn.openart.ai/openart-uploads/production/attachment-transfers/bce857582ee01de064f104dc6627f4e91a41436e67b39724f3b2fdaa6ddb222d.png"
-        alt="Slime's Collectables welcome artwork featuring Yu-Gi-Oh! and Pokémon collections">
+        alt="Slime's Collectables welcome artwork featuring Yu-Gi-Oh! and Pokémon collections"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async">
 
       <div class="energy energy-left" aria-hidden="true"></div>
       <div class="energy energy-right" aria-hidden="true"></div>
