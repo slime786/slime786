@@ -64,9 +64,9 @@ When real inventory is added to collectables_products, it can automatically repl
 
 The currently applied Collectables database migrations are recorded under:
 
-- `supabase/migrations/20260922150418_collectables_secure_checkout_foundation.sql`
-- `supabase/migrations/20260922152210_collectables_catalog_and_cleanup.sql`
-- `supabase/migrations/20261004091955_collectables_checkout_hardening.sql`
+- `collectables/supabase/migrations/20260922150418_collectables_secure_checkout_foundation.sql`
+- `collectables/supabase/migrations/20260922152210_collectables_catalog_and_cleanup.sql`
+- `collectables/supabase/migrations/20261004091955_collectables_checkout_hardening.sql`
 
 These files were restored directly from the live Supabase migration ledger and are the schema/RPC recovery reference for the current checkout foundation. Real order and inventory data still lives in Supabase and must never be committed to Git.
 
@@ -77,7 +77,7 @@ See [DATA-RECOVERY.md](DATA-RECOVERY.md) and [RELEASE-READINESS.md](RELEASE-READ
 
 A rollback-safe database regression is stored at:
 
-`supabase/tests/order-flow-regression.sql`
+`collectables/supabase/tests/order-flow-regression.sql`
 
 It covers empty-cart rejection, single/sealed/free-shipping totals, one-copy oversell protection, cancellation release, reservation expiry, capture amount mismatch safety, hardened capture-state transitions, successful stock deduction, catalog available-stock calculation, idempotent finalisation and mismatched replay rejection.
 
@@ -88,13 +88,13 @@ The test uses synthetic products inside a transaction and ends with `rollback`, 
 
 The deployed Collectables Edge Function source is versioned in Git:
 
-- `supabase/functions/collectables-create-order/index.ts`
-- `supabase/functions/collectables-capture-order/index.ts`
-- `supabase/functions/collectables-catalog/index.ts`
-- `supabase/functions/collectables-paypal-webhook/index.ts`
-- `supabase/functions/collectables-public-info/index.ts`
+- `collectables/supabase/functions/collectables-create-order/index.ts`
+- `collectables/supabase/functions/collectables-capture-order/index.ts`
+- `collectables/supabase/functions/collectables-catalog/index.ts`
+- `collectables/supabase/functions/collectables-paypal-webhook/index.ts`
+- `collectables/supabase/functions/collectables-public-info/index.ts`
 
-Per-function authentication settings are recorded in `supabase/config.toml`. These five endpoints intentionally use `verify_jwt=false` because they are public browser/webhook endpoints with their own origin, signature, launch-gate and server-side authorization controls.
+Per-function authentication settings are recorded in `collectables/supabase/config.toml`. These five endpoints intentionally use `verify_jwt=false` because they are public browser/webhook endpoints with their own origin, signature, launch-gate and server-side authorization controls.
 
 Deployment status verified 7 October 2026:
 - `collectables-create-order`: live version 4 matches Git exactly.
@@ -141,6 +141,3 @@ Source:
 - `supabase/functions/slime-admin-mobile/index.ts`
 - `supabase/migrations/20261007214800_harden_slime_admin_authorization.sql`
 
-### Recovery alignment note
-
-During the 7 October 2026 security review, the Collectables Supabase paths documented above were not present on the repository's `main` branch even though this document described them as source-controlled. Treat live Supabase as ahead of Git for those missing artifacts until the deployed Collectables functions and migrations are reconciled back into source control and re-verified.
