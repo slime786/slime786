@@ -3,6 +3,9 @@ import vm from "node:vm";
 
 const app = fs.readFileSync("collectables/app.js", "utf8");
 const shop = fs.readFileSync("collectables/shop.html", "utf8");
+const splash = fs.readFileSync("collectables/index.html", "utf8");
+const designSystem = fs.readFileSync("collectables/design-system.css", "utf8");
+const splashSystem = fs.readFileSync("collectables/splash-system.css", "utf8");
 const migration = fs.readFileSync("collectables/supabase/migrations/20261004091955_collectables_checkout_hardening.sql", "utf8");
 const regression = fs.readFileSync("collectables/supabase/tests/order-flow-regression.sql", "utf8");
 const failures = [];
@@ -90,6 +93,30 @@ if(!fs.existsSync("collectables/business-info.js")) {
 }
 if(!fs.existsSync("collectables/cancellation-form.html")) {
   fail("model cancellation form is missing");
+}
+if(!shop.includes('design-system.css?v=20261008-1')) {
+  fail("shop must load the versioned storefront design system");
+}
+if(!splash.includes('splash-system.css?v=20261008-1')) {
+  fail("splash must load the versioned splash design system");
+}
+for (const marker of [
+  "--sc-green:",
+  "--sc-surface-1:",
+  "--sc-radius-lg:",
+  "--sc-ease:",
+  ".product-card",
+  ".cart-drawer",
+  ".policy-page"
+]) {
+  if(!designSystem.includes(marker)) fail(`design system missing contract marker: ${marker}`);
+}
+for (const marker of [
+  "--splash-green:",
+  ".enter-hotspot",
+  "@media(prefers-reduced-motion:reduce)"
+]) {
+  if(!splashSystem.includes(marker)) fail(`splash design system missing contract marker: ${marker}`);
 }
 
 const edgeFunctionPaths = [
