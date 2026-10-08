@@ -16,6 +16,7 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
+      - run: node scripts/sync-portfolio.mjs --check
       - run: node tests/portfolio-smoke.mjs
       - run: node tests/collectables-smoke.mjs
 
