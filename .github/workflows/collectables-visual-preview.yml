@@ -1,0 +1,56 @@
+name: Collectables visual preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - chatgpt/collectables-design-system-v2
+    paths:
+      - "collectables/**"
+      - ".github/workflows/collectables-visual-preview.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Start static preview
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 > /tmp/collectables-preview.log 2>&1 &
+          echo $! > /tmp/collectables-preview.pid
+          sleep 2
+          curl --fail http://127.0.0.1:8080/collectables/shop.html >/dev/null
+
+      - name: Install browser
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+
+      - name: Render storefront screenshots
+        run: |
+          mkdir -p visual-preview
+
+          npx --yes playwright@1.55.0 screenshot             --browser chromium             --viewport-size "1440,1000"             --wait-for-timeout 7000             http://127.0.0.1:8080/collectables/shop.html             visual-preview/shop-desktop.png
+
+          npx --yes playwright@1.55.0 screenshot             --browser chromium             --viewport-size "1024,1366"             --wait-for-timeout 7000             http://127.0.0.1:8080/collectables/shop.html             visual-preview/shop-tablet.png
+
+          npx --yes playwright@1.55.0 screenshot             --browser chromium             --viewport-size "390,844"             --wait-for-timeout 7000             http://127.0.0.1:8080/collectables/shop.html             visual-preview/shop-mobile.png
+
+          npx --yes playwright@1.55.0 screenshot             --browser chromium             --viewport-size "1440,900"             --wait-for-timeout 5000             http://127.0.0.1:8080/collectables/             visual-preview/splash-desktop.png
+
+          npx --yes playwright@1.55.0 screenshot             --browser chromium             --viewport-size "390,844"             --wait-for-timeout 5000             http://127.0.0.1:8080/collectables/             visual-preview/splash-mobile.png
+
+      - name: Upload visual preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: collectables-design-system-preview
+          path: visual-preview/*.png
+          if-no-files-found: error
+          retention-days: 14
