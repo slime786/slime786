@@ -4,7 +4,7 @@ import path from "node:path";
 const root = process.cwd();
 const splash = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const portfolio = fs.readFileSync(path.join(root, "portfolio.html"), "utf8");
-const metrics = fs.readFileSync(path.join(root, "portfolio-metrics.js"), "utf8");
+const manifest = JSON.parse(fs.readFileSync(path.join(root, "data/portfolio.json"), "utf8"));
 const baseCss = fs.readFileSync(path.join(root, "style.css"), "utf8");
 const v11Css = fs.readFileSync(path.join(root, "style-v11.css"), "utf8");
 const missing = [];
@@ -76,8 +76,8 @@ if (!splash.includes('data-portfolio-metric="repositories"')) {
 if (!portfolio.includes('data-portfolio-metric="repositories"')) {
   missing.push("portfolio canonical repository metric hook");
 }
-if (!metrics.includes("repositories: 17")) {
-  missing.push("canonical repository metric value");
+if (!Number.isInteger(manifest.summary.repositoryCount) || manifest.summary.repositoryCount < manifest.repositories.length) {
+  missing.push("canonical repository count");
 }
 if (!portfolio.includes('<link rel="canonical" href="https://slime786.github.io/slime786/portfolio.html">')) {
   missing.push("portfolio self-canonical");

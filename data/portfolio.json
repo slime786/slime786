@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-08",
+  "summary": {
+    "repositoryCount": 17,
+    "newBuilds": 5
+  },
+  "repositories": [
+    {
+      "id": "slime786",
+      "name": "slime786",
+      "index": {
+        "purpose": "Public portfolio + live Collectables storefront",
+        "status": "Active"
+      },
+      "map": {
+        "icon": "S7",
+        "status": "PUBLIC HUB",
+        "description": "Portfolio + live Collectables storefront",
+        "tone": "public"
+      }
+    },
+    {
+      "id": "guard-mvp",
+      "name": "guard-mvp",
+      "index": {
+        "purpose": "Consumer financial admin MVP",
+        "status": "Active"
+      },
+      "map": {
+        "icon": "G",
+        "status": "ACTIVE MVP",
+        "description": "Consumer financial admin"
+      }
+    },
+    {
+      "id": "handoff",
+      "name": "handoff",
+      "index": {
+        "purpose": "Device-to-device file transfer",
+        "status": "Active beta"
+      },
+      "map": {
+        "icon": "H",
+        "status": "PRIVATE BETA",
+        "description": "Device-to-device transfer"
+      }
+    },
+    {
+      "id": "context-lease-mcp",
+      "name": "context-lease-mcp",
+      "index": {
+        "purpose": "Purpose-bound context for AI",
+        "status": "Local MVP"
+      },
+      "map": {
+        "icon": "CL",
+        "status": "LOCAL MVP",
+        "description": "Purpose-bound context for AI"
+      }
+    },
+    {
+      "id": "Claim-Window",
+      "name": "Claim-Window",
+      "index": {
+        "purpose": "Purchase deadline tracking",
+        "status": "Local MVP"
+      },
+      "map": {
+        "icon": "CW",
+        "status": "LOCAL MVP",
+        "description": "Purchase deadline tracking",
+        "state": "mvp"
+      }
+    },
+    {
+      "id": "WRECKSTORM",
+      "name": "WRECKSTORM",
+      "index": {
+        "purpose": "Godot armored-vehicle roguelite",
+        "status": "Vertical slice"
+      },
+      "map": {
+        "icon": "W",
+        "status": "VERTICAL SLICE",
+        "description": "Armored roguelite",
+        "state": "private"
+      }
+    },
+    {
+      "id": "Multi-Agent-Vertical-Agent-OS",
+      "name": "Multi-Agent OS",
+      "index": {
+        "purpose": "Vertical agent orchestration",
+        "status": "Early"
+      },
+      "map": {
+        "icon": "AI",
+        "status": "EARLY",
+        "description": "Vertical agent orchestration",
+        "state": "private"
+      }
+    },
+    {
+      "id": "website-business",
+      "name": "website-business",
+      "index": {
+        "purpose": "LocalLaunch Studio",
+        "status": "Pre-launch"
+      },
+      "map": {
+        "icon": "LL",
+        "status": "PRE-LAUNCH",
+        "description": "LocalLaunch Studio",
+        "state": "mvp"
+      }
+    },
+    {
+      "id": "why-app",
+      "name": "why-app",
+      "index": {
+        "purpose": "Intent-first capture app",
+        "status": "Active MVP"
+      }
+    },
+    {
+      "id": "rewind-app",
+      "name": "rewind-app",
+      "index": {
+        "purpose": "Reversible-decision tracker",
+        "status": "Prototype"
+      }
+    },
+    {
+      "id": "life-admin-autopilot",
+      "name": "life-admin-autopilot",
+      "index": {
+        "purpose": "Personal admin command centre",
+        "status": "Maintained prototype"
+      }
+    },
+    {
+      "id": "mofries-business",
+      "name": "mofries-business",
+      "index": {
+        "purpose": "Mo'Fries business, brand and storefront",
+        "status": "Private venture"
+      }
+    },
+    {
+      "id": "slimes-collectables",
+      "name": "slimes-collectables",
+      "index": {
+        "purpose": "Standalone Collectables backup/history",
+        "status": "Secondary"
+      }
+    },
+    {
+      "id": "decision-coin",
+      "name": "decision-coin",
+      "index": {
+        "purpose": "Small decision-tool idea",
+        "status": "Paused"
+      }
+    }
+  ],
+  "featuredProducts": [
+    {
+      "id": "guard",
+      "name": "GUARD",
+      "repository": "guard-mvp",
+      "status": "ACTIVE",
+      "tone": "active",
+      "art": "guard",
+      "description": "Consumer financial admin that surfaces overlooked opportunities and turns findings into clear next actions.",
+      "href": "#case-guard",
+      "cta": "Explore",
+      "primary": true
+    },
+    {
+      "id": "handoff",
+      "name": "Handoff",
+      "repository": "handoff",
+      "status": "ACTIVE",
+      "tone": "active",
+      "art": "handoff",
+      "description": "Private device-to-device transfer with explicit approval, integrity checks and a native Android track.",
+      "href": "#case-handoff",
+      "cta": "Explore"
+    },
+    {
+      "id": "context",
+      "name": "Context Lease",
+      "repository": "context-lease-mcp",
+      "status": "ACTIVE",
+      "tone": "active",
+      "art": "context",
+      "description": "Purpose-bound context for ChatGPT that expires, can be revoked, and leaves recall receipts instead of becoming indefinite memory.",
+      "href": "#repositories",
+      "cta": "Private build"
+    },
+    {
+      "id": "claim",
+      "name": "Claim Window",
+      "repository": "Claim-Window",
+      "status": "MVP",
+      "tone": "mvp",
+      "art": "claim",
+      "description": "Tracks returns, trials, warranties, rebates and price-match deadlines while keeping confirmed dates separate from inference.",
+      "href": "#repositories",
+      "cta": "Private build"
+    },
+    {
+      "id": "wreck",
+      "name": "WRECKSTORM",
+      "repository": "WRECKSTORM",
+      "status": "PRIVATE BUILD",
+      "tone": "private",
+      "art": "wreck",
+      "description": "A Godot armored-vehicle action roguelite built around short runs, scrap, escalating rig upgrades and boss encounters.",
+      "href": "#repositories",
+      "cta": "Private build"
+    },
+    {
+      "id": "collectables",
+      "name": "Slime's Collectables",
+      "repository": "slime786",
+      "status": "BETA",
+      "tone": "beta",
+      "art": "shop",
+      "description": "Personal Pokémon and Yu-Gi-Oh! collection storefront with a hardened PayPal-ready checkout path.",
+      "href": "/slime786/collectables/",
+      "cta": "Visit shop",
+      "shop": true
+    }
+  ]
+}
