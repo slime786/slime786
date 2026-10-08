@@ -64,22 +64,23 @@ body{
 .particle{opacity:.34}
 
 .enter-hotspot{
-  top:74.4%;
-  width:clamp(138px,16.5%,190px);
-  height:clamp(40px,7%,50px);
+  top:74.25%;
+  width:clamp(210px,16.2%,250px);
+  height:clamp(52px,7.6%,64px);
   display:flex;
   align-items:center;
   justify-content:center;
-  border:1px solid rgba(158,255,130,.58);
-  border-radius:999px;
+  border:1px solid rgba(164,255,139,.72);
+  border-radius:16px;
   background:
-    linear-gradient(180deg,rgba(142,255,101,.98),rgba(81,229,62,.98));
+    linear-gradient(180deg,#89ff61 0%,#62ed49 58%,#48d936 100%);
   color:#041205;
   box-shadow:
-    0 10px 30px rgba(0,0,0,.34),
-    0 0 22px rgba(92,255,74,.13);
+    0 8px 22px rgba(0,0,0,.26),
+    0 0 18px rgba(91,255,77,.12),
+    inset 0 1px 0 rgba(255,255,255,.32);
   font-family:Arial,Helvetica,sans-serif;
-  font-size:clamp(.67rem,.72vw,.82rem);
+  font-size:clamp(.7rem,.78vw,.86rem);
   font-weight:900;
   letter-spacing:.08em;
   line-height:1;
@@ -114,22 +115,11 @@ body{
     0 12px 34px rgba(0,0,0,.38);
 }
 
-/* The approved splash artwork contains an older green CTA baked into the image.
-   Cover the full baked-in CTA footprint with an opaque dark patch so only the
-   real accessible button is visible. */
+/* The source artwork already contains a green CTA. The real accessible link
+   covers that CTA directly; no dark mask is used so the surrounding artwork
+   remains untouched. */
 .artifact-mask{
-  top:74.4%;
-  width:clamp(280px,24%,360px);
-  height:clamp(72px,10.5%,92px);
-  transform:translate(-50%,-50%);
-  border-radius:26px;
-  background:
-    radial-gradient(circle at 50% 38%,rgba(5,16,18,.99) 0%,rgba(4,13,15,.995) 54%,rgba(3,10,12,1) 100%);
-  box-shadow:
-    0 0 0 18px rgba(3,9,11,.88),
-    0 0 32px 22px rgba(3,9,11,.72);
-  filter:none;
-  opacity:1;
+  display:none;
 }
 
 @media(max-aspect-ratio:4/3){
@@ -177,17 +167,12 @@ body{
     object-fit:cover;
     object-position:center 48%;
   }
-  .artifact-mask{
-    top:75.2%;
-    width:clamp(240px,58%,360px);
-    height:clamp(68px,13%,92px);
-    border-radius:24px;
-  }
   .enter-hotspot{
-    top:73.1%;
-    width:clamp(132px,34vw,164px);
-    height:clamp(38px,10vw,44px);
-    font-size:clamp(.66rem,2.45vw,.8rem);
+    top:75.2%;
+    width:clamp(190px,48vw,230px);
+    height:clamp(48px,12vw,58px);
+    border-radius:14px;
+    font-size:clamp(.68rem,2.6vw,.82rem);
   }
 }
 
@@ -245,6 +230,7 @@ body{
 @media(max-width:480px){
   .enter-hotspot{
     top:76%;
-    min-width:132px;
+    width:clamp(180px,52vw,220px);
+    min-width:180px;
   }
 }
