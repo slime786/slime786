@@ -88,6 +88,13 @@ if (!splash.includes('<link rel="canonical" href="https://slime786.github.io/sli
 if (!splash.includes('/slime786/style-v11.css?v=1') || !portfolio.includes('/slime786/style-v11.css?v=1')) {
   missing.push("V11 theme stylesheet wiring");
 }
+const secondaryCss = fs.readFileSync(path.join(root, "style-secondary.css"), "utf8");
+if (baseCss.includes("Shared cinematic treatment for secondary pages")) missing.push("secondary cinematic layer leaked into base");
+if (!secondaryCss.includes("Shared cinematic treatment for secondary pages")) missing.push("secondary cinematic layer missing");
+for (const file of ["journal.html", "market-radar.html", "arcade.html"]) {
+  const html = fs.readFileSync(path.join(root, file), "utf8");
+  if (!html.includes('/slime786/style-secondary.css?v=1')) missing.push(`${file}: secondary theme stylesheet wiring`);
+}
 if (baseCss.includes("CURRENT THEME BOUNDARY — V11")) {
   missing.push("V11 theme leaked back into base stylesheet");
 }
