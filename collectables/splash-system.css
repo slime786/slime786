@@ -114,13 +114,23 @@ body{
     0 12px 34px rgba(0,0,0,.38);
 }
 
-/* Existing artwork contains a CTA artefact at the bottom. Keep the mask subtle
-   so the real accessible button remains visually dominant. */
+/* The approved splash artwork contains an older green CTA baked into the image.
+   Cover that artwork CTA completely so only the real accessible button remains. */
 .artifact-mask{
-  top:77.3%;
-  width:20%;
-  height:4.1%;
-  opacity:.9;
+  top:74.4%;
+  width:clamp(230px,21.5%,320px);
+  height:clamp(62px,9%,84px);
+  transform:translate(-50%,-50%);
+  border-radius:999px;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(3,10,12,1) 0%,
+      rgba(3,10,12,.995) 66%,
+      rgba(3,10,12,.96) 78%,
+      rgba(3,10,12,.70) 88%,
+      rgba(3,10,12,0) 100%);
+  filter:blur(.8px);
+  opacity:1;
 }
 
 @media(max-aspect-ratio:4/3){
@@ -169,9 +179,9 @@ body{
     object-position:center 48%;
   }
   .artifact-mask{
-    top:68.8%;
-    width:43%;
-    height:13.6%;
+    top:75.2%;
+    width:clamp(220px,46%,330px);
+    height:clamp(58px,11%,78px);
   }
   .enter-hotspot{
     top:73.1%;
