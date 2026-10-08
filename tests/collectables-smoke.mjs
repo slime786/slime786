@@ -97,7 +97,7 @@ if(!fs.existsSync("collectables/cancellation-form.html")) {
 if(!shop.includes('design-system.css?v=20261008-2')) {
   fail("shop must load the versioned storefront design system");
 }
-if(!splash.includes('splash-system.css?v=20261008-7')) {
+if(!splash.includes('splash-system.css?v=20261008-8')) {
   fail("splash must load the versioned splash design system");
 }
 for (const marker of [
@@ -111,6 +111,7 @@ for (const marker of [
 ]) {
   if(!designSystem.includes(marker)) fail(`design system missing contract marker: ${marker}`);
 }
+if(!splash.includes('class="splash-trust-line"')) fail("splash trust line missing");
 for (const marker of [
   "--splash-green:",
   ".enter-hotspot",
