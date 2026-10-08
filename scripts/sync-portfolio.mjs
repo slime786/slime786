@@ -48,7 +48,7 @@ function generate(d, files){
   ].join("\n");
   const metric=(html,label)=>{
     let count=0;
-    const next=html.replace(/(<strong data-portfolio-metric="(repositories|newBuilds)">)[^<]*(<\/strong>)/g,(_all,a,key,b)=>{
+    const next=html.replace(/(<(strong|span) data-portfolio-metric="(repositories|newBuilds)">)[^<]*(<\/\2>)/g,(_all,a,tag,key,b)=>{
       count++;return a+(key==="repositories"?d.summary.repositoryCount:d.summary.newBuilds)+b;
     });
     assert((label==="index.html"&&count===2)||(label==="portfolio.html"&&count===3),label+" must expose all metric hooks");
