@@ -155,10 +155,18 @@ body{
     padding:max(.5rem,env(safe-area-inset-top)) .5rem max(.75rem,env(safe-area-inset-bottom));
   }
   .stage{
-    width:min(114vw,760px);
+    width:calc(100vw - 1rem);
+    height:min(62svh,560px);
+    aspect-ratio:auto;
     max-height:none;
     border-radius:20px;
-    margin-top:-2.3svh;
+    margin-top:0;
+  }
+  .hero{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
   }
   .artifact-mask{
     top:68.8%;
