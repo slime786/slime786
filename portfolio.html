@@ -93,8 +93,8 @@
     <span>— SLIME786</span>
   </aside>
   <div class="hero-stats" aria-label="Portfolio summary">
-    <div><strong>16</strong><span>Repositories</span></div>
-    <div><strong>5</strong><span>New builds</span></div>
+    <div><strong data-portfolio-metric="repositories">17</strong><span>Repositories</span></div>
+    <div><strong data-portfolio-metric="newBuilds">5</strong><span>New builds</span></div>
     <div><strong>∞</strong><span>Ideas</span></div>
     <div class="hero-live"><span class="live-dot"></span><strong>LIVE</strong><small id="clock">--:--:--</small><em id="date">Loading…</em></div>
   </div>
@@ -106,18 +106,21 @@
     <a class="section-link" href="#repositories">View all repositories →</a>
   </div>
   <div class="product-first-grid">
+<!-- portfolio:featured-products:start -->
     <article class="product-card product-primary"><div class="product-card-top"><span class="status-chip active">ACTIVE</span><span class="product-code">01</span></div><div class="product-art art-guard" aria-hidden="true"><i></i></div><h3>GUARD</h3><p>Consumer financial admin that surfaces overlooked opportunities and turns findings into clear next actions.</p><a href="#case-guard">Explore <span>→</span></a></article>
     <article class="product-card"><div class="product-card-top"><span class="status-chip active">ACTIVE</span><span class="product-code">02</span></div><div class="product-art art-handoff" aria-hidden="true"><i></i></div><h3>Handoff</h3><p>Private device-to-device transfer with explicit approval, integrity checks and a native Android track.</p><a href="#case-handoff">Explore <span>→</span></a></article>
     <article class="product-card"><div class="product-card-top"><span class="status-chip active">ACTIVE</span><span class="product-code">03</span></div><div class="product-art art-context" aria-hidden="true"><i></i></div><h3>Context Lease</h3><p>Purpose-bound context for ChatGPT that expires, can be revoked, and leaves recall receipts instead of becoming indefinite memory.</p><a href="#repositories">Private build <span>→</span></a></article>
     <article class="product-card"><div class="product-card-top"><span class="status-chip mvp">MVP</span><span class="product-code">04</span></div><div class="product-art art-claim" aria-hidden="true"><i></i></div><h3>Claim Window</h3><p>Tracks returns, trials, warranties, rebates and price-match deadlines while keeping confirmed dates separate from inference.</p><a href="#repositories">Private build <span>→</span></a></article>
     <article class="product-card"><div class="product-card-top"><span class="status-chip private">PRIVATE BUILD</span><span class="product-code">05</span></div><div class="product-art art-wreck" aria-hidden="true"><i></i></div><h3>WRECKSTORM</h3><p>A Godot armored-vehicle action roguelite built around short runs, scrap, escalating rig upgrades and boss encounters.</p><a href="#repositories">Private build <span>→</span></a></article>
-    <article class="product-card product-shop"><div class="product-card-top"><span class="status-chip beta">BETA</span><span class="product-code">06</span></div><div class="product-art art-shop" aria-hidden="true"><i></i></div><h3>Slime's Collectables</h3><p>Personal Pokémon and Yu-Gi-Oh! collection storefront with a hardened PayPal-ready checkout path.</p><a href="/slime786/collectables/">Visit shop <span>→</span></a></article>
+    <article class="product-card product-shop"><div class="product-card-top"><span class="status-chip beta">BETA</span><span class="product-code">06</span></div><div class="product-art art-shop" aria-hidden="true"><i></i></div><h3>Slime&#39;s Collectables</h3><p>Personal Pokémon and Yu-Gi-Oh! collection storefront with a hardened PayPal-ready checkout path.</p><a href="/slime786/collectables/">Visit shop <span>→</span></a></article>
+<!-- portfolio:featured-products:end -->
   </div>
 </section>
 
 <section class="section repositories-section" id="repositories" aria-labelledby="repositories-title">
   <div class="section-title split-title"><div><p class="eyebrow">REPOSITORY MAP <span class="slash">/</span></p><h2 id="repositories-title"><span data-portfolio-metric="repositories">—</span> repositories.<br>One working portfolio.</h2></div><p class="section-intro">The public hub stays here. Product code lives in dedicated repositories, with local-only and pre-launch work kept private until it is ready to ship.</p></div>
   <div class="repo-grid">
+<!-- portfolio:featured-repositories:start -->
     <article class="repo-card public"><div class="repo-icon">S7</div><div><span>PUBLIC HUB</span><h3>slime786</h3><p>Portfolio + live Collectables storefront</p></div><i class="repo-state"></i></article>
     <article class="repo-card"><div class="repo-icon">G</div><div><span>ACTIVE MVP</span><h3>guard-mvp</h3><p>Consumer financial admin</p></div><i class="repo-state"></i></article>
     <article class="repo-card"><div class="repo-icon">H</div><div><span>PRIVATE BETA</span><h3>handoff</h3><p>Device-to-device transfer</p></div><i class="repo-state"></i></article>
@@ -126,7 +129,7 @@
     <article class="repo-card"><div class="repo-icon">W</div><div><span>VERTICAL SLICE</span><h3>WRECKSTORM</h3><p>Armored roguelite</p></div><i class="repo-state private"></i></article>
     <article class="repo-card"><div class="repo-icon">AI</div><div><span>EARLY</span><h3>Multi-Agent OS</h3><p>Vertical agent orchestration</p></div><i class="repo-state private"></i></article>
     <article class="repo-card"><div class="repo-icon">LL</div><div><span>PRE-LAUNCH</span><h3>website-business</h3><p>LocalLaunch Studio</p></div><i class="repo-state mvp"></i></article>
-  </div>
+<!-- portfolio:featured-repositories:end -->
   <div class="portfolio-links"><a href="https://github.com/slime786" target="_blank" rel="noopener">Public GitHub ↗</a><a href="https://github.com/slime786/slime786/blob/main/REPOSITORIES.md" target="_blank" rel="noopener">Repository index ↗</a></div>
 </section>
 
@@ -549,7 +552,6 @@
 </main>
 
 <footer><span>© 2026 Moheen Mahmood</span><span>London, UK</span><a href="#top">Back to top ↑</a></footer>
-<script src="/slime786/portfolio-metrics.js" defer></script>
 <script src="/slime786/script.js"></script>
 
 <div class="command-palette" id="command-palette" aria-hidden="true">
