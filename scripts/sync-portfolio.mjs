@@ -51,7 +51,7 @@ function generate(d, files){
     const next=html.replace(/(<strong data-portfolio-metric="(repositories|newBuilds)">)[^<]*(<\/strong>)/g,(_all,a,key,b)=>{
       count++;return a+(key==="repositories"?d.summary.repositoryCount:d.summary.newBuilds)+b;
     });
-    assert(count===2,label+" must expose both metric hooks");
+    assert((label==="index.html"&&count===2)||(label==="portfolio.html"&&count===3),label+" must expose all metric hooks");
     return next;
   };
   const output={...files};
