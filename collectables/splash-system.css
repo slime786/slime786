@@ -214,11 +214,64 @@ body{
 }
 
 
-/* CTA cleanup v2.2 — the artwork supplies the visible button. */
-.enter-hotspot::before,
-.enter-hotspot::after{content:none!important}
+/* CTA hover polish v2.3 — preserve the baked artwork button and enhance it on hover. */
 .enter-hotspot{
   background:transparent!important;
   color:transparent!important;
   border-color:transparent!important;
+  overflow:hidden;
+  transition:
+    box-shadow 180ms var(--splash-ease),
+    backdrop-filter 180ms ease,
+    -webkit-backdrop-filter 180ms ease;
+}
+.enter-hotspot::before{
+  content:""!important;
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:0;
+  background:
+    linear-gradient(110deg,
+      transparent 18%,
+      rgba(255,255,255,.06) 34%,
+      rgba(255,255,255,.42) 48%,
+      rgba(255,255,255,.10) 61%,
+      transparent 78%);
+  transform:translateX(-130%);
+}
+.enter-hotspot::after{
+  content:""!important;
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:0;
+  box-shadow:
+    inset 0 0 0 1px rgba(220,255,211,.38),
+    0 0 0 1px rgba(121,255,83,.16);
+  transition:opacity 180ms ease;
+}
+.enter-hotspot:hover{
+  backdrop-filter:brightness(1.10) saturate(1.08);
+  -webkit-backdrop-filter:brightness(1.10) saturate(1.08);
+  box-shadow:
+    0 0 0 1px rgba(154,255,126,.24),
+    0 0 18px rgba(89,255,69,.22),
+    0 8px 24px rgba(0,0,0,.14);
+}
+.enter-hotspot:hover::before{
+  opacity:1;
+  animation:splashCtaSweep 620ms var(--splash-ease) both;
+}
+.enter-hotspot:hover::after{
+  opacity:1;
+}
+@keyframes splashCtaSweep{
+  from{transform:translateX(-130%)}
+  to{transform:translateX(130%)}
+}
+@media(prefers-reduced-motion:reduce){
+  .enter-hotspot:hover::before{animation:none;opacity:.14;transform:none}
 }
