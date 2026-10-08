@@ -97,7 +97,7 @@ if(!fs.existsSync("collectables/cancellation-form.html")) {
 if(!shop.includes('design-system.css?v=20261008-2')) {
   fail("shop must load the versioned storefront design system");
 }
-if(!splash.includes('splash-system.css?v=20261008-4')) {
+if(!splash.includes('splash-system.css?v=20261008-5')) {
   fail("splash must load the versioned splash design system");
 }
 for (const marker of [
