@@ -644,16 +644,26 @@ textarea:focus-visible{
 
   .hero-showcase{
     width:100%;
-    grid-template-columns:1fr;
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:
+      "center center"
+      "ygo pokemon";
     min-height:auto;
-    padding:1rem 1rem 1.7rem;
+    padding:1rem 1rem 1.35rem;
+    gap:.1rem .45rem;
     border-inline:0;
   }
-  .hero-center{order:1}
-  .hero-card-cluster-ygo{order:2}
-  .hero-card-cluster-pokemon{order:3}
+  .hero-center{grid-area:center}
+  .hero-card-cluster-ygo{grid-area:ygo}
+  .hero-card-cluster-pokemon{grid-area:pokemon}
   .hero-card-cluster{
-    display:none;
+    display:block;
+    min-height:clamp(150px,28vw,220px);
+  }
+  .hero-tcg-card{
+    width:min(46%,110px);
+    max-height:180px;
+    border-radius:7px;
   }
   .hero-main-logo{max-width:min(300px,78vw)}
   .hero-center h1{
