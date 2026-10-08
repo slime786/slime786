@@ -156,7 +156,7 @@ body{
   }
   .stage{
     width:calc(100vw - 1rem);
-    height:min(62svh,560px);
+    height:min(72svh,640px);
     aspect-ratio:auto;
     max-height:none;
     border-radius:20px;
@@ -166,7 +166,7 @@ body{
     width:100%;
     height:100%;
     object-fit:cover;
-    object-position:center center;
+    object-position:center 48%;
   }
   .artifact-mask{
     top:68.8%;
@@ -183,7 +183,8 @@ body{
 
 @media(max-width:480px){
   .stage{
-    width:116vw;
+    width:calc(100vw - .75rem);
+    height:min(74svh,630px);
     border-radius:18px;
   }
   .energy{opacity:.08}
@@ -197,5 +198,43 @@ body{
   }
   .enter-hotspot:hover{
     transform:translate(-50%,-50%);
+  }
+}
+
+
+/* Final splash polish v2.1 */
+.stage{
+  transition:box-shadow 220ms var(--splash-ease),border-color 220ms ease;
+}
+.enter-hotspot{
+  min-width:138px;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.enter-hotspot::after{
+  letter-spacing:.07em;
+}
+@media(hover:hover) and (pointer:fine){
+  .stage:hover{
+    border-color:rgba(129,255,89,.18);
+    box-shadow:
+      0 34px 110px rgba(0,0,0,.54),
+      0 0 0 1px rgba(255,255,255,.025) inset;
+  }
+}
+@media(max-aspect-ratio:4/3){
+  .stage{
+    box-shadow:
+      0 26px 80px rgba(0,0,0,.52),
+      0 0 0 1px rgba(255,255,255,.02) inset;
+  }
+  .enter-hotspot{
+    top:75.2%;
+  }
+}
+@media(max-width:480px){
+  .enter-hotspot{
+    top:76%;
+    min-width:132px;
   }
 }
