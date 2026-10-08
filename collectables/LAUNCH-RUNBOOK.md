@@ -10,6 +10,14 @@ This is the exact cutover and rollback sequence for moving the public shop from 
 - While `DEMO_MODE = true`, PayPal sandbox checkout is allowed only on `localhost` / `127.0.0.1`. GitHub Pages stays locked.
 - Use verified real stock only. Never test against valuable one-off inventory when a synthetic test product will do.
 
+## Read-only preflight (does not accept payments)
+
+Run `node collectables/sandbox-preflight.mjs` to verify that the public browser remains in demo/sandbox mode and cannot unintentionally launch checkout. A passing script is **not** evidence that inventory, PayPal secrets, seller details, or server-side order/capture switches are ready.
+
+Current observed blockers (8 October 2026): zero catalogue rows/stock in the connected production database, empty public PayPal Client ID, and no confirmed sandbox end-to-end rehearsal. Keep production orders disabled.
+
+Before testing payment flows, independently verify the actual inventory rows, server-side PayPal sandbox credentials, PayPal sandbox buyer/seller accounts, webhook configuration, and confirmation email configuration. Never put secret values in a ticket, commit, or test output.
+
 ## Phase 1 — Real inventory preparation
 
 1. Export/collect the items that are actually for sale.
