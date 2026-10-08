@@ -275,3 +275,140 @@ body{
 @media(prefers-reduced-motion:reduce){
   .enter-hotspot:hover::before{animation:none;opacity:.14;transform:none}
 }
+
+/* Splash CTA v2.4 — one visual CTA, consistent with storefront interactions. */
+.enter-hotspot{
+  z-index:10!important;
+  top:74.1%!important;
+  width:18.8%!important;
+  min-width:210px!important;
+  max-width:270px!important;
+  height:8.25%!important;
+  min-height:52px!important;
+  max-height:66px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:18px!important;
+  background:linear-gradient(180deg,#8cff68 0%,#62ef4d 58%,#47d936 100%)!important;
+  color:#041205!important;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.24),
+    0 0 20px rgba(91,255,77,.14),
+    inset 0 1px 0 rgba(255,255,255,.28)!important;
+  font-family:Arial,Helvetica,sans-serif!important;
+  font-size:clamp(.72rem,.78vw,.88rem)!important;
+  font-weight:900!important;
+  letter-spacing:.075em!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+  transform:translate(-50%,-50%) scale(1)!important;
+  transition:
+    transform 180ms var(--splash-ease),
+    filter 180ms ease,
+    box-shadow 180ms ease!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.enter-hotspot span{
+  position:relative;
+  z-index:2;
+  color:inherit;
+  pointer-events:none;
+}
+.enter-hotspot::before,
+.enter-hotspot::after{content:none!important}
+.enter-hotspot:hover{
+  transform:translate(-50%,-50%) scale(1.055)!important;
+  filter:brightness(1.075) saturate(1.04)!important;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.28),
+    0 0 28px rgba(91,255,77,.24),
+    inset 0 1px 0 rgba(255,255,255,.32)!important;
+}
+.enter-hotspot:active{
+  transform:translate(-50%,-50%) scale(1.025)!important;
+}
+.enter-hotspot:focus:not(:focus-visible){
+  outline:none!important;
+}
+.enter-hotspot:focus-visible{
+  outline:2px solid rgba(255,255,255,.94)!important;
+  outline-offset:4px!important;
+  box-shadow:
+    0 0 0 5px rgba(121,255,83,.14),
+    0 10px 28px rgba(0,0,0,.28)!important;
+}
+
+.splash-trust-line{
+  position:absolute;
+  z-index:9;
+  left:50%;
+  top:79.55%;
+  width:max-content;
+  max-width:54%;
+  margin:0;
+  padding:.32rem .85rem;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(.7rem,1.4vw,1.25rem);
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(2,8,10,.68) 14%,rgba(2,8,10,.78) 50%,rgba(2,8,10,.68) 86%,transparent);
+  color:#c6d5ce;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(.58rem,.64vw,.72rem);
+  font-weight:700;
+  letter-spacing:.035em;
+  line-height:1;
+  text-shadow:0 1px 5px #000,0 0 10px rgba(0,0,0,.9);
+  white-space:nowrap;
+  pointer-events:none;
+}
+.splash-trust-line span:first-child{color:#d9f6d2}
+
+@media(max-aspect-ratio:4/3){
+  .enter-hotspot{
+    top:75.2%!important;
+    width:clamp(190px,48vw,235px)!important;
+    min-width:0!important;
+    height:clamp(48px,12vw,58px)!important;
+    min-height:0!important;
+    border-radius:16px!important;
+    font-size:clamp(.68rem,2.6vw,.82rem)!important;
+  }
+  .splash-trust-line{
+    top:82.25%;
+    max-width:88%;
+    gap:.55rem;
+    padding:.3rem .65rem;
+    font-size:clamp(.54rem,1.8vw,.66rem);
+  }
+}
+@media(max-width:480px){
+  .enter-hotspot{
+    top:76%!important;
+    width:clamp(180px,52vw,225px)!important;
+    height:clamp(46px,11vw,56px)!important;
+  }
+  .splash-trust-line{
+    top:83%;
+    width:88%;
+    max-width:88%;
+    flex-wrap:wrap;
+    row-gap:.25rem;
+    white-space:normal;
+    line-height:1.25;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .enter-hotspot,
+  .enter-hotspot:hover,
+  .enter-hotspot:active{
+    transition:none!important;
+    transform:translate(-50%,-50%) scale(1)!important;
+  }
+}
