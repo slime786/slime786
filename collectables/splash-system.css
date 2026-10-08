@@ -125,6 +125,33 @@ body{
 
 @media(max-aspect-ratio:4/3){
   .splash{
+    isolation:isolate;
+  }
+  .splash::before{
+    content:"";
+    position:absolute;
+    inset:-10%;
+    z-index:0;
+    background:
+      linear-gradient(rgba(1,7,5,.42),rgba(1,7,5,.66)),
+      url("https://cdn.openart.ai/openart-uploads/production/attachment-transfers/bce857582ee01de064f104dc6627f4e91a41436e67b39724f3b2fdaa6ddb222d.png") center/cover no-repeat;
+    filter:blur(28px) saturate(1.12);
+    transform:scale(1.08);
+    opacity:.38;
+    pointer-events:none;
+  }
+  .splash::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background:
+      radial-gradient(circle at 50% 48%,rgba(121,255,83,.09),transparent 34%),
+      linear-gradient(180deg,rgba(0,0,0,.24),rgba(0,0,0,.50));
+    pointer-events:none;
+  }
+  .stage{z-index:1}
+  .splash{
     padding:max(.5rem,env(safe-area-inset-top)) .5rem max(.75rem,env(safe-area-inset-bottom));
   }
   .stage{
