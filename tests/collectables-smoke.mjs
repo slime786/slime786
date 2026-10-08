@@ -94,10 +94,10 @@ if(!fs.existsSync("collectables/business-info.js")) {
 if(!fs.existsSync("collectables/cancellation-form.html")) {
   fail("model cancellation form is missing");
 }
-if(!shop.includes('design-system.css?v=20261008-1')) {
+if(!shop.includes('design-system.css?v=20261008-2')) {
   fail("shop must load the versioned storefront design system");
 }
-if(!splash.includes('splash-system.css?v=20261008-1')) {
+if(!splash.includes('splash-system.css?v=20261008-2')) {
   fail("splash must load the versioned splash design system");
 }
 for (const marker of [
