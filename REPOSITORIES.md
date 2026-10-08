@@ -2,18 +2,24 @@
 
 A compact map of the repositories connected to this account. Use this page to decide where work belongs.
 
+<!-- portfolio:repository-index:start -->
 | Repository | Purpose | Status |
 | --- | --- | --- |
 | [slime786/slime786](https://github.com/slime786/slime786) | Public portfolio + live Collectables storefront | Active |
 | [slime786/guard-mvp](https://github.com/slime786/guard-mvp) | Consumer financial admin MVP | Active |
 | [slime786/handoff](https://github.com/slime786/handoff) | Device-to-device file transfer | Active beta |
+| [slime786/context-lease-mcp](https://github.com/slime786/context-lease-mcp) | Purpose-bound context for AI | Local MVP |
+| [slime786/Claim-Window](https://github.com/slime786/Claim-Window) | Purchase deadline tracking | Local MVP |
+| [slime786/WRECKSTORM](https://github.com/slime786/WRECKSTORM) | Godot armored-vehicle roguelite | Vertical slice |
+| [slime786/Multi-Agent-Vertical-Agent-OS](https://github.com/slime786/Multi-Agent-Vertical-Agent-OS) | Vertical agent orchestration | Early |
+| [slime786/website-business](https://github.com/slime786/website-business) | LocalLaunch Studio | Pre-launch |
 | [slime786/why-app](https://github.com/slime786/why-app) | Intent-first capture app | Active MVP |
 | [slime786/rewind-app](https://github.com/slime786/rewind-app) | Reversible-decision tracker | Prototype |
 | [slime786/life-admin-autopilot](https://github.com/slime786/life-admin-autopilot) | Personal admin command centre | Maintained prototype |
-| [slime786/Iron-Vultures](https://github.com/slime786/Iron-Vultures) | Godot arcade game | Pre-release prototype |
 | [slime786/mofries-business](https://github.com/slime786/mofries-business) | Mo'Fries business, brand and storefront | Private venture |
 | [slime786/slimes-collectables](https://github.com/slime786/slimes-collectables) | Standalone Collectables backup/history | Secondary |
 | [slime786/decision-coin](https://github.com/slime786/decision-coin) | Small decision-tool idea | Paused |
+<!-- portfolio:repository-index:end -->
 
 ## Where new work belongs
 
