@@ -115,21 +115,20 @@ body{
 }
 
 /* The approved splash artwork contains an older green CTA baked into the image.
-   Cover that artwork CTA completely so only the real accessible button remains. */
+   Cover the full baked-in CTA footprint with an opaque dark patch so only the
+   real accessible button is visible. */
 .artifact-mask{
   top:74.4%;
-  width:clamp(230px,21.5%,320px);
-  height:clamp(62px,9%,84px);
+  width:clamp(280px,24%,360px);
+  height:clamp(72px,10.5%,92px);
   transform:translate(-50%,-50%);
-  border-radius:999px;
+  border-radius:26px;
   background:
-    radial-gradient(ellipse at center,
-      rgba(3,10,12,1) 0%,
-      rgba(3,10,12,.995) 66%,
-      rgba(3,10,12,.96) 78%,
-      rgba(3,10,12,.70) 88%,
-      rgba(3,10,12,0) 100%);
-  filter:blur(.8px);
+    radial-gradient(circle at 50% 38%,rgba(5,16,18,.99) 0%,rgba(4,13,15,.995) 54%,rgba(3,10,12,1) 100%);
+  box-shadow:
+    0 0 0 18px rgba(3,9,11,.88),
+    0 0 32px 22px rgba(3,9,11,.72);
+  filter:none;
   opacity:1;
 }
 
@@ -180,8 +179,9 @@ body{
   }
   .artifact-mask{
     top:75.2%;
-    width:clamp(220px,46%,330px);
-    height:clamp(58px,11%,78px);
+    width:clamp(240px,58%,360px);
+    height:clamp(68px,13%,92px);
+    border-radius:24px;
   }
   .enter-hotspot{
     top:73.1%;
