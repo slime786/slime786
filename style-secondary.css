@@ -1,0 +1,32 @@
+/* Shared cinematic treatment for secondary pages */
+.journal-page,.radar-page{
+  background:
+    radial-gradient(circle at 82% 2%,rgba(31,118,186,.12),transparent 30%),
+    linear-gradient(180deg,#01050a,#03090e 70%,#02060b);
+}
+.radar-nav{
+  height:66px;padding:0 clamp(20px,4vw,58px);
+  background:rgba(1,5,9,.86)!important;
+  border-bottom:1px solid rgba(114,161,194,.17)!important;
+  backdrop-filter:blur(20px);
+}
+.radar-nav>a{
+  color:#fff!important;font:800 17px/1 Space Grotesk,sans-serif!important;letter-spacing:-.03em!important;
+}
+.radar-nav>a:after{content:"_";color:#00f59d}
+.radar-nav div a{color:#a9bac7!important;font-size:11px!important}
+.journal-hero,.radar-hero{background:transparent!important}
+.journal-hero h1,.radar-hero h1{
+  font-size:clamp(58px,8vw,110px)!important;letter-spacing:-.055em!important;line-height:.88!important;
+}
+.journal-card,.radar-themes article,.principle-grid>div{
+  border-color:#1d3548!important;border-radius:8px!important;background:linear-gradient(155deg,#06101a,#03080d)!important;
+}
+.journal-card>p,.journal-card a,.radar-themes article>span{color:#00f59d!important}
+.journal-tools input,.journal-tools button{
+  border-color:#263e51!important;background:#040b11!important;color:#aebdca!important;
+}
+.journal-tools button.active{border-color:#00bb79!important;color:#00f59d!important}
+.radar-strip{border-color:#1d3548!important;background:#040b11!important}
+.radar-strip span{color:#00f59d!important}
+.radar-footer{border-color:#1d3548!important;background:#010409!important}
