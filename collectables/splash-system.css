@@ -64,43 +64,27 @@ body{
 .particle{opacity:.34}
 
 .enter-hotspot{
-  top:74.25%;
-  width:clamp(210px,16.2%,250px);
-  height:clamp(52px,7.6%,64px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(164,255,139,.72);
-  border-radius:16px;
-  background:
-    linear-gradient(180deg,#89ff61 0%,#62ed49 58%,#48d936 100%);
-  color:#041205;
-  box-shadow:
-    0 8px 22px rgba(0,0,0,.26),
-    0 0 18px rgba(91,255,77,.12),
-    inset 0 1px 0 rgba(255,255,255,.32);
-  font-family:Arial,Helvetica,sans-serif;
-  font-size:clamp(.7rem,.78vw,.86rem);
-  font-weight:900;
-  letter-spacing:.08em;
-  line-height:1;
-  text-transform:uppercase;
-  transition:
-    transform 180ms var(--splash-ease),
-    box-shadow 180ms ease,
-    filter 180ms ease;
+  top:74.1%;
+  width:18.4%;
+  height:8.1%;
+  display:block;
+  border:0;
+  border-radius:20px;
+  background:transparent;
+  color:transparent;
+  box-shadow:none;
+  font-size:0;
+  text-decoration:none;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:none;
 }
 
-.enter-hotspot::after{
-  content:"Enter Site  →";
-}
+.enter-hotspot::after{content:none!important}
 
 .enter-hotspot:hover{
-  transform:translate(-50%,-50%) translateY(-2px);
-  filter:brightness(1.04);
-  box-shadow:
-    0 13px 36px rgba(0,0,0,.4),
-    0 0 28px rgba(92,255,74,.2);
+  filter:none;
+  box-shadow:none;
 }
 
 .enter-hotspot:active{
@@ -108,19 +92,15 @@ body{
 }
 
 .enter-hotspot:focus-visible{
-  outline:2px solid #fff;
-  outline-offset:4px;
-  box-shadow:
-    0 0 0 6px rgba(121,255,83,.12),
-    0 12px 34px rgba(0,0,0,.38);
+  outline:2px solid rgba(255,255,255,.92);
+  outline-offset:3px;
+  box-shadow:0 0 0 5px rgba(121,255,83,.12);
 }
 
 /* The source artwork already contains a green CTA. The real accessible link
    covers that CTA directly; no dark mask is used so the surrounding artwork
    remains untouched. */
-.artifact-mask{
-  display:none;
-}
+.artifact-mask{display:none!important}
 
 @media(max-aspect-ratio:4/3){
   .splash{
@@ -171,8 +151,7 @@ body{
     top:75.2%;
     width:clamp(190px,48vw,230px);
     height:clamp(48px,12vw,58px);
-    border-radius:14px;
-    font-size:clamp(.68rem,2.6vw,.82rem);
+    border-radius:16px;
   }
 }
 
@@ -202,13 +181,11 @@ body{
   transition:box-shadow 220ms var(--splash-ease),border-color 220ms ease;
 }
 .enter-hotspot{
-  min-width:138px;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
+  min-width:0;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
 }
-.enter-hotspot::after{
-  letter-spacing:.07em;
-}
+.enter-hotspot::after{content:none!important}
 @media(hover:hover) and (pointer:fine){
   .stage:hover{
     border-color:rgba(129,255,89,.18);
@@ -231,6 +208,17 @@ body{
   .enter-hotspot{
     top:76%;
     width:clamp(180px,52vw,220px);
-    min-width:180px;
+    height:clamp(46px,11vw,56px);
+    min-width:0;
   }
+}
+
+
+/* CTA cleanup v2.2 — the artwork supplies the visible button. */
+.enter-hotspot::before,
+.enter-hotspot::after{content:none!important}
+.enter-hotspot{
+  background:transparent!important;
+  color:transparent!important;
+  border-color:transparent!important;
 }
