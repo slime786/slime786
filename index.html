@@ -93,6 +93,20 @@ body{min-height:100svh}
     nav?.classList.toggle('open',!open);
   });
 
+  const closeMobileNav=()=>{
+    if(toggle?.getAttribute('aria-expanded')!=='true') return;
+    toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-label','Open navigation');
+    nav?.classList.remove('open');
+    toggle.focus();
+  };
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape') closeMobileNav();
+  });
+  nav?.addEventListener('click',event=>{
+    if(event.target.closest('a')) closeMobileNav();
+  });
+
   const tick=()=>{
     const now=new Date();
     document.querySelector('#gateway-clock').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now);
