@@ -95,6 +95,11 @@ for (const file of ["journal.html", "market-radar.html", "arcade.html"]) {
   const html = fs.readFileSync(path.join(root, file), "utf8");
   if (!html.includes('/slime786/style-secondary.css?v=1')) missing.push(`${file}: secondary theme stylesheet wiring`);
 }
+const caseCss = fs.readFileSync(path.join(root, "style-case-study.css"), "utf8");
+const caseMarkup = fs.readFileSync(path.join(root, "project-personal-command-centre.html"), "utf8");
+if (baseCss.includes("V9.1 — Project 001 case study")) missing.push("case study CSS leaked into base");
+if (!caseCss.includes("V9.1 — Project 001 case study")) missing.push("case study CSS missing");
+if (!caseMarkup.includes('href="style-case-study.css?v=1"')) missing.push("case-study stylesheet not linked");
 if (baseCss.includes("CURRENT THEME BOUNDARY — V11")) {
   missing.push("V11 theme leaked back into base stylesheet");
 }
