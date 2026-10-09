@@ -155,6 +155,10 @@ if (!collectablesSplash.includes('rel="preconnect" href="https://cdn.openart.ai"
 }
 
 const caseStudy = fs.readFileSync(path.join(root, "project-personal-command-centre.html"), "utf8");
+const caseStyles = fs.readFileSync(path.join(root, "style-case-study.css"), "utf8");
+if (!caseStudy.includes("style-case-study.css?v=1")) missing.push("case-study stylesheet missing");
+if (!caseStyles.includes("V9.1 — Project 001 case study")) missing.push("case study CSS boundary missing");
+if (baseCss.includes("V9.1 — Project 001 case study")) missing.push("case CSS leaked back into base");
 if (!caseStudy.includes('loading="lazy" decoding="async"')) {
   missing.push("case-study below-fold image loading hint");
 }
