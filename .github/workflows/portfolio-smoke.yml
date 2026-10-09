@@ -19,6 +19,7 @@ jobs:
       - run: node scripts/sync-portfolio.mjs --check
       - run: node tests/portfolio-smoke.mjs
       - run: node tests/collectables-smoke.mjs
+      - run: node tests/commerce-rehearsal-guards.mjs
 
       - name: Verify Supabase source layout
         run: |
