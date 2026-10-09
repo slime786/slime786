@@ -87,21 +87,11 @@ body{min-height:100svh}
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nav=document.querySelector('#nav-links');
   const toggle=document.querySelector('#mobile-nav-toggle');
-  const closeNavigation=()=>{
-    if(toggle?.getAttribute('aria-expanded')!=='true')return;
-    toggle.setAttribute('aria-expanded','false');
-    nav?.classList.remove('open');
-    toggle.focus();
-  };
   toggle?.addEventListener('click',()=>{
     const open=toggle.getAttribute('aria-expanded')==='true';
     toggle.setAttribute('aria-expanded',String(!open));
     nav?.classList.toggle('open',!open);
   });
-  document.addEventListener('keydown',event=>{
-    if(event.key==='Escape')closeNavigation();
-  });
-
   const closeMobileNav=()=>{
     if(toggle?.getAttribute('aria-expanded')!=='true') return;
     toggle.setAttribute('aria-expanded','false');
