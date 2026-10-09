@@ -1,0 +1,34 @@
+name: Responsive visual QA
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  responsive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install pinned browser test tooling
+        run: npm install --no-save --package-lock=false @playwright/test@1.56.1
+      - name: Install Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Responsive assertions and screenshots
+        run: npx playwright test --config=playwright.config.mjs
+      - name: Publish screenshot evidence and diagnostic report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: responsive-qa-evidence
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
