@@ -201,6 +201,8 @@ const productDialogClose = document.querySelector("#product-dialog-close");
 const catalogStatus = document.querySelector("#catalog-status");
 const conditionSelect = document.querySelector("#condition-select");
 const conditionFilterNote = document.querySelector("#condition-filter-note");
+const productResults = document.querySelector("#product-results");
+const clearFiltersButton = document.querySelector("#clear-filters");
 let productDialogReturnFocus = null;
 let cartReturnFocus = null;
 
@@ -271,11 +273,32 @@ function renderProducts(){
     return b.newest-a.newest;
   });
 
+  const total=inventory.length;
+  const hasCustomState=activeFilter!=="all" || activeCondition!=="all" || Boolean(searchTerm) || sortMode!=="featured";
+  if(productResults){
+    const noun=items.length===1?"item":"items";
+    const context=searchTerm ? ` matching “${searchTerm}”` : activeFilter!=="all" ? " in this view" : "";
+    productResults.textContent=`${items.length} ${noun}${context} · ${total} total`;
+  }
+  if(clearFiltersButton) clearFiltersButton.hidden=!hasCustomState;
+
   grid.innerHTML="";
   if(!items.length){
-    grid.innerHTML=usingLiveCatalog
-      ? '<div class="no-products">No items match these filters. Try another condition or category.</div>'
-      : '<div class="no-products">Nothing matches that filter yet. More stock will appear here when your inventory is added.</div>';
+    const empty=document.createElement("div");
+    empty.className="no-products";
+    const title=document.createElement("strong");
+    title.textContent=usingLiveCatalog?"No items match this view.":"Nothing matches this preview yet.";
+    const copy=document.createElement("p");
+    copy.textContent=usingLiveCatalog
+      ?"Try resetting the catalogue or choosing a different category."
+      :"Reset the catalogue to see all preview products.";
+    const reset=document.createElement("button");
+    reset.type="button";
+    reset.className="button secondary no-products-reset";
+    reset.textContent="Reset catalogue";
+    reset.addEventListener("click",resetCatalogue);
+    empty.append(title,copy,reset);
+    grid.append(empty);
     return;
   }
 
@@ -376,10 +399,27 @@ productDialog?.addEventListener("cancel",event=>{
 });
 
 function syncFilterState(filter){
-  document.querySelectorAll("[data-filter]").forEach(button=>button.classList.toggle("active",button.dataset.filter===filter));
-  document.querySelectorAll("#category-filters [data-filter]").forEach(button=>{
-    button.setAttribute("aria-pressed",String(button.dataset.filter===filter));
+  document.querySelectorAll("[data-filter]").forEach(button=>{
+    const active=button.dataset.filter===filter;
+    button.classList.toggle("active",active);
+    if(button.matches("button")) button.setAttribute("aria-pressed",String(active));
   });
+}
+
+function resetCatalogue({scroll=false}={}){
+  activeFilter="all";
+  activeCondition="all";
+  sortMode="featured";
+  searchTerm="";
+  document.querySelectorAll("#site-search,#mobile-site-search").forEach(input=>{
+    input.value="";
+  });
+  const sortSelect=document.querySelector("#sort-select");
+  if(sortSelect) sortSelect.value="featured";
+  syncFilterState("all");
+  updateConditionOptions();
+  renderProducts();
+  if(scroll) document.querySelector("#shop")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 function setFilter(filter,{scroll=true}={}){
@@ -519,14 +559,21 @@ document.querySelectorAll("[data-filter-link]").forEach(link=>link.addEventListe
   setTimeout(()=>document.querySelector("#shop")?.scrollIntoView({behavior:"smooth",block:"start"}),50);
 }));
 
+clearFiltersButton?.addEventListener("click",()=>resetCatalogue());
+
 document.querySelector("#sort-select").addEventListener("change",e=>{sortMode=e.target.value;renderProducts()});
 conditionSelect?.addEventListener("change",e=>{activeCondition=e.target.value;renderProducts()});
 
 function bindSearch(input){
   if(!input)return;
   input.addEventListener("input",e=>{
-    searchTerm=e.target.value.trim().toLowerCase();
+    const raw=e.target.value;
+    searchTerm=raw.trim().toLowerCase();
+    document.querySelectorAll("#site-search,#mobile-site-search").forEach(other=>{
+      if(other!==input && other.value!==raw) other.value=raw;
+    });
     activeFilter="all";
+    activeCondition="all";
     syncFilterState("all");
     updateConditionOptions();
     renderProducts();
