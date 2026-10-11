@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - chatgpt/collectables-design-system-v2
+      - chatgpt/collectables-shop-final-qa
     paths:
       - "collectables/**"
       - ".github/workflows/collectables-visual-preview.yml"

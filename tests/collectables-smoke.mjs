@@ -37,6 +37,12 @@ if(app.includes("row.innerHTML=")) {
 if(!app.includes("function syncFilterState(filter)")) {
   fail("filter aria state synchronisation missing");
 }
+if(!app.includes("function resetCatalogue")) {
+  fail("catalogue reset behaviour missing");
+}
+if(!app.includes('document.querySelectorAll("#site-search,#mobile-site-search")')) {
+  fail("desktop/mobile search synchronisation missing");
+}
 
 const start = app.indexOf("const inventory = [");
 const endMarker = "];\n\nlet activeFilter";
@@ -77,7 +83,9 @@ for(const marker of [
   'id="catalog-status" role="status" aria-live="polite"',
   'role="dialog" aria-modal="true"',
   'aria-controls="mobile-search-panel" aria-expanded="false"',
-  'data-filter="all" aria-pressed="true"'
+  'data-filter="all" aria-pressed="true"',
+  'id="product-results" role="status" aria-live="polite"',
+  'id="clear-filters"'
 ]) {
   if(!shop.includes(marker)) fail(`shop missing marker: ${marker}`);
 }
@@ -94,7 +102,7 @@ if(!fs.existsSync("collectables/business-info.js")) {
 if(!fs.existsSync("collectables/cancellation-form.html")) {
   fail("model cancellation form is missing");
 }
-if(!shop.includes('design-system.css?v=20261008-2')) {
+if(!shop.includes('design-system.css?v=20261011-1')) {
   fail("shop must load the versioned storefront design system");
 }
 if(!splash.includes('splash-system.css?v=20261008-10')) {
