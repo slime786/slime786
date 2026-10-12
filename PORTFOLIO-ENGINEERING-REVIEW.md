@@ -2,6 +2,28 @@
 
 Scope: 21 repositories accessible under `slime786`. Review evidence: default-branch Git trees, README files, selected manifests, CI workflows, and selected implementations. This is a **triage review, not an exhaustive code audit**. No claims of passing tests or production certification are implied.
 
+## Seven-project commercial focus
+
+These are seven **parallel engineering and validation tracks**, not seven simultaneous full launches. This selection is a prioritisation hypothesis, not a revenue forecast. Keep other repos on maintenance until demand requires more investment.
+
+| Project / repository | First externally measurable milestone | Technical milestone | Operating lane |
+| --- | --- | --- | --- |
+| [LocalLaunch Studio](https://github.com/slime786/website-business) | One paid, scope-controlled customer website | Production-ready tested enquiry workflow and privacy/terms | Lead: revenue |
+| [Somavexa](https://github.com/slime786/Somavexa) | 10–20 learner tests, repeat use and willingness-to-pay evidence | Core upper-limb learning flow with passing deterministic scoring tests | Lead: SaaS validation |
+| [WorthState Battery](https://github.com/slime786/worthstate-battery) | Prospective design partner and permission to assess historical battery data | Versioned battery evidence/valuation contract and golden tests | Discovery |
+| [GUARD](https://github.com/slime786/guard-mvp) | Real users verifying financially meaningful opportunities | Review authentication, evidence isolation and approval gates | Controlled validation |
+| [SomaMirror](https://github.com/slime786/SomaMirror) | Research/lab user agrees to assess a narrow data-to-visualisation workflow | Data provenance and measured/reference/inferred separation tests | Discovery |
+| [Multi-Agent OS](https://github.com/slime786/Multi-Agent-Vertical-Agent-OS) | One organisation with a specific paid automation need | Tighten per-tool authorisation, audit and task reliability | Discovery / reusable infrastructure |
+| [NervaLocus](https://github.com/slime786/NervaLocus) | Neuroanatomy educator reviews a clearly non-diagnostic prototype | Create first runnable anatomical overlap fixture and repeatable tests | Research prototype |
+
+### Parallel execution policy
+
+- Maintain separate branches, pull requests, issue tracking, test commands and release gates per repository. Never combine changes to different applications into a single unreviewable release.
+- Run **two delivery lanes** (LocalLaunch and Somavexa) plus **five bounded discovery/prototype lanes**. Do not treat all seven as equal ongoing feature-development commitments.
+- Batch safe read-only reviews, test preparation and independent PRs in one active working session when feasible. This plan does **not** mean an assistant will execute work unattended between sessions.
+- Prioritise demonstrated paid demand, validated user outcomes and independently passing CI over more planning documents.
+- Keep clinical diagnosis, claims of efficacy, financial consequential actions and automated external writes outside prototype authorisation boundaries.
+
 ## Shared engineering protocol
 
 When reviewing or changing a repository:
